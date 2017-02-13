@@ -1,0 +1,9 @@
+<div class="col-md-8 custom-control" ng-init="rules.ruleDefine.name = ruleName">
+    提醒指标：每天开机时间少于<input type="text" class="form-control" ng-model="rules.ruleDefine.warnRule.params.warn" placeholder="小时">小时
+</div>
+<div class="col-md-8 custom-control">
+    违规指标：每天开机时间少于<input type="text" class="form-control" ng-model="rules.ruleDefine.illegalRule.params.illegal" placeholder="小时">小时
+</div>
+<div class="col-md-8 custom-control">
+    停机指标：每天开机时间少于<input type="text" class="form-control" ng-model="rules.ruleDefine.stopRule.params.stop" placeholder="小时">小时
+</div>

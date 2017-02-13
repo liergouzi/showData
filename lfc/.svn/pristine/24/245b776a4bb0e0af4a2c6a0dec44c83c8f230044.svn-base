@@ -1,0 +1,61 @@
+<div  class="portlet box red portlet-mg0 ">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-gift"></i>发起紧急任务</div>
+        <div class="tools">
+            <i class="fa fa-close" ng-click="cancel()"></i>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <form class="form-horizontal" role="form">
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">督导员</label>
+                    <div class="col-md-8">
+                        <input class="form-control" ng-model="filter.ownerName" ng-change="search()" placeholder="请输入督导员名称"/>
+                        <div class="custom-select hide" ng-class="{show:result.length}">
+                            <div class="custom-select-scroll">
+                                <div class="custom-select-body">
+                                    <div ng-repeat="li in result" ng-click="changeValue(li.user_name,li.userId)">
+                                        {{li.user_name}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">所属站点</label>
+                    <div class="col-md-8">
+                        <input type="text" readonly="readonly" ng-model="params.name" class="form-control" > </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">站点地址</label>
+                    <div class="col-md-8">
+                        <input type="text" readonly="readonly" ng-model="params.address" class="form-control" > </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">任务截止日期</label>
+                    <div class="col-md-8">
+                        <div class="date date-picker" style="position: relative" data-date="new Date()"
+                             data-date-format="yyyy-mm-dd"
+                             data-date-viewmode="years">
+                            <input class="form-control" ng-model="request.endDate"/>
+                            <i class="btn sm-btn default fa fa-calendar"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">任务内容</label>
+                    <div class="col-md-8">
+                        <textarea  ng-model="request.taskCheckOut.content" style="width: 100%;height: 100px;resize:none"></textarea></div>
+                </div>
+            </div>
+            <div class="form-actions right1">
+                <button type="button" class="btn green" ng-click="ok()">提交</button>
+                <button type="submit" class="btn default" ng-click="cancel()">取消</button>
+            </div>
+        </form>
+    </div>
+</div>
+

@@ -1,0 +1,40 @@
+<div>
+    <div class="portlet box red portlet-mg0 ">
+        <div class="portlet-title" style="min-height: 36px">
+            <div class="caption" style="padding: 8px 0 6px;">字典内容</div>
+            <div class="tools" style="padding: 10px 0 5px;">
+                <i class="fa fa-close big-icon" ng-click="cancel()"></i>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <form class="form-horizontal" role="form">
+                <div class="form-body" style="padding:40px 20px 0 20px">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">字典类型</label>
+                        <div class="col-md-8">
+                            <input class="form-control" ng-model="dictType" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">字典类型</label>
+                        <div class="col-md-8">
+                            <table class="dict-table">
+                                <tr ng-repeat="li in params track by $index">
+                                    <td style="width: 33%"><input class="form-control" ng-model="li.value" placeholder="字典值"/></td>
+                                    <td style="width: 33%"><input class="form-control" ng-model="li.name" placeholder="字典名字"/></td>
+                                    <td style="text-align: right;">
+                                        <span ng-click="delRow($index)">删除</span>&nbsp;&nbsp;
+                                        <span ng-click="addRow()">添加</span></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-foot">
+                    <button class="btn green confirm" ng-click="ok()">提交</button>
+                    <button class="btn default cancel" ng-click="cancel()">关闭</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

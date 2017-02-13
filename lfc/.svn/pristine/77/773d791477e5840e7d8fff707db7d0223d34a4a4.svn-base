@@ -1,0 +1,26 @@
+<div ng-controller="restController"  data-options="{initLoad:'false'}">
+    <div ng-controller="roleAdminCtrl as vm">
+        <div class="row table-list">
+            <div class="col-md-12 title">
+            </div>
+            <div class="form-group col-md-12">
+                <button class="addBtn" ng-click="vm.role('新增')"><i class="glyphicon glyphicon-plus-sign"></i><span>新增角色</span></button>
+            </div>
+            <!--表格-->
+            <div class="col-md-12 portlet-body custom">
+                <div class="table-title clearfix">角色列表</div>
+                <table cz-table-control cz-delegate-handle="delegateHandle" data-search-toolbar="#toolbar" data-sort-name="id" data-show-print="false"
+                       data-toggle="table" data-advanced-search="true" data-url="/rest/role?_method=get"
+                       data-show-export="true" data-show-refresh="true" data-show-columns="true">
+                    <thead>
+                    <tr style="display: none">
+                        <th data-align="center" cz-index-column="true">序号</th>
+                        <th data-field="name" data-align="center" data-sortable="false">角色名称</th>
+                        <th data-field="id" data-align="center" data-print-ignore="true" cz-column-formatter="column.formatter.formatAction" cz-column-event="column.colEvents.operation">操作</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<div>
+    <div class="privilege portlet box red portlet-mg0 ">
+        <div class="portlet-title" style="min-height: 36px">
+            <div class="caption" style="padding: 8px 0 6px;">权限分配</div>
+            <div class="tools" style="padding: 10px 0 5px;">
+                <i class="fa fa-close big-icon" ng-click="cancel()"></i>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <form class="form-horizontal" role="form">
+                <div class="form-body" style="padding:40px 20px 0 20px">
+                    <table>
+                        <tr ng-repeat="li in params">
+                            <td>
+                                {{li.category}}
+                            </td>
+                            <td>
+                                <li ng-repeat="l in li.privileges"><input name="privilegeId" type="checkbox" ng-model="l.checkflag" ng-click="updateSelection($event,l.code)">{{l.name}}</li>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <br>
+                <br>
+                <div class="form-foot">
+                    <button class="btn green confirm" ng-click="ok()">提交</button>
+                    <button class="btn default cancel" ng-click="cancel()">关闭</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<div ng-controller="restController" data-options="{initLoad:'false'}">
+    <div ng-controller="regionAdminCtrl">
+        <div class="row table-list">
+            <div class="col-md-12 title">
+            </div>
+            <!--表格-->
+            <div class="col-md-12 portlet-body custom">
+                <div class="table-title clearfix">区域列表</div>
+                <table cz-table-control cz-delegate-handle="delegateHandle" data-search-toolbar="#toolbar"
+                       data-sort-name="id" data-show-print="false"
+                       data-toggle="table" data-advanced-search="true" data-url="/rest/region?_method=get&sort=level"
+                       data-show-export="true" data-show-refresh="true" data-show-columns="true">
+                    <thead>
+                    <tr style="display: none">
+                        <th data-align="center" cz-index-column="true">序号</th>
+                        <th data-field="name" data-align="center" data-sortable="false">区域名称</th>
+                        <th data-field="shortName" data-align="center" data-sortable="false">区域简称</th>
+                        <th data-field="id" data-align="center" data-print-ignore="true"
+                            cz-column-formatter="column.formatter.formatAction"
+                            cz-column-event="column.colEvents.operation">操作
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+<div class="portlet box red portlet-mg0 ">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-gift"></i>查看人员</div>
+        <div class="tools">
+            <i class="fa fa-close" ng-click="cancel()"></i>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <div class="form-horizontal">
+            <div class="form-body">
+                <div class="head text-center">
+                    <img src="{{params.user_avatar|photoFilter}}" width="120" height="120">
+                    <p style="margin: 20px 0 0;">姓名:{{params.name}}</p>
+                </div>
+                <div class="left-right clearfix">
+                    <div class="pull-left">
+                        <div>用户名:<div class="inline-block" style="vertical-align: top" ><p>{{params.loginId}}</p></div></div>
+                        <div>所属部门:<div class="inline-block" style="vertical-align: top" ><p>{{params.loginId}}</p></div></div>
+                        <div>身份证号:<div class="inline-block" style="vertical-align: top" ><p>{{params.identityNum}}</p></div></div>
+                        <div>电子邮箱:<div class="inline-block" style="vertical-align: top" ><p>{{params.email}}</p></div></div>
+                        <div>籍贯:<div class="inline-block" style="vertical-align: top" ><p>{{params.nativeLocation}}</p></div></div>
+                    </div>
+                    <div class="pull-right">
+                        <div>性别:<div class="inline-block" style="vertical-align: top" ><p>{{params.gender|sexFilter}}</p></div></div>
+                        <div>职位:<div class="inline-block" style="vertical-align: top" ><p>{{params.loginId}}</p></div></div>
+                        <div>手机号:<div class="inline-block" style="vertical-align: top" ><p>{{params.mobile}}</p></div></div>
+                        <div>地址:<div class="inline-block" style="vertical-align: top" ><p>{{params.address}}</p></div></div>
+                        <div>政治面貌:<div class="inline-block" style="vertical-align: top" ><p>{{params.politicalStatus}}</p></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

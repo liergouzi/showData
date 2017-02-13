@@ -1,0 +1,62 @@
+<div class="portlet box red portlet-mg0 ">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-gift"></i>销售员详情页</div>
+        <div class="tools">
+            <i class="fa fa-close" ng-click="cancel()"></i>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <div class="form-horizontal">
+            <div class="form-body">
+                <div class="head text-center">
+                    <img src="{{params.photourl|photoFilter}}" width="120" height="120">
+                </div>
+                <div class="left-right">
+                    <div>
+                        <p>销售员:{{params.name}}</p>
+                        <p>性别:{{params.sex|sexFilter}}</p>
+                        <p>是否在岗:{{params.status|statusFilter}}</p>
+                        <p>手机号:{{params.phone}}</p>
+                        <p>所属站点:{{params.station_name}}</p>
+                    </div>
+                    <div>
+                        <p>证书编号:{{params.certification}}</p>
+                        <p>证书有效期:{{params.certificationEndtime}}</p>
+                        <p>是否站长:{{params.leaderFlag}}</p>
+                        <p>身份证号:{{params.identification}}</p>
+                        <p>分支机构:{{params.station_company_name}}</p>
+                    </div>
+                </div>
+                <h3 class="h-title-center">{{year}}年度考核情况</h3>
+                <div>
+                    <p>考核分数（满分15分）：<span class="red-font">{{sum}}分</span></p>
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr class="table-title1">
+                            <th class="text-center">序号</th>
+                            <th class="text-center">科目</th>
+                            <th class="text-center">细则</th>
+                            <th class="text-center">扣分情况</th>
+                            <th class="text-center">扣分内容</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-if="personScore.length" ng-repeat="li in personScore">
+                            <td class="text-center">{{$index+1}}</td>
+                            <td>{{li.kpiName}}</td>
+                            <td>{{li.kpiContent}}</td>
+                            <td class="text-center">{{li.score}}分</td>
+                            <td>详情</td>
+                        </tr>
+                        <tr ng-if="personScore.length==0">
+                            <td colspan="5" class="text-center">无</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

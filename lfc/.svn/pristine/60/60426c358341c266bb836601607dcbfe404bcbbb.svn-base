@@ -1,0 +1,98 @@
+/**
+ * Created by 46358 on 2016/11/3.
+ */
+app.controller('salesCtrl', ['$scope', '$rootScope', 'salesService','dateService', function ($scope, $rootScope, salesService,dateService) {
+    var vm = this;
+    $rootScope.$settings.layout.pageBodySolid = true;
+    $scope.initCompany();
+    $scope.initRegions();
+    $scope.initDicts('ZDLX');
+    vm.years=dateService.getYears();   //可传距今年年数
+    $scope.months=dateService.getMonths;
+    $scope.days=dateService.getDays();
+    //console.log(vm.years);
+    ComponentsDateTimePickers.init(); // 初始化日历
+
+    //请求数据
+    $rootScope.dynColumn = [];
+    salesService.getLotteryType().then(function (res) {
+        $rootScope.dynColumn = res.data;
+        //console.log($scope.dynColumn)
+    })
+    $rootScope.tableOptions = {hide: true};
+    $rootScope.$on('$column.repeat.done', function () {
+        $rootScope.tableOptions.hide = false;
+    });
+
+    $scope.params = [];
+    salesService.getSalesBasicFacts().then(function (res) {
+        $scope.params = res.data;
+
+
+        var option = {
+            series: [
+                {
+                    type: 'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'center',
+                            textStyle: {
+                                color: '#000'
+                            }
+                        },
+                        emphasis: {
+                            show: false,
+                            textStyle: {
+                                fontSize: '30',
+                                fontWeight: 'bold'
+                            }
+                        }
+                    },
+                    selectedMode: false,
+                    color: ['#5D36AC', '#C0C0C0'],
+                    data: [
+                        {value: $scope.params.stationCountTopAve, name: ' ' + $scope.params.stationCountTopAve + '家 '},
+                        {value: $scope.params.stationCountLowAve, name: $scope.params.stationCountTopAve + '家'}
+
+                    ]
+                }
+            ]
+        };
+        var option1 = {
+            series: [
+                {
+                    type: 'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'center',
+                            textStyle: {
+                                color: '#000'
+                            }
+                        },
+                        emphasis: {
+                            show: false,
+                            textStyle: {
+                                fontSize: '30',
+                                fontWeight: 'bold',
+                            }
+                        }
+                    },
+                    selectedMode: false,
+                    color: ['#E20F5B', '#C0C0C0'],
+                    data: [
+                        {value: $scope.params.stationCountOfAbnormal, name: ' ' + $scope.params.stationCountOfAbnormal + '家 '},
+                        {value: $scope.params.stationCountOfNormal, name: $scope.params.stationCountOfAbnormal + '家'}
+                    ]
+                }
+            ]
+        };
+        echarts.init(document.getElementById("cake")).setOption(option);
+        echarts.init(document.getElementById("cake1")).setOption(option1);
+    })
+}]);

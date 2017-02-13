@@ -1,0 +1,11 @@
+<div>
+    <p class="text-center">{{aa.length}}条未读信息</p>
+    <div class="scroller" style="height: 90vh;" data-always-visible="1" data-rail-visible1="0"
+         data-handle-color="#ccc">
+        <div class="sidebar-item" ng-repeat="li in aa">
+            <p><a>{{li.station_name}}发起了停机预警！</a></p>
+            <p style="font-size: 12px">{{li.createDate}}</p>
+        </div>
+    </div>
+
+</div>

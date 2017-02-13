@@ -1,0 +1,46 @@
+<style>
+    .cause {
+        width: 120px;
+        line-height: 30px;
+        border: 1px solid #999999;
+        color: #999999;
+        margin-right: 20px;
+    }
+
+    .causeActive {
+        border-color: #D64635;
+        color: #D64635;
+    }
+</style>
+<div class="portlet box red portlet-mg0 ">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-gift"></i>{{do}}角色
+        </div>
+        <div class="tools">
+            <i class="fa fa-close" ng-click="cancel()"></i>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <form class="form-horizontal" role="form">
+            <div class="form-body">
+                <div class="form-group">
+                    <label class="col-md-3 control-label">角色名称</label>
+                    <div class="col-md-8">
+                        <input class="form-control" ng-model="params.name"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">角色备注</label>
+                    <div class="col-md-8">
+                        <input class="form-control" ng-model="params.remark"/>
+                    </div>
+                </div>
+            </div>
+            <div class="form-foot">
+                <button class="btn green confirm" ng-click="ok()">提交</button>
+                <button class="btn default cancel" ng-click="cancel()">关闭</button>
+            </div>
+        </form>
+    </div>
+</div>

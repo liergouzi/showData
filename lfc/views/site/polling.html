@@ -1,0 +1,89 @@
+<div data-ng-controller="restController">
+<div data-ng-controller="pollingCtrl as vm" class="row table-list">
+    <div class="col-md-12 title">
+        搜索条件
+    </div>
+    <!--搜索条件-->
+    <div id="toolbar" class="table-search clearfix">
+        <div class="form-group col-md-6 col-lg-3">
+            <label>模糊搜索</label>
+            <input type="text" ng-model="filter.station__code$stationName$station__address$$LIKE" placeholder="站点编号/站点名称/地址"/>
+        </div>
+        <div class="form-group col-lg-5 col-sm-12">
+            <label>完成时间</label>
+            <div class="inline-block date date-picker" style="position: relative" data-date="new Date()"
+                 data-date-format="yyyy-mm-dd"
+                 data-date-viewmode="years">
+                <input ng-model="filter.finalScoreTime$$GTE"/>
+                <i class="btn sm-btn default fa fa-calendar"></i>
+            </div>
+            --
+            <div class="inline-block date date-picker" style="position: relative" data-date="new Date()"
+                 data-date-format="yyyy-mm-dd"
+                 data-date-viewmode="years">
+                <input ng-model="filter.finalScoreTime$$LTE"/>
+                <i class="btn sm-btn default fa fa-calendar"></i>
+            </div>
+        </div>
+        <input style="display: none" ng-model="filter.taskCore__useFlag" ng-init="filter.taskCore__useFlag=1"/>
+        <div class="form-group col-md-6 col-lg-3">
+            <label>状态</label>
+            <select ng-model="filter.taskCore__status">
+                <option value="">所有</option>
+                <option ng-repeat="opt in dicts['RWZT']" ng-value="opt.value">{{opt.name}}</option>
+            </select>
+        </div>
+        <button class="btn" id="ok"><i class="icon-magnifier"></i>查询</button>
+        <div class="form-group col-md-6 col-lg-3">
+            <label>任务类型</label>
+            <select ng-model="filter.taskCore__type">
+                <option value="">所有</option>
+                <option ng-repeat="opt in dicts['RWLX']" ng-if="opt.name!='自查'" ng-value="opt.value">{{opt.name}}</option>
+            </select>
+        </div>
+        <div class="form-group col-lg-6 col-sm-12">
+            <label>截止时间</label>
+            <div class="inline-block date date-picker" style="position: relative" data-date="new Date()"
+                 data-date-format="yyyy-mm-dd"
+                 data-date-viewmode="years">
+                <input ng-model="filter.taskCore__endTime$$GTE"/>
+                <i class="btn sm-btn default fa fa-calendar"></i>
+            </div>
+            --
+            <div class="inline-block date date-picker" style="position: relative" data-date="new Date()"
+                 data-date-format="yyyy-mm-dd"
+                 data-date-viewmode="years">
+                <input ng-disabled="list" ng-model="filter.taskCore__endTime$$LTE"/>
+                <i class="btn sm-btn default fa fa-calendar"></i>
+            </div>
+        </div>
+        <div class="form-group col-md-12">
+            <button class="addBtn" ng-click="vm.add()"><i class="glyphicon glyphicon-plus-sign"></i><span>任务新增</span></button>&nbsp;&nbsp;&nbsp;
+            <button class="addBtn" ng-click="vm.update()"><i class="glyphicon glyphicon-plus-sign"></i><span>任务变更</span></button>
+        </div>
+    </div>
+    <!--表格-->
+    <div class="col-md-12 portlet-body custom">
+        <div class="table-title clearfix">任务列表</div>
+        <table cz-table-control cz-delegate-handle="delegateHandle" data-search-toolbar="#toolbar" data-sort-name="id" data-show-print="false"
+               data-toggle="table" data-advanced-search="true" data-url="/rest/taskCheckOut?_method=get&order=desc"
+               data-show-export="true" data-show-refresh="true" data-show-columns="true">
+            <thead>
+            <tr>
+                <th data-checkbox="true" ng-disabled="1==2" data-width="10px" data-align="center" cz-column-event="column.colEvents.operation"></th>
+                <th data-align="center" cz-index-column="true">序号</th>
+                <th data-field="taskCore_activeName" data-align="center" data-sortable="true">督导员名称</th>
+                <th data-field="stationName" data-align="center" data-sortable="false">站点名称</th>
+                <th data-field="stationCompanyName" data-align="center" data-sortable="false">分支机构</th>
+                <th data-field="dateCode" data-align="center" data-sortable="false">考核期数</th>
+                <th data-field="finalScoreTime" data-align="center" data-sortable="false">任务完成时间</th>
+                <th data-field="taskCore_endTime" data-align="center" data-sortable="false" cz-column-formatter="formatter1">任务截止日期</th>
+                <th data-field="taskCore_type" data-align="center" data-sortable="false" data-dict="RWLX" cz-column-formatter="formatter.formatDictByValue">任务类型</th>
+                <th data-field="otherQuestion" data-align="center" data-sortable="false">发现问题</th>
+                <th data-field="taskCore_status" data-align="center" data-sortable="false" data-dict="RWZT" cz-column-formatter="formatter.formatDictByValue">状态</th>
+                <th data-field="taskCoreId" data-align="center" data-print-ignore="true"  cz-column-formatter="column.formatter.formatAction" cz-column-event="column.colEvents.operation">操作</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div></div>

@@ -1,0 +1,237 @@
+<div class="page-sidebar navbar-collapse collapse">
+    <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200"
+        ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
+        <!--<li class="sidebar-user">-->
+        <!--&lt;!&ndash;<img src="img/test.jpg" width="90" height="90" class="img-circle">&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="inline-block middle sid-user"><p class="username">张三李</p><p class="userstatus">管理员</p></div>&ndash;&gt;-->
+        <!--</li>-->
+        <div class="menu-top"></div>
+        <li class="nav-item">
+            <a ui-sref="dashboard">
+                <i class="icon-home"></i>
+                <span class="title">首页</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link nav-toggle">
+                <i class="fa icon-pointer"></i>
+                <span class="title">站点管理</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li class="nav-item">
+                    <a ui-sref="siteAdmin">
+                        <i class=""></i>
+                        站点概况
+                        <span class="cyclic"></span>
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref="siteInquire">
+                        <i class=""></i>站点查询
+                        <span class="cyclic"></span>
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref="siteIllegal">
+                        <i class=""></i>近期违规
+                        <span class="cyclic"></span>
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref="siteSelfCheck">
+                        <i class=""></i>站点自查
+                        <span class="cyclic"></span>
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref="bettingMachine">
+                        <i class=""></i>投注机查询
+                        <span class="cyclic"></span>
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref="machineStatus">
+                        <i class=""></i>投注机启停
+                        <span class="cyclic"></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link nav-toggle">
+                <i class="fa fa-bell-o"></i>
+                <span class="title">停机预警</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a ui-sref="warningdo">
+                        <i class=""></i>停机预警
+                        <span class="cyclic"></span>
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref="warning">
+                        <i class=""></i>停机查询
+                        <span class="cyclic"></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link nav-toggle">
+                <i class="icon-pin"></i>
+                <span class="title">巡检与任务</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a ui-sref="polling">
+                        <i class=""></i>巡检与任务查询
+                        <span class="cyclic"></span>
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref="supervisor">
+                        <i class=""></i>督导员管理
+                        <span class="cyclic"></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link nav-toggle">
+                <i class="fa fa-sticky-note-o"></i>
+                <span class="title">销售管理</span>
+                <span class="arrow"></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a ui-sref="sales">
+                        <i class=""></i>销售概况
+                        <span class="cyclic"></span>
+                    </a>
+                </li>
+                <li>
+                    <a ui-sref="salesMan">
+                        <i class=""></i>销售人员
+                        <span class="cyclic"></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link nav-toggle">
+                <i class="icon-trophy"></i>
+                <span class="title">考核评比</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a ui-sref="assessInfo">
+                        <i class=""></i>考核概况<span class="cyclic"></span></a>
+                </li>
+                <li>
+                    <a ui-sref="assessList">
+                        <i class=""></i>考核查询<span class="cyclic"></span></a>
+                </li>
+                <li>
+                    <a ui-sref="ruleSet">
+                        <i class=""></i>指标设置<span class="cyclic"></span></a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link nav-toggle">
+                <i class="fa fa-calculator"></i>
+                <span class="title">财务管理</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a ui-sref="finance">
+                        <i class="card"></i>财务概况<span class="cyclic"></span></a>
+                </li>
+                <li>
+                    <a ui-sref="card">
+                        <i class="card"></i>银行卡<span class="cyclic"></span></a>
+                </li>
+                <li>
+                    <a ui-sref="communication">
+                        <i class=""></i>通讯费缴纳<span class="cyclic"></span></a>
+                </li>
+                <li>
+                    <a ui-sref="consumable">
+                        <i class=""></i>耗材费缴纳<span class="cyclic"></span></a>
+                </li>
+                <li>
+                    <a ui-sref="large">
+                        <i class=""></i>大额缴款<span class="cyclic"></span></a>
+                </li>
+                <li>
+                    <a ui-sref="risk">
+                        <i class=""></i>销售风险金<span class="cyclic"></span></a>
+                </li>
+                <li>
+                    <a ui-sref="reward">
+                        <i class=""></i>站点奖惩<span class="cyclic"></span></a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link nav-toggle">
+                <i class="icon-settings" style="margin-left: -1px;"></i>
+                <span class="title">系统设置</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a ui-sref="deptAdmin">
+                        <i class="card"></i>机构管理<span class="cyclic"></span></a>
+                </li>
+                <li>
+                    <a ui-sref="userAdmin">
+                        <i class=""></i>人员管理<span class="cyclic"></span></a>
+                </li>
+                <li>
+                    <a ui-sref="roleAdmin">
+                        <i class=""></i>角色管理<span class="cyclic"></span></a>
+                </li>
+                <li>
+                    <a ui-sref="dictionaryAdmin">
+                        <i class="card"></i>字典管理<span class="cyclic"></span></a>
+                </li>
+                <li>
+                    <a ui-sref="regionAdmin">
+                        <i class=""></i>区域管理<span class="cyclic"></span></a>
+                </li>
+                <li>
+                    <a ui-sref="dateAdmin">
+                        <i class=""></i>工作日设置<span class="cyclic"></span></a>
+                </li>
+                <li>
+                    <a ui-sref="logsAdmin">
+                        <i class=""></i>日志管理<span class="cyclic"></span></a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link nav-toggle">
+                <i class="fa fa-bar-chart" style="margin-left: -1px;"></i>
+                <span class="title">统计分析</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a ui-sref="analysisAdmin">
+                        <i class="card"></i>销售分布<span class="cyclic"></span></a>
+                </li>
+                <li>
+                    <a ui-sref="statisticalAdmin">
+                        <i class="card"></i>时间纬度分析<span class="cyclic"></span></a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>

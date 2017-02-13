@@ -1,0 +1,101 @@
+<div>
+    <div class="portlet box red portlet-mg0 ">
+        <div class="portlet-title" style="min-height: 36px">
+            <div class="caption" style="padding: 8px 0 6px;">任务变更</div>
+            <div class="tools" style="padding: 10px 0 5px;">
+                <i class="fa fa-close big-icon" ng-click="cancel()"></i>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <form class="form-horizontal" role="form">
+                <div class="form-body" style="padding:40px 20px 0 20px">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">任务类型</label>
+                        <div class="col-md-8">
+                            <!--<input readonly="readonly" class="form-control" ng-model="list[0].taskCore_type|taskTypeFilter">-->
+                            <p ng-bind="list[0].taskCore_type|taskTypeFilter" style="padding-top: 8px">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">督导员</label>
+                        <div class="col-md-8">
+                            <!--<input readonly="readonly" class="form-control" ng-model="list[0].taskCore_activeName">-->
+                            <p ng-bind="list[0].taskCore_activeName" style="padding-top: 8px">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">变更督导员</label>
+                        <div class="col-md-8">
+                            <input class="form-control" ng-model="params.activeName" ng-change="search()">
+                            <input type="text" ng-if="show3=='1'" class="form-control" style="color: red;" ng-disabled="true" ng-model="info1" ng-init="info1='没找到相关信息'">
+                            <div class="custom-select hide" ng-class="{show:result.length}">
+                                <div class="custom-select-scroll">
+                                    <div class="custom-select-body">
+                                        <div ng-repeat="li in result" ng-click="changeValue(li.user_name,li.userId)">
+                                            {{li.user_name}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="flag">
+                        <label class="col-md-3 control-label">分支机构</label>
+                        <div class="col-md-8">
+                            <p ng-bind="list[0].station_company_name" style="padding-top: 8px">
+                        </div>
+                    </div>
+                    <div ng-repeat="x in list" ng-if="flag=='批量'">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">站点名称{{$index+1}}</label>
+                            <div class="col-md-8">
+                                <p ng-bind="x.station_name" style="padding-top: 8px">
+                            </div>
+                        </div>
+                        <div class="form-group" ng-if="x.content">
+                            <label class="col-md-3 control-label">任务内容{{$index+1}}</label>
+                            <div class="col-md-8">
+                                <p ng-bind="x.content" style="padding-top: 8px">
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="flag=='单'">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">站点名称</label>
+                            <div class="col-md-8">
+                                <p ng-bind="list[0].station_name" style="padding-top: 8px">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">站点地址</label>
+                            <div class="col-md-8">
+                                <p ng-bind="list[0].station_address" style="padding-top: 8px">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="flag=='单'&&list[0].content!=null">
+                        <label class="col-md-3 control-label">任务内容</label>
+                        <div class="col-md-8">
+                            <p ng-bind="list[0].content" style="padding-top: 8px">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">任务截止日期</label>
+                        <div class="col-md-8">
+                            <div class="date date-picker" style="position: relative" data-date="new Date()"
+                                 data-date-format="yyyy-mm-dd"
+                                 data-date-viewmode="years">
+                                <input class="form-control" ng-model="params.endTime"/>
+                                <i class="btn sm-btn default fa fa-calendar"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-foot">
+                    <button class="btn green confirm" ng-click="ok()">提交</button>
+                    <button class="btn default cancel" ng-click="cancel()">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

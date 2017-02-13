@@ -1,0 +1,87 @@
+<div>
+    <div class="portlet box red portlet-mg0 ">
+        <div class="portlet-title" style="min-height: 36px">
+            <div class="caption" style="padding: 8px 0 6px;">{{doing}}</div>
+            <div class="tools" style="padding: 10px 0 5px;">
+                <i class="fa fa-close big-icon" ng-click="cancel()"></i>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <form class="form-horizontal" role="form">
+                <div class="form-body" style="padding:40px 20px 0 20px">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">上级机构</label>
+                        <div class="col-md-8">
+                            <input class="form-control" ng-model="params.parentId_name" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">机构名称</label>
+                        <div class="col-md-8">
+                            <input class="form-control" ng-model="params.name"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">机构简称</label>
+                        <div class="col-md-8">
+                            <input class="form-control" ng-model="params.shortName"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">机构号</label>
+                        <div class="col-md-8">
+                            <input class="form-control" ng-model="params.deptIdentity"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">机构编码</label>
+                        <div class="col-md-8">
+                            <input class="form-control" ng-model="params.deptCode"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">机构地址</label>
+                        <div class="col-md-8">
+                            <input class="form-control" ng-model="params.deptAddr"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">机构联系电话</label>
+                        <div class="col-md-8">
+                            <input class="form-control" ng-model="params.deptPhone"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">联系人</label>
+                        <div class="col-md-8">
+                            <input class="form-control" ng-model="params.contactPerson"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">联系人电话</label>
+                        <div class="col-md-8">
+                            <input class="form-control" ng-model="params.contactPhone"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">所属区域</label>
+                        <div class="col-md-8">
+                            <select class="custom-control" ng-model="params.regionId" ng-options="m.id as m.name for m in regions">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">备注</label>
+                        <div class="col-md-8">
+                            <textarea ng-model="params.remark" style="width: 100%;height:90px;resize:none"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-foot">
+                    <button class="btn green confirm" ng-click="ok()">提交</button>
+                    <button class="btn default cancel" ng-click="cancel()">关闭</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,424 @@
+/**
+ * Created by Administrator on 2017/1/17.
+ */
+app.controller('DropdownCtrl', ['$scope', '$log', function ($scope, $log) {
+
+}])
+app.controller('analysisInfoController', ['$scope', '$state', function ($scope, $state) {
+    $scope.nextClick = function (e) {
+        //上钻下钻  改变视图的代码
+        if (e) {
+            $scope.base = e;
+        }
+    };
+    $scope.clearopacity = function () {
+        $('.filter').mousemove(function () {
+            $('.selectinput').css('display', 'block');
+        })
+        $('.filter').mouseout(function () {
+            $('.selectinput').css('display', 'none');
+        })
+        $('.selectinput').click(function (e) {
+            e.stopPropagation();
+        })
+        $('.selectinput button').click(function () {
+            $('.filter').click();
+            $scope.base=7;
+        })
+    }
+    $scope.clearopacity();
+    $scope.titles = [
+        {name: '各个彩种', id: 1},
+        {name: '双色球周报', id: 2},
+        {name: '双色球日报', id: 3},
+        {name: '站点top', id: 4},
+    ];
+    $scope.base = 1;
+    $scope.toggle = function (id) {
+        $scope.base = id;
+    }
+    $scope.alltables = {
+        title: '各彩种时间段销量分析',
+        time: {
+            startTime: '2015/1/26',
+            endTime: '2015/3/23'
+        },
+        theads: [
+            {name: '双色球', alink: '2'},
+            {name: '3D'},
+            {name: '七彩乐'},
+            {name: '快乐8'},
+            {name: 'PK拾'},
+            {name: '快三'},
+
+        ],
+        tbodys:[
+            {week: '2015年第6周',  Sales: '1001.643', percentage:'36.17%', Dsales: '158.613', Dpercentage: '5.73%', redsales: '312.133', redpercentage: '11.27%', bulesales: '205.04',  bluepercentage: '7.40%', Qsales: '271.01',  Qpercentage: '9.79%', Tsales: '820.528', Tpercentage: '29.63%', weeksum: '2768.967'},
+            {week: '2015年第7周',  Sales: '1056.625', percentage:'43.68%', Dsales: '120.749', Dpercentage: '4.99%', redsales: '324.328', redpercentage: '13.41%', bulesales: '163.359',  bluepercentage: '6.75%', Qsales: '122.558',  Qpercentage: '5.07%', Tsales: '631.348', Tpercentage: '26.10%', weeksum: '2418.967'},
+            {week: '2015年第8周',  Sales: '991.022', percentage:'45.78%', Dsales: '122.13', Dpercentage: '5.64%', redsales: '154.246', redpercentage: '7.13%', bulesales: '205.668',  bluepercentage: '9.50%', Qsales: '101.346',  Qpercentage: '4.68%', Tsales: '590.277', Tpercentage: '27.27%', weeksum: '2164.689'},
+            {week: '2015年第9周',  Sales: '2390.405', percentage:'51.95%', Dsales: '216.954', Dpercentage: '4.71%', redsales: '281.455', redpercentage: '6.12%', bulesales: '321.838',  bluepercentage: '6.99%', Qsales: '170.79',  Qpercentage: '3.71%', Tsales: '1220.115', Tpercentage: '26.52%', weeksum: '4601.557'},
+            {week: '2015年第10周',  Sales: '1491.686', percentage:'41.51%', Dsales: '124.829', Dpercentage: '3.47%', redsales: '293.652', redpercentage: '8.17%', bulesales: '279.073',  bluepercentage: '7.77%', Qsales: '182.564',  Qpercentage: '5.08%', Tsales: '1221.35', Tpercentage: '33.99%', weeksum: '3593.154'},
+            {week: '2015年第11周',  Sales: '1005.603', percentage:'30.85%', Dsales: '163.911', Dpercentage: '5.03%', redsales: '428.946', redpercentage: '13.16%', bulesales: '346.838',  bluepercentage: '10.64%', Qsales: '261.263',  Qpercentage: '8.01%', Tsales: '1053.416', Tpercentage: '32.31%', weeksum: '3259.977'},
+            {week: '2015年第12周',  Sales: '986.715', percentage:'30.56%', Dsales: '166.577', Dpercentage: '5.16%', redsales: '574.91', redpercentage: '17.80%', bulesales: '387.93',  bluepercentage: '12.01%', Qsales: '217.205',  Qpercentage: '6.73%', Tsales: '895.966', Tpercentage: '27.74%', weeksum: '3229.303'},
+            {week: '2015年第13周',  Sales: '890.044', percentage:'33.19%', Dsales: '143.571', Dpercentage: '5.35%', redsales: '444.863', redpercentage: '16.59%', bulesales: '273.825',  bluepercentage: '10.21%', Qsales: '156.867',  Qpercentage: '5.85%', Tsales: '772.314', Tpercentage: '28.80%', weeksum: '2681.484'},
+            {week: '2015年第14周',  Sales: '1023.246', percentage:'38.33%', Dsales: '129.588', Dpercentage: '4.85%', redsales: '310.167', redpercentage: '11.62%', bulesales: '236.364',  bluepercentage: '8.85%', Qsales: '109.111',  Qpercentage: '4.09%', Tsales: '861.141', Tpercentage: '32.26%', weeksum: '2669.617'},
+        ],
+    };
+    $scope.weektables = {
+        title: '各彩种时间段销量分析',
+        time: {
+            startTime: '2015/2/1',
+            endTime: '2015/4/1'
+        },
+        theads: [
+            {name: '单式下一注'},
+            {name: '单式下多注'},
+            {name: '红色球号码复式'},
+            {name: '蓝色球号码复式'},
+            {name: '全复式'},
+            {name: '拖胆'},
+        ],
+        tbodys:[
+            {week: '2015年第6周', Sales: '240.3458', percentage:'24.00%', Dsales: '178.8863', Dpercentage: '17.86%', redsales: '152.5630', redpercentage: '15.23%', bulesales: '122.9395',  bluepercentage:'12.27%', Qsales: '126.7404',  Qpercentage:'12.65%', Tsales: '180.1680', Tpercentage: '17.99%', weeksum: '1001.643'},
+            {week: '2015年第7周', Sales: '234.9528', percentage:'22.24%', Dsales: '180.3690', Dpercentage: '17.07%', redsales: '143.9846', redpercentage: '13.63%', bulesales: '173.3972',  bluepercentage:'16.41%', Qsales: '151.0000',  Qpercentage:'14.29%', Tsales: '172.9213', Tpercentage: '16.37%', weeksum: '1056.625'},
+            {week: '2015年第8周', Sales: '339.3457', percentage:'34.24%', Dsales: '126.6267', Dpercentage: '12.78%', redsales: '124.6685', redpercentage: '12.58%', bulesales: '162.8729',  bluepercentage:'16.43%', Qsales: '101.3052',  Qpercentage:'10.22%', Tsales: '136.2030', Tpercentage: '13.74%', weeksum: '991.022'},
+            {week: '2015年第9周', Sales: '840.3475', percentage:'35.16%', Dsales: '280.3481', Dpercentage: '11.73%', redsales: '256.8904', redpercentage: '10.75%', bulesales: '312.3738',  bluepercentage:'13.07%', Qsales: '231.4926',  Qpercentage:'9.68%', Tsales: '468.9526', Tpercentage: '19.62%', weeksum: '2390.405',alink:'3'},
+            {week: '2015年第10周', Sales: '534.3660', percentage:'35.82%', Dsales: '128.8490', Dpercentage: '8.64%', redsales: '132.5978', redpercentage: '8.89%', bulesales: '217.3756',  bluepercentage:'14.57%', Qsales: '127.4816',  Qpercentage:'8.55%', Tsales: '351.0160', Tpercentage: '23.53%', weeksum: '1491.686'},
+            {week: '2015年第11周', Sales: '310.8542', percentage:'30.91%', Dsales: '89.3862', Dpercentage: '8.89%', redsales: '121.8045', redpercentage: '12.11%', bulesales: '109.2620',  bluepercentage:'10.87%', Qsales: '100.6532',  Qpercentage:'10.01%', Tsales: '273.6429', Tpercentage: '27.21%', weeksum: '1005.603'},
+            {week: '2015年第12周', Sales: '270.3459', percentage:'27.40%', Dsales: '105.4823', Dpercentage: '10.69%', redsales: '105.1408', redpercentage: '10.66%', bulesales: '108.9732',  bluepercentage:'11.04%', Qsales: '138.3935',  Qpercentage:'14.03%', Tsales: '258.3793', Tpercentage: '26.19%', weeksum: '986.715'},
+            {week: '2015年第13周', Sales: '230.7824', percentage:'25.93%', Dsales: '103.9527', Dpercentage: '11.68%', redsales: '109.0254', redpercentage: '12.25%', bulesales: '92.3021',  bluepercentage:'10.37%', Qsales: '124.3287',  Qpercentage:'13.97%', Tsales: '229.6527', Tpercentage: '25.80%', weeksum: '890.044'},
+            {week: '2015年第14周', Sales: '249.7260', percentage:'24.41%', Dsales: '119.7260', Dpercentage: '11.70%', redsales: '123.6610', redpercentage: '12.09%', bulesales: '121.5607',  bluepercentage:'11.88%', Qsales: '165.1848',  Qpercentage:'16.14%', Tsales: '243.3876', Tpercentage: '23.79%', weeksum: '1023.246'},
+        ],
+    };
+    $scope.daytables = {
+        title: '各彩种时间段销量分析',
+        time: {
+            startTime: '2015/2/16',
+            endTime: '2015/2/22'
+        },
+        theads: [
+            {name: '单式下一注'},
+            {name: '单式下多注'},
+            {name: '红色球号码复式'},
+            {name: '蓝色球号码复式'},
+            {name: '全复式'},
+            {name: '拖胆'},
+        ],
+        tbodys:[
+            {week: '2015/2/16', Sales:'120.5214', percentage:'36.84%', Dsales: '40.9652', Dpercentage: '12.52%', redsales: '34.5263', redpercentage: '10.55%', bulesales: '40.5927',  bluepercentage:'12.41%', Qsales: '30.3648',  Qpercentage:'9.28%', Tsales: '60.1953', Tpercentage: '18.40%', weeksum: '327.1657 '},
+            {week: '2015/2/17', Sales:'122.7593', percentage:'37.88%', Dsales: '42.5254', Dpercentage: '13.12%', redsales: '28.5345', redpercentage: '8.81%', bulesales: '36.3826',  bluepercentage:'11.23%', Qsales: '25.9291',  Qpercentage:'8.00%', Tsales: '67.9236', Tpercentage: '20.96%', weeksum: '324.0545 '},
+            {week: '2015/2/18', Sales:'113.7352', percentage:'37.47%', Dsales: '38.1365', Dpercentage: '12.57%', redsales: '27.7636', redpercentage: '9.15%', bulesales: '32.4718',  bluepercentage:'10.70%', Qsales: '28.4826',  Qpercentage:'9.38%', Tsales: '62.9145', Tpercentage: '20.73%', weeksum: '303.5042 '},
+            {week: '2015/2/19', Sales:'101.4159', percentage:'34.09%', Dsales: '32.9543', Dpercentage: '11.08%', redsales: '35.5563', redpercentage: '11.95%', bulesales: '27.3914',  bluepercentage:'9.21%', Qsales: '34.3652',  Qpercentage:'11.55%', Tsales: '65.8251', Tpercentage: '22.13%', weeksum: '297.5082 '},
+            {week: '2015/2/20', Sales:'140.7258', percentage:'33.42%', Dsales: '46.1250', Dpercentage: '10.96%', redsales: '45.1252', redpercentage: '10.72%', bulesales: '66.2849',  bluepercentage:'15.74%', Qsales: '43.9136',  Qpercentage:'10.43%', Tsales: '78.8519', Tpercentage: '18.73%', weeksum: '421.0264 ',alink:'4'},
+            {week: '2015/2/21', Sales:'123.9321', percentage:'34.07%', Dsales: '38.7526', Dpercentage: '10.65%', redsales: '40.9325', redpercentage: '11.25%', bulesales: '56.3715',  bluepercentage:'15.50%', Qsales: '36.7642',  Qpercentage:'10.11%', Tsales: '66.9615', Tpercentage: '18.41%', weeksum: '363.7144 '},
+            {week: '2015/2/22', Sales:'117.2578', percentage:'33.18%', Dsales: '40.8891', Dpercentage: '11.57%', redsales: '44.4520', redpercentage: '12.58%', bulesales: '52.8789',  bluepercentage:'14.96%', Qsales: '31.6731',  Qpercentage:'8.96%', Tsales: '66.2807', Tpercentage: '18.75%', weeksum: '353.4316 '},
+            {week: '合计', Sales:'840.3475', percentage:'35.16%', Dsales: '280.3481', Dpercentage: '11.73%', redsales: '256.8904', redpercentage: '10.75%', bulesales: '312.3738',  bluepercentage:'13.07%', Qsales: '231.4926',  Qpercentage:'9.68%', Tsales: '468.9526', Tpercentage: '19.62%', weeksum: '2390.4050 '},
+        ],
+    };
+    $scope.sitetables = {
+        title: '各彩种时间段销量分析',
+        time: {
+            startTime: '2015/2/20',
+            endTime: '2015/2/20'
+        },
+        theads: [
+            {name: '单式下一注'},
+            {name: '单式下多注'},
+            {name: '红色球号码复式'},
+            {name: '蓝色球号码复式'},
+            {name: '全复式'},
+            {name: '拖胆'},
+        ],
+        tbodys:[
+            {week: '全市站点平均', Sales:'670.14', percentage:'43.11%', Dsales: '173.10', Dpercentage: '11.14%', redsales: '150.18', redpercentage: '9.66%',  bulesales: '137.28',  bluepercentage:'8.83%',  Qsales:'95.77',  Qpercentage:'6.16%',  Tsales: '327.97', Tpercentage: '21.10%', weeksum: '1554.44'},
+            {week: '站点1',Sales:'396', percentage:'18.54%', Dsales: '276', Dpercentage: '12.92%', redsales: '336', redpercentage: '15.73%', bulesales: '568',  bluepercentage:'26.59%', Qsales: '480 ',  Qpercentage:'22.47%', Tsales: '80', Tpercentage: '3.75%', weeksum: '2136'},
+            {week: '站点2',Sales:'372', percentage:'18.13%', Dsales: '204', Dpercentage: '9.94%',  redsales: '396', redpercentage: '19.30%', bulesales: '548',  bluepercentage:'26.71%', Qsales: '456 ',  Qpercentage:'22.22%', Tsales: '76', Tpercentage: '3.70%', weeksum: '2052'},
+            {week: '站点3',Sales:'528', percentage:'26.19%', Dsales: '324', Dpercentage: '16.07%', redsales: '420', redpercentage: '20.83%', bulesales: '114',  bluepercentage:'5.65%',  Qsales: '540 ',  Qpercentage:'26.79%', Tsales: '90', Tpercentage: '4.46%', weeksum: '2016'},
+            {week: '站点4',Sales:'390', percentage:'20.02%', Dsales: '336', Dpercentage: '17.25%', redsales: '444', redpercentage: '22.79%', bulesales: '330',  bluepercentage:'16.94%', Qsales: '384 ',  Qpercentage:'19.71%', Tsales: '64', Tpercentage: '3.29%', weeksum: '1948'},
+            {week: '站点5',Sales:'396', percentage:'20.75%', Dsales: '204', Dpercentage: '10.69%', redsales: '336', redpercentage: '17.61%', bulesales: '524',  bluepercentage:'27.46%', Qsales: '384 ',  Qpercentage:'20.13%', Tsales: '64', Tpercentage: '3.35%', weeksum: '1908'},
+            {week: '站点6',Sales:'504', percentage:'26.55%', Dsales: '204', Dpercentage: '10.75%', redsales: '312', redpercentage: '16.44%', bulesales: '192',  bluepercentage:'10.12%', Qsales: '588 ',  Qpercentage:'30.98%', Tsales: '98', Tpercentage: '5.16%', weeksum: '1898'},
+            {week: '站点7',Sales:'396', percentage:'21.09%', Dsales: '312', Dpercentage: '16.61%', redsales: '332', redpercentage: '17.68%', bulesales: '102',  bluepercentage:'5.43%',  Qsales: '636 ',  Qpercentage:'33.87%', Tsales:'100', Tpercentage: '5.32%', weeksum: '1878'},
+            {week: '站点8',Sales:'516', percentage:'27.62%', Dsales: '336', Dpercentage: '17.99%', redsales: '264', redpercentage: '14.13%', bulesales: '52',   bluepercentage:'2.78%',  Qsales: '600 ',  Qpercentage:'32.12%', Tsales: '100',Tpercentage: '5.35%', weeksum: '1868'},
+            {week: '站点9',Sales:'336', percentage:'18.18%', Dsales: '348', Dpercentage: '18.83%', redsales: '396', redpercentage: '21.43%', bulesales: '250',  bluepercentage:'13.53%', Qsales: '444 ',  Qpercentage:'24.03%', Tsales: '74', Tpercentage: '4.00%', weeksum: '1848'},
+            {week: '站点1',Sales:'480', percentage:'26.55%', Dsales: '312', Dpercentage: '17.26%', redsales: '396', redpercentage: '21.90%', bulesales: '60',   bluepercentage:'3.32%',  Qsales: '480 ',  Qpercentage:'26.55%', Tsales: '80', Tpercentage: '4.42%', weeksum: '1808'},
+        ],
+
+    };
+    $scope.siteSorttables = {
+        title: '各彩种时间段销量分析',
+        time: {
+            startTime: '2015/2/20',
+            endTime: '2015/2/20'
+        },
+        theads: [
+            {name: '单式下一注'},
+            {name: '单式下多注'},
+            {name: '红色球号码复式'},
+            {name: '蓝色球号码复式'},
+            {name: '全复式'},
+            {name: '拖胆'},
+        ],
+        tbodys: [
+            {week: '全市站点平均', Sales:'670.14', percentage:'43.11%', Dsales: '173.10', Dpercentage: '11.14%', redsales: '150.18', redpercentage: '9.66%',  bulesales: '137.28',  bluepercentage:'8.83%',  Qsales:'95.77',  Qpercentage:'6.16%',  Tsales: '327.97', Tpercentage: '21.10%', weeksum: '1554.44'},
+            {week: '站点1', Sales: '420 ', percentage: '22.13%', Dsales: '294 ', Dpercentage: '15.49%', redsales: '466', redpercentage: '24.55%', bulesales: '404', bluepercentage: '21.29%', Qsales: '280 ', Qpercentage: '14.75%', Tsales: '34', Tpercentage: '1.79%', weeksum: '1898 '},
+            {week: '站点2', Sales: '410 ', percentage: '21.83%', Dsales: '174 ', Dpercentage: '9.27%', redsales: ' 376',  redpercentage:'20.02%', bulesales: '604', bluepercentage: '32.16%', Qsales: '276 ', Qpercentage: '14.70%', Tsales: '38', Tpercentage: '2.02%', weeksum: '1878 '},
+            {week: '站点3', Sales: '424 ', percentage: '22.70%', Dsales: '176 ', Dpercentage: '9.42%', redsales: ' 380', redpercentage: '20.34%', bulesales: '564', bluepercentage: '30.19%', Qsales: '264 ', Qpercentage: '14.13%', Tsales: '60', Tpercentage: '3.21%', weeksum: '1868 '},
+            {week: '站点4', Sales: '416 ', percentage: '22.51%', Dsales: '172 ', Dpercentage: '9.31%', redsales: ' 364', redpercentage: '19.70%', bulesales: '542', bluepercentage: '29.33%', Qsales: '292 ', Qpercentage: '15.80%', Tsales: '62', Tpercentage: '3.35%', weeksum: '1848 '},
+            {week: '站点5', Sales: '388 ', percentage: '23.23%', Dsales: '174 ', Dpercentage: '10.42%', redsales: '220', redpercentage: '13.17%', bulesales: '522', bluepercentage: '31.26%', Qsales: '294 ', Qpercentage: '17.60%', Tsales: '72', Tpercentage: '4.31%', weeksum: '1670 '},
+            {week: '站点6', Sales: '362 ', percentage: '26.50%', Dsales: '136 ', Dpercentage: '9.96%', redsales: '262', redpercentage: ' 19.18%', bulesales: '336', bluepercentage: '24.60%', Qsales: '178 ', Qpercentage: '13.03%', Tsales: '92', Tpercentage: '6.73%', weeksum: '1366 '},
+            {week: '站点7', Sales: '320 ', percentage: '25.36%', Dsales: '140 ', Dpercentage: '11.09%', redsales: '282', redpercentage: '22.35%', bulesales: '246', bluepercentage: '19.49%', Qsales: '180 ', Qpercentage: '14.26%', Tsales: '94', Tpercentage: '7.45%', weeksum: '1262 '},
+            {week: '站点8', Sales: '264 ', percentage: '21.50%', Dsales: '136 ', Dpercentage: '11.07%', redsales: '244', redpercentage: '19.87%', bulesales: '306', bluepercentage: '24.92%', Qsales: '186 ', Qpercentage: '15.15%', Tsales: '92', Tpercentage: '7.49%', weeksum: '1228 '},
+            {week: '站点9', Sales: '222 ', percentage: '19.24%', Dsales: '126 ', Dpercentage: '10.92%', redsales: '236', redpercentage: '20.45%', bulesales: '394', bluepercentage: '34.14%', Qsales: '86 ',  Qpercentage: '7.45%',  Tsales: '90', Tpercentage: '7.80%', weeksum: '1154 '},
+            {week: '站点1', Sales: '198 ', percentage: '17.22%',Dsales: '186',  Dpercentage: ' 16.17%', redsales: '210', redpercentage: '18.26%', bulesales: '380', bluepercentage: '33.04%', Qsales: '80 ',  Qpercentage: '6.96%',  Tsales: '96', Tpercentage: '8.35%', weeksum: '1150'},
+        ]
+    };
+    $scope.getdata = function (tablename) {
+        var arrone = [], arrsome = [], arrred = [], arrblue = [], arrall = [], arrtuo = [], arrsum = [], tbconut = [];
+        var th = $scope[tablename].theads;
+        var tb = $scope[tablename].tbodys;
+        tbconut = tb.concat();
+        if (tablename == 'daytables') {
+            tbconut.pop();
+        }
+        for (var i = 0; i < tbconut.length; i++) {
+            var item = tbconut[i];
+            arrone.push(item.Sales);
+            arrsome.push(item.Dsales);
+            arrred.push(item.redsales);
+            arrblue.push(item.bulesales);
+            arrall.push(item.Qsales);
+            arrtuo.push(item.Tsales);
+            arrsum.push(item.weeksum);
+        }
+        var seriesarr = [arrone, arrsome, arrred, arrblue, arrall, arrtuo, arrsum];
+        var resarr = [];
+        var colorList = ['#5B9BD5', '#ED7D31', '#A5A5A5', '#FFC000', '#4472C4', "#70AD47"];
+        for (var i = 0; i < th.length; i++) {
+            var seriesObj = {
+                name: th[i].name,
+                stack: 'tab',
+                type: 'bar',
+                data: seriesarr[i],
+                itemStyle: {
+                    normal: {
+                        color: colorList[i]
+                    }
+                }
+            }
+            resarr.push(seriesObj);
+        }
+        return resarr;
+    }
+    $scope.getXtitle = function (tablename) {
+        var arr = [];
+        var tb = $scope[tablename].tbodys;
+        for (var i = 0; i < tb.length; i++) {
+            arr.push(tb[i].week);
+        }
+        return arr;
+    }
+    $scope.setZhexian = function (argument) {
+        var yearFirstDanArr = [], yearSecentDanArr = [], yearThirdDanArr = [], yearFourthDanArr = [];
+        var tbs = $scope.yeartables.tbodys;
+        if (argument == 'dan') {
+            for (var i = 0; i < tbs.length - 1; i++) {
+                yearFirstDanArr.push(tbs[i].firstD);
+                yearSecentDanArr.push(tbs[i].secendD);
+                yearThirdDanArr.push(tbs[i].thirdD);
+                yearFourthDanArr.push(tbs[i].fourthD);
+            }
+            return [yearFirstDanArr, yearSecentDanArr, yearThirdDanArr, yearFourthDanArr];
+        } else if (argument == 'shuang') {
+            for (var i = 0; i < tbs.length - 1; i++) {
+                yearFirstDanArr.push(tbs[i].firstS);
+                yearSecentDanArr.push(tbs[i].secendS);
+                yearThirdDanArr.push(tbs[i].thirdS);
+                yearFourthDanArr.push(tbs[i].fourthS);
+            }
+            return [yearFirstDanArr, yearSecentDanArr, yearThirdDanArr, yearFourthDanArr];
+        } else if (argument == 'all') {
+            for (var i = 0; i < tbs.length - 1; i++) {
+                yearFirstDanArr.push(tbs[i].firstsum);
+                yearSecentDanArr.push(tbs[i].secendsum);
+                yearThirdDanArr.push(tbs[i].thirdsum);
+                yearFourthDanArr.push(tbs[i].fourthsum);
+            }
+            return [yearFirstDanArr, yearSecentDanArr, yearThirdDanArr, yearFourthDanArr];
+        } else {
+        }
+    }
+    //绘制第一个图
+    $scope.echartAlltable = function () {
+        var myChart = echarts.init(document.getElementById('alltable-left'));
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '各彩种2015年6-14周销售情况',
+                subtext: '单位：万元',
+                x: 'center',
+            },
+            tooltip: {},
+            legend: {
+                data: ['双色球', '3D', '七彩乐', '快乐8', 'PK哈', '快三'],
+                bottom: 20
+            },
+            xAxis: {
+                data: $scope.getXtitle('alltables'),//得到每一周
+                axisLabel: {
+                    interval: 0,
+                    rotate: 45,//倾斜度 -90 至 90 默认为0  
+                    margin: 3,
+                    textStyle: {
+                        color: "#000000"
+                    }
+                },
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '18%',
+                containLabel: true
+            },
+            yAxis: {},
+            series: $scope.getdata('alltables')
+        };
+        myChart.setOption(option);
+    };
+    $scope.echartAlltable();
+    //绘制第二个图
+    $scope.echartAllNinetable = function () {
+        var myChart = echarts.init(document.getElementById('alltable-right'));
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '各彩种时间段销量分析(第九周)',
+                subtext: '单位：万元',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c}万元 ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                top: '85',
+                x: 'right',
+                right: '20%',
+                data: ['双色球', '3D', '七彩乐', '快乐8', 'PK拾', '快3']
+            },
+            series: [
+                {
+                    name: '各彩种时间段销量分析(第九周)',
+                    type: 'pie',
+                    selectedMode: 'single',
+                    radius: [0, '30%'],
+
+                    label: {
+                        normal: {
+                            position: 'inner'
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    }
+                },
+                {
+                    name: '各彩种时间段销量分析(第九周)',
+                    type: 'pie',
+                    radius: ['40%', '55%'],
+                    color: ['#5B9BD5', '#ED7D31', '#A5A5A5', '#FFC000', '#4472C4', "#70AD47"],
+                data: [
+                        {value: $scope.alltables.tbodys[3].Sales, name: '双色球'},
+                        {value: $scope.alltables.tbodys[3].Dsales, name: '3D'},
+                        {value: $scope.alltables.tbodys[3].redsales, name: '七彩乐'},
+                        {value: $scope.alltables.tbodys[3].bulesales, name: '快乐8'},
+                        {value: $scope.alltables.tbodys[3].Qsales, name: 'PK拾'},
+                        {value: $scope.alltables.tbodys[3].Tsales, name: '快3'}
+                    ]
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+    $scope.echartAllNinetable();
+    //绘制第三个图
+    $scope.echartWeektable = function () {
+        var myChart = echarts.init(document.getElementById('weektable'));
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '双色球2015年6-14周销售情况',
+                subtext: '单位：万元',
+                x: 'center',
+            },
+            tooltip: {},
+            legend: {
+                data: ['单式下一注', '单式下多注', '红色球号码复式', '蓝色球号码复式', '全复式', '拖胆'],
+                bottom: 20
+            },
+            xAxis: {
+                data: $scope.getXtitle('weektables'),//得到每一周
+                axisLabel: {
+                    interval: 0,
+                    rotate: 45,//倾斜度 -90 至 90 默认为0  
+                    margin: 3,
+                    textStyle: {
+                        color: "#000000"
+                    }
+                },
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '18%',
+                containLabel: true
+            },
+            yAxis: {},
+            series: $scope.getdata('weektables')
+        };
+        myChart.setOption(option);
+    };
+    $scope.echartWeektable();
+    //绘制第四个图
+    $scope.echarDaytable = function () {
+        var myChart = echarts.init(document.getElementById('daytable'));
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '双色球2015年第9周销售情况',
+                subtext: '单位：万元',
+                x: 'center',
+            },
+            tooltip: {},
+            legend: {
+                data: ['单式下一注', '单式下多注', '红色球号码复式', '蓝色球号码复式', '全复式', '拖胆'],
+                bottom: 20
+            },
+            xAxis: {
+                data: $scope.getXtitle('daytables'),//得到每一周
+                axisLabel: {
+                    interval: 0,
+                    rotate: 45,//倾斜度 -90 至 90 默认为0  
+                    margin: 3,
+                    textStyle: {
+                        color: "#000000"
+                    }
+                },
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '18%',
+                containLabel: true
+            },
+            yAxis: {},
+            series: $scope.getdata('daytables')
+        };
+        myChart.setOption(option);
+    }
+    $scope.echarDaytable();
+}]);
+

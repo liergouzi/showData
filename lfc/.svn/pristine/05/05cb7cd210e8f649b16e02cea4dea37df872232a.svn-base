@@ -1,0 +1,92 @@
+<div data-ng-controller="restController">
+    <div data-ng-controller="dashboardCtrl">
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <div class="portlet light bordered radius list">
+                    <p class="index-title">动态信息</p>
+                    <div class="ranking-list">
+                        <ul>
+                            <li ng-repeat="li in params.dynamicInformation"><i class="glyphicon glyphicon-file" style="color:#666666"></i><span
+                                    style="color: #666666; padding-left: 12px;" ng-click="click(li.id)">{{li.title}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <div class="portlet light bordered radius list">
+                    <p class="index-title">统计分析</p>
+                    <div>
+                        <div id="cake" style="width: 100%;height: 340px;;margin-top: 20px; margin-left: 20px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <div class="portlet light bordered radius list" style="padding-left: 0;padding-right: 0;">
+                    <p class="index-title" style="padding-left: 50px;">地图展示</p>
+                    <div class="ranking-list">
+                        <img src="img/rlt.png" width="100%" height="100%">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <div class="portlet light bordered radius list">
+                    <p class="index-title">最近情况</p>
+                    <div>
+                        <div style="height: 280px;" data-always-visible="1" data-rail-visible1="0"
+                             data-handle-color="#ccc">
+                            <div class="index_rb">
+                                <div class="rb-t" style="color: #D64635;">{{params.recentSituation.daySalesValue}}</div>
+                                <div class="rb-b">日销量（万元）</div>
+                            </div>
+                            <div class="index_rb">
+                                <div class="rb-t" style="color: #FFB61C;">{{params.recentSituation.stationnum}}</div>
+                                <div class="rb-b">站点（家）</div>
+                            </div>
+                            <div class="index_rb">
+                                <div class="rb-t" style="color: #2EC1CC;">{{params.recentSituation.personnum}}</div>
+                                <div class="rb-b">销售员（人）</div>
+                            </div>
+                            <div class="index_rb">
+                                <div class="rb-t" style="color: #23AE89;">{{params.recentSituation.machinenum}}</div>
+                                <div class="rb-b">投注机（台）</div>
+                            </div>
+                            <div class="tab-c">
+                                <ul id="myTab" class="nav nav-tabs">
+                                    <li class="active">
+                                        <a href="#home" data-toggle="tab">
+                                            年情况
+                                        </a>
+                                    </li>
+                                    <li><a href="#ios" data-toggle="tab">月情况</a></li>
+                                </ul>
+                            </div>
+                            <div id="myTabContent" class="tab-content">
+                                <div class="tab-pane fade in active" id="home">
+                                    <ul>
+                                        <li>今年累计销量：{{params.recentSituation.yearSalesValue}}万元</li>
+                                        <li>年累同比增长：3.21%</li>
+                                        <li>今年站点增数：21家</li>
+                                        <li>今年销售员增：-77人</li>
+                                        <li>今年投注机增：98台</li>
+                                    </ul>
+                                </div>
+                                <div class="tab-pane fade" id="ios">
+                                    <ul>
+                                        <li>上月站点不达标率：2.02%</li>
+                                        <li>上月销售员不达标率：1.31%</li>
+                                        <li>上月设备故障率：0.73%</li>
+                                        <li>上月系统预警率：4.77</li>
+                                        <li>上月投诉环比增长率：-2.33%</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

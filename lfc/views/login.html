@@ -1,0 +1,14 @@
+<div ng-controller="userController" class="col-md-12 text-center login-body">
+    <div class="col-md-12">
+        <img src="img/login_logo.png">
+        <p style="font-size: 22px;color: #6F6E6B;">阳光彩云</p>
+    </div>
+    <div class="col-md-12 login-main">
+        <div></div>
+        <form class="login-form col-md-12">
+            <label><input type="text" ng-init="user.loginId='admin'" ng-model="user.loginId" placeholder="请输入用户名" /></label>
+            <label><input type="password" ng-model="user.password" placeholder="请输入密码"/></label>
+            <button class="btn confirm login-btn" ng-click="login()" style="color: white;margin-left: 0px !important;">登录</button>
+        </form>
+    </div>
+</div>

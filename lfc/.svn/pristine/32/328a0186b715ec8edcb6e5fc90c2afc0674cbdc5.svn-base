@@ -1,0 +1,66 @@
+<div data-ng-controller="restController">
+    <div data-ng-controller="warningdoCtrl" class="row table-list">
+        <div class="col-md-12 title">
+            搜索条件
+        </div>
+        <!--搜索条件-->
+        <div  id="toolbar" class="table-search clearfix">
+            <div class="form-group col-md-6 col-lg-3">
+                <label>模糊搜索</label>
+                <input type="text" ng-model="filter.station__name$station__code$$LIKE" placeholder="站点名称/编号"/>
+            </div>
+            <div class="form-group col-md-6 col-lg-3">
+                <label>来源部门</label>
+                <select ng-model="filter.creatorDeptId">
+                    <option value="">---所有---</option>
+                    <option ng-repeat="li in depts" value="{{li.id}}">{{li.name}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6 col-lg-3 sm-3">
+                <label>分支机构</label>
+                <select ng-model="filter.station__company__id" >
+                    <option value="">---所有---</option>
+                    <option ng-repeat="li in company" value="{{li.id}}">{{li.name}}</option>
+                </select>
+            </div>
+            <button id="ok" class="btn"><i class="icon-magnifier"></i>查询</button>
+            <div class="form-group col-lg-6 col-sm-12">
+                <label>设立时间</label>
+                <div class="inline-block date date-picker" style="position: relative" data-date="new Date()"
+                     data-date-format="yyyy-mm-dd"
+                     data-date-viewmode="years">
+                    <input ng-model="filter.createDate$$GTE"/>
+                    <i class="btn sm-btn default fa fa-calendar"></i>
+                </div>
+                --
+                <div class="inline-block date date-picker" style="position: relative" data-date="new Date()"
+                     data-date-format="yyyy-mm-dd"
+                     data-date-viewmode="years">
+                    <input ng-model="filter.createDate$$LTE"/>
+                    <i class="btn sm-btn default fa fa-calendar"></i>
+                </div>
+            </div>
+        </div>
+        <!--表格-->
+        <div class="col-md-12 portlet-body custom">
+            <div class="table-title clearfix">停机预警列表</div>
+            <table cz-table-control cz-delegate-handle="delegateHandle" data-search-toolbar="#toolbar" data-sort-name="id" data-show-print="false"
+                   data-toggle="table" data-advanced-search="true" data-url="/rest/warningStopStation?_method=get&filter.status=0&order=desc"
+                   data-show-export="true" data-show-refresh="true" data-show-columns="true">
+                <thead>
+                <tr>
+                    <th data-align="center" cz-index-column="true">序号</th>
+                    <th data-field="station_code" data-align="center" data-sortable="false">站点编号</th>
+                    <th data-field="station_name" data-align="center" data-sortable="false">名称</th>
+                    <th data-field="station_company_name" data-align="center" data-sortable="false">分支机构</th>
+                    <th data-field="createDate" data-align="center" data-sortable="false">发起时间</th>
+                    <th data-field="warningInfo_reason" data-align="center" data-sortable="false">预警原因</th>
+                    <th data-field="creator_name" data-align="center" data-sortable="false">预警来源人</th>
+                    <th data-field="creatorDeptName" data-align="center" data-sortable="false">预警来源部门</th>
+                    <th data-field="id" data-align="center" data-print-ignore="true" cz-column-formatter="column.formatter.formatAction" cz-column-event="column.colEvents.operation">操作</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div></div>
+

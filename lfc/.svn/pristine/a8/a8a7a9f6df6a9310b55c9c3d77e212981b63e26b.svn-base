@@ -1,0 +1,15 @@
+/**
+ * Created by 46358 on 2016/11/11.
+ */
+app.controller('arcitleCtrl', ['$scope', '$rootScope', 'indexService','$state', function ($scope, $rootScope, indexService,$state) {
+    $rootScope.$settings.layout.pageBodySolid = false;
+
+    $scope.userId = $state.params.id;
+
+    indexService.getarticle($scope.userId).then(function (res) {
+        $scope.params = res.data;
+        console.log($scope.params);
+    })
+
+
+}]);

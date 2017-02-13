@@ -1,0 +1,127 @@
+app.filter('ageFilter', function () {
+    return function(id) {
+        if(!id||id==undefined)
+        return;
+        var str=id.slice(6,14),
+             year=str.slice(0,4),
+            //month=str.slice(4,6),
+            //day=str.slice(6),
+            nowTime=new Date().getFullYear();
+        //data=new Date((year+"-"+month+"-"+day)).getTime()/1000;
+        return nowTime-year
+    };
+});
+app.filter('sexFilter', function ($rootScope) {
+    return function (value) {
+        if(!value)
+        return;
+        for(var i in $rootScope.dicts.XB){
+            if(value==$rootScope.dicts.XB[i].value)
+            return $rootScope.dicts.XB[i].name
+        }
+    }
+});
+app.filter('syqkFilter', function ($rootScope) {
+    return function (value) {
+        if(!value)
+            return;
+        for(var i in $rootScope.dicts.SYQK){
+            if(value==$rootScope.dicts.SYQK[i].value)
+                return $rootScope.dicts.SYQK[i].name
+        }
+    }
+});
+app.filter('jkfsFilter', function ($rootScope) {
+    return function (value) {
+        if(!value)
+            return;
+        for(var i in $rootScope.dicts.JKFS){
+            if(value==$rootScope.dicts.JKFS[i].value)
+                return $rootScope.dicts.JKFS[i].name
+        }
+    }
+});
+app.filter('stationTypeFilter', function ($rootScope) {
+    return function (value) {
+        if(!value)
+            return;
+        for(var i in $rootScope.dicts.ZDLX){
+            if(value==$rootScope.dicts.ZDLX[i].value)
+                return $rootScope.dicts.ZDLX[i].name
+        }
+    }
+});
+app.filter('zzmmFilter', function ($rootScope) {
+    return function (value) {
+        if(!value)
+            return;
+        for(var i in $rootScope.dicts.ZZMM){
+            if(value==$rootScope.dicts.ZZMM[i].value)
+                return $rootScope.dicts.ZZMM[i].name
+        }
+    }
+});
+app.filter('statusFilter', function ($rootScope) {
+    return function (value) {
+        if(!value)
+            return;
+        for(var i in $rootScope.dicts.ZGZT){
+            if(value==$rootScope.dicts.ZGZT[i].value)
+                return $rootScope.dicts.ZGZT[i].name
+        }
+    }
+});
+app.filter('taskTypeFilter', function ($rootScope) {
+    return function (value) {
+        if(!value)
+            return;
+        for(var i in $rootScope.dicts.RWLX){
+            if(value==$rootScope.dicts.RWLX[i].value)
+                return $rootScope.dicts.RWLX[i].name
+        }
+    }
+});
+app.filter('photoFilter',function ($rootScope) {
+    return function (value) {
+        if(value)
+            return value;
+        else
+            return "img/defaultphoto.png"
+    }
+});
+app.filter('qylxFilter',function ($rootScope) {
+    return function (value) {
+        if(!value)
+            return value;
+        else if(value=='first_sign')
+            return '初次签约';
+        else
+            return '追加签约';
+    }
+});
+app.filter('ruleTypeFilter',function ($rootScope) {
+    return function (value) {
+        if(value=='0')
+            return '阳历年月日';
+        else if(value=='1')
+            return '阳历月日';
+        else if(value=='2')
+            return '阴历年月日';
+        else if(value=='3')
+            return '阴历月日';
+        else
+            return '';
+    }
+});
+app.filter('holidayFilter',function ($rootScope) {
+    return function (value) {
+        if(value=='0')
+            return '节假日且放假';
+        else if(value=='1')
+            return '节假日且不放假';
+        else if(value=='2')
+            return '非节假日且不放假';
+        else
+            return '';
+    }
+});

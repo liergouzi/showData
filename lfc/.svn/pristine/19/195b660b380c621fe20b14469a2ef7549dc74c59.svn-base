@@ -1,0 +1,137 @@
+/**
+ * Created by hxd on 2016/11/29.
+ */
+app.controller('userAdminCtrl', ['$scope', '$rootScope', 'systemService', '$uibModal', '$state',function ($scope, $rootScope, systemService, $uibModal,$state) {
+    $rootScope.$settings.layout.pageBodySolid = false;
+    $scope.initDicts('XB,ZZMM');
+    var vm = $scope;
+    $scope.initDepts();
+    ComponentsDateTimePickers.init(); // init
+    $scope.column = {
+        formatter: {
+            formatIndex: function (value, row, index) {
+                return index + 1;
+            },
+            formatAction: function (value, row, index) {
+                return '<a class="popup"><span>查看详情</span><i class="customicon glyphicon glyphicon-eye-open" style="color: #1A9ED8;"></i></a>' +
+                    '<a class="popup"><span>编辑</span><i class="customicon glyphicon glyphicon-edit" style="color: #D64635"></i></a>' +
+                    '<a class="popup"><span>删除</span><i class="customicon glyphicon glyphicon-trash" style="color: #65Be42"></i></a>'+
+                    '<a class="popup sb"><span>权限编辑</span>权限编辑<i class="customicon glyphicon glyphicon-sb" style="color: #65Be42"></i></a>'
+            }
+        },
+        colEvents: {
+            operation: {
+                'click .glyphicon-trash': function (e, id, row, index) {
+                    $scope.delUser(id);
+                },
+                'click .glyphicon-eye-open': function (e, id, row, index) {
+                    systemService.userDetails(systemService.getuser(id))
+                },
+                'click .glyphicon-edit': function (e, id, row, index) {
+                    $scope.params = row;
+                    $scope.edit(id, $scope.params);
+                },
+                'click .sb': function (e, id, row, index) {
+                   $state.go("privilege",{id:id})
+                }
+            }
+        }
+    }
+
+    $scope.edit = function (id, params) {
+        $uibModal.open({
+            animation: true,
+            templateUrl: 'views/system/user-edit-modal.html',
+            controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                $scope.params = params;
+                setTimeout(function () {
+                    ComponentsDateTimePickers.init()
+                }, 50);
+                $scope.doing="编辑人员";
+                $scope.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                };
+                $scope.warninfo = "";
+                $scope.checkLoginId=function () {
+                    if($scope.params.loginId) {
+                        systemService.checkLoginID($scope.params.loginId,id).then(function (res) {
+                            if (res.data.data.length)
+                                $scope.warninfo = "用户名已被占用";
+                            else
+                                $scope.warninfo = "";
+                        })
+                    }else
+                        $scope.warninfo = "用户名不能为空";
+                }
+                $scope.ok = function () {
+                    if (systemService.updateUser($scope.params)) {
+                        $rootScope.alert({
+                            title: "操作结果", message: "修改成功", callback: function () {
+                                $scope.cancel();
+                                vm.refresh();
+                            }
+                        })
+                    }
+                }
+            }],
+            size: 'md'
+        })
+    }
+
+    $scope.add = function () {
+        $uibModal.open({
+            animation: true,
+            templateUrl: 'views/system/user-edit-modal.html',
+            controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                setTimeout(function () {
+                    ComponentsDateTimePickers.init()
+                }, 50);
+                $scope.doing="新增人员";
+                $scope.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                };
+                $scope.checkLoginId=function () {
+                    if($scope.params.loginId) {
+                        systemService.checkLoginID($scope.params.loginId,0).then(function (res) {
+                            if (res.data.data.length)
+                                $scope.warninfo = "用户名已被占用";
+                            else
+                                $scope.warninfo = "";
+                        })
+                    }else
+                        $scope.warninfo = "用户名不能为空";
+                }
+                $scope.ok = function () {
+                    systemService.saveUser($scope.params).then(function (res) {
+                        $scope.user=res.data;
+                        console.log($scope.user);
+                        if ($scope.user) {
+                            $rootScope.alert({
+                                title: "操作结果", message: "添加成功,该用户密码是"+$scope.user.pwd, callback: function () {
+                                    $scope.cancel();
+                                    vm.refresh();
+                                }
+                            })
+                        }
+                    })
+                }
+            }],
+            size: 'md'
+        })
+    }
+
+    //删除人员
+    $scope.delUser = function (id) {
+        $rootScope.dialog({
+            title: "是否删除", message: "是否对该人员进行删除操作？", callback: function () {
+                if (systemService.delUser(id)) {
+                    $rootScope.alert({
+                        title: "操作结果", message: "删除成功", callback: function () {
+                            $scope.refresh();
+                        }
+                    })
+                }
+            }
+        })
+    }
+}]);

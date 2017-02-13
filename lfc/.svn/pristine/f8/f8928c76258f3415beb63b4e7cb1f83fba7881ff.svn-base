@@ -1,0 +1,63 @@
+<div data-ng-controller="restController">
+<div data-ng-controller="assessinfoCtrl" class="row">
+    <div class="col-md-12 ">
+        <div class="clearfix portlet light bordered radius" style="margin-top: 20px;">
+            <div class="dusty-blue">
+                <i class="fa fa-area-chart"></i><span>考核数据综合展示</span>
+            </div>
+            <div class="item clearfix text-center">
+                <div class="col-md-4 ">
+                    <div class="portlet text-center inline-block" style="width: 132px;height: 132px;">
+                        <div class="box">
+                            <i class="sales-date fa fa-calendar"></i>
+                            <p>{{params.time}}</p>
+                            <p>统计区间</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 cake">
+                    <div id="cake" style="width: 120px;height: 120px;margin-top: -17px"></div>
+                    <p>参加考核的站点数</p>
+                </div>
+                <div class="col-md-4 cake">
+                    <div id="cake1" style="width: 120px;height: 120px;margin-top: -17px"></div>
+                    <p>考核平均分</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div>
+                    <div style="margin-bottom: 15px;color: #576162;font-weight: 900">高于考核平均分的有<span style="color: #d94635">{{params.gtAverageStationCount}}</span>家</div>
+                    <span style="vertical-align: top">其中：</span>
+                    <div class="inline-block mg-p c666666">
+                        <p ng-repeat="li in params.stationCountByLeave"><span>{{li.score}}分以上的<span style="color: #d64635">{{li.count}}</span>家</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 text-center">
+        <div class="portlet light bordered radius list">
+            <p>考核分数排名前6的站点</p>
+            <div class="ranking-list custom-select-scroll1" >
+                <p ng-repeat="x in params.topStations" style="display:block;white-space:nowrap; overflow:hidden; text-overflow:ellipsis;"><span class="ranking">{{x.index}}</span><span>{{x.stationName}}</span> <span>{{x.score}}分</span></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 text-center">
+        <div class="portlet light bordered radius list">
+            <p>考核分数排名后6的站点</p>
+            <div class="ranking-list custom-select-scroll1">
+                <p ng-repeat="x in params.lastStations"><span class="ranking">{{x.index}}</span><span>{{x.stationName}}</span> <span>{{x.score}}分</span></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 text-center">
+        <div class="portlet light bordered radius list">
+            <p>考核分数提升最快的前6名站点</p>
+            <div class="ranking-list custom-select-scroll1">
+                <p ng-repeat="x in params.upTopStation"><span class="ranking">{{x.index}}</span><span>{{x.stationName}}</span> <span>{{x.score}}分</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

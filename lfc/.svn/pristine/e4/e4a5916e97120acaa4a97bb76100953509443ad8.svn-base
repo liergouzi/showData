@@ -1,0 +1,55 @@
+<div data-ng-controller="restController">
+    <div class="calendar">
+        <h5>巡检期数设置</h5>
+        <div class="nav">
+            <div class="col-md-12 title">
+                搜索条件
+                <button ng-click="vm.goDebug()" ng-if="debug">批量编辑</button>
+                <button ng-if="!debug" ng-click="vm.goDebug()">取消</button>
+            </div>
+        </div>
+        <div>
+            <span class="btn glyphicon glyphicon-chevron-left" ng-click="vm.turningYear(-1)"></span>
+            <b style="font-size: 60px" ng-bind="initYear"></b>
+            <span class="btn glyphicon glyphicon-chevron-right" ng-click="vm.turningYear(1)"></span>
+            <ul class="col-md-12 text-center">
+                <li ng-repeat="li in vm.year track by $index" class="col-md-4">
+                    <label style="display: initial!important;">
+                        <input ng-if="!debug" ng-disabled="li.disabled" type="checkbox" name="months" ng-model="li.selected" style="display: none">
+                        <div ng-click="vm.getDetails(li.value,li.disabled)" class="date-col" ng-class="{'wait-select':!debug,'over-select':li.selected&&!debug,'disabled-select':li.disabled&&!debug}">
+                            <span ng-bind="li.showvalue"></span>
+                            <span ng-bind="li.count+'期'" ng-click="vm.goDetails(li.value)" style="font-size: 30px;font-weight: normal"></span>
+                            <p ng-if="li.disabled" style="color: red;font-size: 13px;-webkit-text-stroke:0 red">已过设置时间</p>
+                        </div>
+                    </label>
+
+                </li>
+            </ul>
+            <label ng-if="!debug" >设置<input ng-model="vm.count" type="text">期</label>
+            <button ng-if="!debug"   ng-click="vm.batchSetperiods()">保存</button>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="datePicker.html">
+    <div class="portlet box red portlet-mg0 ">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gift"></i>工作日设置
+            </div>
+            <div class="tools">
+                <i class="fa fa-close" ng-click="cancel()"></i>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <form class="form-horizontal calendar" role="form">
+                <cz-date-picker  year="selectDate.year" month="selectDate.month" ng-model="periodsDate" date-format="'dd'"  pattern="double" select="false"></cz-date-picker>
+                <div class="calendar-modal">
+                    <div class="form-actions right1">
+                        <button type="button" ng-disabled="status" class="btn green" ng-click="confirm()">提交</button>
+                        <button type="submit" class="btn default" ng-click="cancel()">取消</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>

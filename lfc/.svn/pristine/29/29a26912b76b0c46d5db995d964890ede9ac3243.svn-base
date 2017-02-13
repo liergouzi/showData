@@ -1,0 +1,68 @@
+<div data-ng-controller="restController">
+<div data-ng-controller="rewardCtrl" class="row table-list">
+    <div class="col-md-12 title">
+        搜索条件
+    </div>
+    <!--搜索条件-->
+    <div class="table-search clearfix">
+        <div class="form-group col-md-6 col-lg-3">
+            <label>模糊搜索</label>
+            <input type="text" ng-model="filter.station__name$station__code$$LIKE" placeholder="站点编号/名称"/>
+        </div>
+        <div class="form-group col-md-6 col-lg-3 sm-3">
+            <label>发起部门</label>
+            <select ng-model="filter.station_company__id" >
+                <option value="">---所有---</option>
+            </select>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label>分支机构</label>
+            <select ng-model="filter.station__company__id">
+                <option value="">所有</option>
+                <option ng-repeat="li in company" value="{{li.id}}">{{li.name}}</option>
+            </select>
+        </div>
+        <button class="btn"><i class="icon-magnifier"></i>查询</button>
+        <div class="form-group col-lg-6 col-sm-12">
+            <label>发起时间</label>
+            <div class="inline-block date date-picker" style="position: relative" data-date="new Date()"
+                 data-date-format="yyyy-mm-dd"
+                 data-date-viewmode="years">
+                <input ng-model="filter.createDate$$GTE"/>
+                <i class="btn sm-btn default fa fa-calendar"></i>
+            </div>
+            --
+            <div class="inline-block date date-picker" style="position: relative" data-date="new Date()"
+                 data-date-format="yyyy-mm-dd"
+                 data-date-viewmode="years">
+                <input ng-model="filter.createDate$$LTE"/>
+                <i class="btn sm-btn default fa fa-calendar"></i>
+            </div>
+        </div>
+    </div>
+    <!--表格-->
+    <!--表格-->
+    <div class="col-md-12 portlet-body custom">
+        <div class="table-title clearfix">站点奖惩列表</div>
+        <table cz-table-control cz-delegate-handle="delegateHandle" data-search-toolbar="#toolbar" data-sort-name="id" data-show-print="false"
+               data-toggle="table" data-advanced-search="true" data-url="/rest/rewardPunishmentHistory?_method=get"
+               data-show-export="true" data-show-refresh="true" data-show-columns="true">
+            <thead>
+            <tr>
+                <th data-align="center" cz-index-column="true">序号</th>
+                <th data-field="station_code" data-align="center" data-sortable="false">站点编号</th>
+                <th data-field="station_name" data-align="center" data-sortable="false">站点名称</th>
+                <th data-field="deptId_name" data-align="center" data-sortable="false">发起部门</th>
+                <th data-field="type" data-align="center" data-sortable="false"  data-dict="JCLX" cz-column-formatter="formatter.formatDictByValue">奖惩类型</th>
+                <th data-field="createDate" data-align="center" data-sortable="false">发起时间</th>
+                <th data-field="reason" data-align="center" data-sortable="false">发起原因</th>
+                <th data-field="time" data-align="center" data-sortable="false">执行时间</th>
+                <th data-field="money" data-align="center" data-sortable="false">执行金额</th>
+                <th data-field="remark" data-align="center" data-sortable="false">备注</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div></div>
+
+

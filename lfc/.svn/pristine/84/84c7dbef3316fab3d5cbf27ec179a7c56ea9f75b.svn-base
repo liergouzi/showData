@@ -1,0 +1,77 @@
+<div ng-controller="restController">
+    <div ng-controller="salesManCtrl" class="row table-list">
+        <div class="col-md-12 title">
+            搜索条件
+        </div>
+        <!--搜索条件-->
+        <div id="toolbar" class="table-search clearfix">
+            <div class="form-group col-md-6 col-lg-3">
+                <label>模糊搜索</label>
+                <input type="text" ng-model="filter.certification$name$stationId_name$$LIKE" placeholder="姓名/证书编号/站点名称"/>
+            </div>
+            <div class="form-group col-md-6 col-lg-3">
+                <label>证书状态</label>
+                <select ng-model="timeIndex" ng-change="changeTime()">
+                    <option value="">所有</option>
+                    <option  value="certificationEndtime$$LTE">无效</option>
+                    <option  value="certificationEndtime$$GTE">有效</option>
+                </select>
+            </div>
+            <div class="form-group col-lg-6 col-sm-12">
+
+                <label>是否站长</label>
+                <select ng-model="filter.leaderFlag">
+                    <option value="">所有</option>
+                    <option value="是">是</option>
+                    <option value="否">否</option>
+                </select>
+                <button id="ok" class="btn"><i class="icon-magnifier"></i>查询</button>
+            </div>
+            <div class="form-group col-md-6 col-lg-3">
+                <label>是否在岗</label>
+                <select ng-model="filter.status">
+                    <option value="">所有</option>
+                    <option value="leaveJob">离职</option>
+                    <option value="onJob">在岗</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6 col-lg-3">
+                <label>分支机构</label>
+                <select ng-model="filter.stationId_company.name">
+                    <option value="">所有</option>
+                    <option ng-repeat="x in company" ng-value="x.id">{{x.name}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-12">
+                <button class="addBtn" ng-click="add()"><i class="glyphicon glyphicon-plus-sign"></i><span>新增人员</span></button>
+            </div>
+        </div>
+        <!--表格-->
+        <div class="col-md-12 portlet-body custom">
+            <div class="table-title clearfix">站点列表</div>
+            <table cz-table-control data-search-toolbar="#toolbar" data-sort-name="id" data-show-print="false"
+                   data-toggle="table" data-advanced-search="true" data-url="/rest/person?_method=get"
+                   data-show-export="true" data-show-refresh="true" data-show-columns="true">
+                <thead>
+                <tr>
+                    <th data-align="center" cz-index-column="true">序号</th>
+                    <th data-field="name" data-align="center" data-sortable="false">姓名</th>
+                    <th data-field="sex" data-align="center" data-sortable="false"  data-dict="XB" cz-column-formatter="formatter.formatDictByValue" >性别</th>
+                    <th data-field="identification" data-align="center" data-sortable="false">身份证号</th>
+                    <th data-field="phone" data-align="center" data-sortable="false">手机号码</th>
+                    <th data-field="certification" data-align="center" data-sortable="false">证书编码</th>
+                    <th data-width="110px" data-field="certificationEndtime" data-align="center" data-sortable="false">证书有效期</th>
+                    <th data-field="certificationEndtime" data-align="center" data-sortable="false" cz-column-formatter="formatter1">是否有效</th>
+                    <th data-field="status" data-align="center" data-sortable="false" data-dict="ZGZT" cz-column-formatter="formatter.formatDictByValue">是否在岗</th>
+                    <th data-field="leaderFlag" data-align="center" data-sortable="false">是否站长</th>
+                    <th data-field="station_name" data-align="center" data-sortable="false">所属站点名称</th>
+                    <th data-field="station_company_name" data-align="center" data-sortable="false">分支机构</th>
+                    <th data-width="100px" data-field="id" data-align="center" data-print-ignore="true" cz-column-formatter="column.formatter.formatAction" cz-column-event="column.colEvents.operation">操作</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+

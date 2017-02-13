@@ -1,0 +1,66 @@
+<div data-ng-controller="restController">
+<div data-ng-controller="ruleSetCtrl as vm" class="row table-list">
+    <div class="col-md-12 title">
+        <button ng-click="vm.add()" class="addBtn"><i class="glyphicon glyphicon-plus-sign"></i><span>新增指标</span></button>
+    </div>
+    <!--搜索条件-->
+
+    <!--表格-->
+    <div class="col-md-12">
+        <div class="table-title clearfix">
+            <span class="col-md-6">指标预览</span>
+            <div class="col-md-6 title-btn text-right">
+            </div>
+        </div>
+        <div class="">
+            <div class="clearfix custom-table" style="font-size: 0">
+                <div class="clearfix custom-thead2">
+                    <div class="th2 text-center" style="width: 15%;position: relative"><span style="padding-right: 12%;position: absolute;left: 5px">序号</span>指标名称</div>
+                    <div class="inline-block widthBox" style="width: 84.6%">
+                        <div class="th2">细则名称</div>
+                        <div class="th2">监控方式</div>
+                        <div class="th2">提醒指标</div>
+                        <div class="th2">违规指标</div>
+                        <div class="th2">停机预警指标</div>
+                        <div class="th2">违规复判天数</div>
+                        <div class="th2">违规扣分分值</div>
+                        <div class="th2">状态</div>
+                        <div class="th2">操作</div>
+                    </div>
+                </div>
+                <div class="custom-body2" ng-repeat="li in vm.list">
+                    <div class="td2 refer" style="vertical-align: top;width: 15%;border-right: solid 1px #d4d4d4">
+                        <div class="left-title text-center" style="position: relative"><span style="position: absolute;left: 10px">{{$index+1}}</span>{{li.name}}</div>
+                        <div class="rule-btn">
+                            <div ng-click="vm.addrules({id:li.id,name:li.name,shortname:li.shortName})" class="cli text-center">
+                                <i class="glyphicon glyphicon-plus-sign"></i>
+                                <span>新增细则</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="asRefer inline-block" style="width: 84.6%">
+                        <div class="widthBox" repeat-finish ng-repeat="x in li.lstCheckModelKpi|orderBy:'-useFlag'">
+                            <div class="td2">{{x.name}}</div>
+                            <div class="td2">{{x.judgeMethod|jkfsFilter}}</div>
+                            <div class="td2">{{x.ruleDefine.warnRule.ruleDesc}}</div>
+                            <div class="td2">{{x.ruleDefine.illegalRule.ruleDesc}}</div>
+                            <div class="td2">{{x.ruleDefine.stopRule.ruleDesc}}</div>
+                            <div class="td2">{{x.repeatDay}}</div>
+                            <div class="td2">{{x.maxscore}}</div>
+                            <div class="td2">{{x.useFlag|syqkFilter}}</div>
+                            <div class="td2">
+                                <a class="popup"><span>编辑</span><i ng-click="vm.updaterules({id:x.id,name:li.name})" class="customicon glyphicon glyphicon-edit" style="color: #43b7e9"> </i></a>
+                                <!--<i ng-click="vm.delrules(x.id,x.useFlag)" ng-class="{'fa-bell-slash-o':x.useFlag=='HISTORIC', 'fa-bell-o':x.useFlag=='USEFUL'}" class="customicon fa pointer"></i>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<uib-pagination total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize" class="pagination-sm"-->
+                        <!--boundary-link-numbers="true" previous-text="<" next-text=">">-->
+        <!--</uib-pagination>-->
+    </div>
+</div>
+    </div>
+</div>

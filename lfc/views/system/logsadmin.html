@@ -1,0 +1,50 @@
+<div ng-controller="restController"  data-options="{initLoad:'false'}">
+    <div ng-controller="logsAdminCtrl">
+        <div class="row table-list">
+            <div class="col-md-12 title">
+                搜索条件
+            </div>
+            <!--搜索条件-->
+            <div id="toolbar" class="table-search clearfix">
+                <div class="form-group col-md-6 col-lg-3">
+                    <label>模糊搜索</label>
+                    <input type="text" placeholder="操作人员"/>
+                </div>
+                <div class="form-group col-lg-6 col-sm-12">
+                    <label>操作时间</label>
+                    <div class="inline-block date date-picker" style="position: relative" data-date="new Date()"
+                         data-date-format="yyyy-mm-dd"
+                         data-date-viewmode="years">
+                        <input ng-model="filter.CreateTime$$GTE"/>
+                        <i class="btn sm-btn default fa fa-calendar"></i>
+                    </div>
+                    --
+                    <div class="inline-block date date-picker" style="position: relative" data-date="new Date()"
+                         data-date-format="yyyy-mm-dd"
+                         data-date-viewmode="years">
+                        <input ng-model="filter.CreateTime$$LTE"/>
+                        <i class="btn sm-btn default fa fa-calendar"></i>
+                    </div>
+                    <button class="btn" id="ok"><i class="icon-magnifier"></i>查询</button>
+                </div>
+            </div>
+            <!--表格-->
+            <div class="col-md-12 portlet-body custom">
+                <div class="table-title clearfix">人员列表</div>
+                <table cz-table-control cz-delegate-handle="delegateHandle" data-search-toolbar="#toolbar" data-sort-name="id" data-show-print="false"
+                       data-toggle="table" data-advanced-search="true" data-url="/rest/logs?_method=get"
+                       data-show-export="true" data-show-refresh="true" data-show-columns="true">
+                    <thead>
+                    <tr style="display: none">
+                        <th data-align="center" cz-index-column="true">序号</th>
+                        <th data-field="user_name" data-align="center" data-sortable="false">操作人员</th>
+                        <th data-field="ip" data-align="center" data-sortable="false">IP地址</th>
+                        <th data-field="handle" data-align="center" data-sortable="false">操作内容</th>
+                        <th data-field="createDate" data-align="center" data-sortable="false">操作时间</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

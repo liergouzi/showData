@@ -1,0 +1,39 @@
+<div class="page-header-inner">
+    <div class="hide-xs page-logo">
+        <a ui-sref="dashboard">
+            <img src="img/logo.png" alt="logo" class="logo-default" style="margin: 1px 0 0;" />
+        </a>
+        <span class="logo-default" style="margin:9px 0 0 15px;color: white;float: left">阳光彩云</span>
+        <div class="menu-toggler sidebar-toggler">
+            <span></span>
+        </div>
+    </div>
+    <div class="top-menu" ng-controller="userController">
+        <ul class="nav navbar-nav pull-right">
+            <li class="dropdown dropdown-user">
+                <a href="#" class="dropdown-toggle" dropdown-menu-hover data-toggle="dropdown" data-close-others="true">
+                    <img alt="" class="img-circle" src="img/defaultphoto.png" />
+                    <span class="username username-hide-on-mobile">{{userName}}</span>
+                    <i class="fa fa-angle-down"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-default">
+                    <li ng-click="updatepwd()">
+                        <a href="#/profile/dashboard">
+                            <i class="icon-user"></i> 修改密码 </a>
+                    </li>
+                    <li ng-click="logout()">
+                        <a href="#/profile/dashboard">
+                            <i class="icon-user"></i> 退出登录 </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="dropdown dropdown-quick-sidebar-toggler">
+                <a  class="dropdown-toggle custom-quick-sidebar " >
+                    <i class="fa fa-bell"></i>
+                    <span class="badge badge-default" ng-if="aa.length>0">{{aa.length}}</span>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</div>

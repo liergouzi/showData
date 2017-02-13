@@ -1,0 +1,72 @@
+<div class="page-sidebar navbar-collapse collapse">
+    <ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200"
+        ng-class="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
+        <!--<li class="sidebar-user">-->
+        <!--&lt;!&ndash;<img src="img/test.jpg" width="90" height="90" class="img-circle">&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="inline-block middle sid-user"><p class="username">张三李</p><p class="userstatus">管理员</p></div>&ndash;&gt;-->
+        <!--</li>-->
+        <div class="menu-top"></div>
+        <li class="nav-item">
+            <a class="nav-link nav-toggle">
+                <i class="fa fa-area-chart" style="margin-left: -1px;"></i>
+                <span class="title">玩法分析</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a ui-sref="playAdmin">
+                        <i class="card "></i>玩法分析<span class="cyclic"></span></a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link nav-toggle">
+                <i class="fa fa-line-chart" style="margin-left: -1px;"></i>
+                <span class="title">时间分析</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a ui-sref="timeAdmin">
+                        <i class="card "></i>时间分析<span class="cyclic"></span></a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link nav-toggle">
+                <i class="icon-settings" style="margin-left: -1px;"></i>
+                <span class="title">系统设置</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu">
+                <li>
+                    <a href="javascript:void(0)">
+                        <i class="card"></i>机构管理<span class="cyclic"></span></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)">
+                        <i class=""></i>人员管理<span class="cyclic"></span></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)">
+                        <i class=""></i>角色管理<span class="cyclic"></span></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)">
+                        <i class="card"></i>字典管理<span class="cyclic"></span></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)">
+                        <i class=""></i>区域管理<span class="cyclic"></span></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)">
+                        <i class=""></i>工作日设置<span class="cyclic"></span></a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)">
+                        <i class=""></i>日志管理<span class="cyclic"></span></a>
+                </li>
+            </ul>
+    </ul>
+</div>

@@ -1,0 +1,92 @@
+<div class="portlet box red modal-s portlet-mg0">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-gift"></i><span ng-if="!params.id">新增销售人员</span><span ng-if="params.id">编辑销售人员</span></div>
+        <div class="tools">
+            <i class="fa fa-close" ng-click="cancel()"></i>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <form class="form-horizontal" role="form">
+            <div class="form-body">
+                <div class="head text-center">
+                    <img src="{{params.user_avatar|photoFilter}}" width="120" height="120">
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">姓名</label>
+                    <div class="col-md-8">
+                        <input type="text" ng-disabled="params.id" class="form-control" ng-model="params.name"
+                               placeholder="请输入姓名"></div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">性别</label>
+                    <div class="col-md-8">
+                        <!--<select ng-if="!params.id" class="form-control" ng-model="params.sex" ng-options="li.value as li.name for li in dicts.XB">-->
+                        <!--&lt;!&ndash;<option ng-repeat="li in dicts.XB" value="{{li.value}}">{{li.name}}</option>&ndash;&gt;-->
+                        <!--</select>-->
+                        <div ng-if="!params.id" class="col-md-8 custom-control">
+                            <label><input name="yes" type="radio" ng-model="params.sex" value="1">男</label>
+                            <label style="padding-left: 30px;"><input name="yes" type="radio" ng-model="params.sex"
+                                                                      value="2">女</label>
+                        </div>
+                        <input type="text" ng-disabled="params.id" ng-if="params.id" class="form-control"
+                               ng-model="params.sex|sexFilter">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">身份证号码</label>
+                    <div class="col-md-8">
+                        <input type="text" ng-disabled="params.id" class="form-control" ng-model="params.identification"
+                               placeholder="请输入身份证号"></div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">手机号码</label>
+                    <div class="col-md-8">
+                        <input type="text" class="form-control" ng-model="params.phone" placeholder="请输入手机号"></div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">证书编号</label>
+                    <div class="col-md-8">
+                        <input type="text" ng-disabled="params.id" class="form-control" ng-model="params.certification"
+                               placeholder="请输入证书编号"></div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">证书有效期</label>
+                    <div class="col-md-8">
+                        <div ng-if="!params.id" class="date date-picker" style="position: relative"
+                             data-date="new Date()"
+                             data-date-format="yyyy-mm-dd"
+                             data-date-viewmode="years">
+                            <input class="form-control" ng-model="params.certificationEndtime" placeholder="请选择有效期"/>
+                            <i class="btn sm-btn default fa fa-calendar"></i>
+                        </div>
+                        <input type="text" ng-if="params.id" class="form-control" ng-disabled="true"
+                               ng-model="params.certificationEndtime"></div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">所属站点</label>
+                    <div class="col-md-8">
+                        <input  ng-if="!params.id" class="form-control" ng-model="filter.stationName" ng-change="search()"
+                               placeholder="请输入站点名称"/><input type="text" ng-if="show=='1'" class="form-control" style="color: red;" ng-disabled="true" ng-model="info" ng-init="info='没找到相关信息'">
+                        <div class="custom-select hide" ng-class="{show:result.length}">
+                            <div class="custom-select-scroll">
+                                <div class="custom-select-body">
+                                    <div ng-repeat="li in result" ng-click="changeValue(li.name,li.id)">
+                                        {{li.name}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="text" ng-if="params.id" class="form-control" ng-disabled="true"
+                               ng-model="params.station_name">
+                    </div>
+                </div>
+            </div>
+            <div class="form-actions right1">
+                <button class="btn green" ng-click="ok()">提交</button>
+                <button class="btn default" ng-click="cancel()">取消</button>
+            </div>
+        </form>
+    </div>
+</div>
+

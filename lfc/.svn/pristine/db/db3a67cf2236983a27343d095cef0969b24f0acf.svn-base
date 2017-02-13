@@ -1,0 +1,16 @@
+<style>
+    .article h3{
+        color: red;
+        text-align: center;
+    }
+    .article .body{
+        padding: 10px 20px;
+    }
+</style>
+<div class='article' data-ng-controller="restController">
+    <div data-ng-controller="articleCtrl">
+        <h3>{{params.title}}</h3>
+        <div class="body">
+        </div>
+    </div>
+</div>

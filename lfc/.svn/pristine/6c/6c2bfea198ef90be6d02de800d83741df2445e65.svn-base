@@ -1,0 +1,94 @@
+<div data-ng-controller="restController">
+<div data-ng-controller="siteSelfCheckCtrl as vm" class="row table-list">
+    <div class="col-md-12 title">
+        搜索条件
+    </div>
+    <!--搜索条件-->
+    <div class="table-search learfix" id="toolbar">
+        <div class="form-group col-md-6 col-lg-3">
+            <label>模糊搜索</label>
+            <input type="text" placeholder="站点名称/地址/编号/站长" ng-model="searchKey"/>
+        </div>
+        <div class="form-group col-lg-5 col-sm-9">
+            <label>上报时间</label>
+            <div class="inline-block date date-picker" style="position: relative" data-date="new Date()"
+                 data-date-format="yyyy-mm-dd"
+                 data-date-viewmode="years">
+                <input ng-model="begintime" ng-change="datechange()"/>
+                <i class="btn sm-btn default fa fa-calendar"></i>
+            </div>
+            --
+            <div class="inline-block date date-picker" style="position: relative" data-date="new Date()"
+                 data-date-format="yyyy-mm-dd"
+                 data-date-viewmode="years">
+                <input ng-model="endtime" ng-change="datechange()"/>
+                <i class="btn sm-btn default fa fa-calendar"></i>
+            </div>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label>违规类别</label>
+            <select ng-model="categoryId" >
+                <option value="">---所有---</option>
+                <option ng-repeat="li in kpiCategory" value="{{li.id}}">{{li.name}}</option>
+            </select>
+        </div>
+        <button class="btn" ng-click="click()"><i class="icon-magnifier"></i>查询</button>
+        <div class="form-group col-md-6 col-lg-3">
+            <label>分支机构</label>
+            <select ng-model="companyId" >
+                <option value="">---所有---</option>
+                <option ng-repeat="li in company" value="{{li.id}}">{{li.name}}</option>
+            </select>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+           <label class="mt-checkbox mt-checkbox-outline">
+               <input type="checkbox" name="today" ng-model="today" ng-change="selecttoday()" value="2016-16">只显示今日违规
+               <span></span>
+           </label>
+        </div>
+    </div>
+    <!--表格-->
+    <div class="col-md-12">
+        <div class="table-title clearfix">
+            <span class="col-md-6">站点列表</span>
+        </div>
+        <div>
+            <h5 style="padding-left: 20px">序号</h5>
+            <div class="custom-table clearfix"   ng-repeat="x in vm.list"><!--repeat-->
+                <div class="custom-thead clearfix">
+                    <div class="th"><span style="padding: 0 22px">{{$index+1}}</span>站点信息</div>
+                    <div class="right-box">
+                        <div class="th left32" style="width: 20%">违规类别</div>
+                        <div class="th" style="width: 40%">违规指标</div>
+                        <div class="th" style="width: 20%">上报人</div>
+                        <div class="th" style="width: 20%">上报时间</div>
+                    </div>
+                </div>
+                <div class="custom-tbody clearfix" >
+                    <div class="left-box">
+                        <div><span>站点编号：</span>{{x.stationDetails.station.code}}</div>
+                        <div><span>站点名称：</span>{{x.stationDetails.station.name}}</div>
+                        <div><span>站点地址：</span>{{x.stationDetails.station.address}}</div>
+                        <div><span>分支机构：</span>{{x.stationDetails.station.companyName}}</div>
+                        <div><span>站长：</span>{{x.stationDetails.leaderName}}</div>
+                    </div><div class="right-box">
+                    <div repeat-finish  ng-repeat="li in x.lstCheckSelfResult" class="clearfix" ng-class="{smBorder:$index!=0}">
+                        <div class="td left32" style="vertical-align: top;width: 20%;">{{li.catagoryName}}</div>
+                        <div class="box-list clearfix" ng-class="{blank:$index!=0}" ng-repeat="item in li.kpiresults">
+                            <div class="td"  style="width: 40%">
+                                <div class="indent">{{item.kpiContent}}</div>
+                            </div>
+                            <div class="td"  style="width: 20%">
+                                {{item.creatorName}}
+                            </div>
+                            <div class="td"  style="width: 20%">
+                                {{item.createDate}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div></div>

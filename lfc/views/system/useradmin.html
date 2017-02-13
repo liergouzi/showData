@@ -1,0 +1,49 @@
+<div ng-controller="restController">
+    <div ng-controller="userAdminCtrl">
+        <div class="row table-list">
+            <div class="col-md-12 title">
+                搜索条件
+            </div>
+            <!--搜索条件-->
+            <div id="toolbar" class="table-search clearfix">
+                <div class="form-group col-md-6 col-lg-3">
+                    <label>模糊搜索</label>
+                    <input type="text" ng-model="filter.name$loginId$identityNum$$LIKE" placeholder="姓名/用户名/身份证号"/>
+                </div>
+                <div class="form-group col-md-6 col-lg-3">
+                    <label>所属部门</label>
+                    <select ng-model="filter.regionId">
+                        <option value="">---所有---</option>
+                        <option ng-repeat="opt in regions" ng-value="opt.id">{{opt.name}}</option>
+                    </select>
+                </div>
+                <button class="btn" id="ok"><i class="icon-magnifier"></i>查询</button>
+                <div class="form-group col-md-12">
+                    <button class="addBtn" ng-click="add()"><i class="glyphicon glyphicon-plus-sign"></i><span>新增人员</span></button>
+                </div>
+            </div>
+            <!--表格-->
+            <div class="col-md-12 portlet-body custom">
+                <div class="table-title clearfix">人员列表</div>
+                <table cz-table-control cz-delegate-handle="delegateHandle" data-search-toolbar="#toolbar" data-sort-name="id" data-show-print="false"
+                       data-toggle="table" data-advanced-search="true" data-url="/rest/user?_method=get"
+                       data-show-export="true" data-show-refresh="true" data-show-columns="true">
+                    <thead>
+                    <tr style="display: none">
+                        <th data-align="center" cz-index-column="true">序号</th>
+                        <th data-field="loginId" data-align="center" data-sortable="false">用户名</th>
+                        <th data-field="name" data-align="center" data-sortable="false">姓名</th>
+                        <th data-field="gender" data-align="center" data-sortable="false" data-dict="XB" cz-column-formatter="formatter.formatDictByValue">性别</th>
+                        <th data-field="birthday" data-align="center" data-sortable="false">生日</th>
+                        <th data-field="identityNum" data-align="center" data-sortable="false">身份证号</th>
+                        <th data-field="mobile" data-align="center" data-sortable="false">手机号码</th>
+                        <th data-field="email" data-align="center" data-sortable="false">电子邮箱</th>
+                        <th data-field="address" data-align="center" data-sortable="false">住址</th>
+                        <th data-field="id" data-align="center" data-print-ignore="true" cz-column-formatter="column.formatter.formatAction" cz-column-event="column.colEvents.operation">操作</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

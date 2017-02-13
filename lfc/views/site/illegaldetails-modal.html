@@ -1,0 +1,41 @@
+<div class="portlet box red portlet-mg0 ">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-gift"></i>违规详情页</div>
+        <div class="tools">
+            <i class="fa fa-close" ng-click="cancel()"></i>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <div class="form-horizontal">
+            <div class="form-body">
+                <div>
+                    <p style="font-size: 16px;color: #D64635">站点信息</p>
+
+                    <p>站点编号:{{params.checkOutResult.taskCheckOut_stationCode}}</p>
+                    <p>站点名称:{{params.checkOutResult.taskCheckOut_stationName}}</p>
+                    <p>分支机构:{{params.checkOutResult.taskCheckOut_stationCompanyName}}</p>
+                    <p>站长:{{params.checkOutResult.taskCheckOut_station_leaderUser_name}}</p>
+                </div>
+                <div>
+                    <p style="font-size: 16px;color: #D64635">违规详情</p>
+                    <p>违规类别:{{params.checkOutResult.kpiType}}</p>
+                    <p>违规细则:{{params.checkOutResult.kpiContent}}</p>
+                    <div style="margin-bottom: 10px">违规说明:
+                        <div class="inline-block imgs" style="vertical-align: top" >
+                            <p>{{params.checkOutResult.resultRemark}}</p>
+                            <img src="{{li}}" ng-repeat="li in params.imgs track by $index">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <p style="font-size: 16px;color: #D64635">图片说明</p>
+                    <p ng-if="params.attaches.length==0">暂无上传图片</p>
+                    <sm-carous ng-if="params.attaches.length!=0"  size="3"  img-arr="params.attaches"></sm-carous>
+                </div>
+                <div class="clearfix"></div>
+             </div>
+        </div>
+    </div>
+</div>
+

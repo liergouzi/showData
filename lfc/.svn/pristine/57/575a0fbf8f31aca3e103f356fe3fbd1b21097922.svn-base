@@ -1,0 +1,154 @@
+<div class="portlet box red  portlet-mg0">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-gift"></i>
+            <span ng-if="!rules.checkCateGoryId">新增指标</span>
+            <span ng-if="((pageStatus=='新增')&& rules.checkCateGoryId)">新增细则</span>
+            <span ng-if="rules.checkCateGoryId && pageStatus==null">修改细则</span>
+        </div>
+        <div class="tools">
+            <i class="fa fa-close" ng-click="cancel()"></i>
+        </div>
+    </div>
+    <div class="portlet-body form">
+        <form class="form-horizontal" role="form">
+            <div class="form-body">
+                <!--一级指标-->
+                <div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label text-left">指标名称</label>
+                        <div class="col-md-8">
+                            <input type="text" ng-disabled="rules.checkCateGoryId" class="form-control"
+                                   ng-model="rule.name" placeholder="请输入一级指标名称">
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="!rules.checkCateGoryId">
+                        <label class="col-md-3 control-label text-left">指标简称</label>
+                        <div class="col-md-8">
+                            <input type="text" ng-disabled="rules.checkCateGoryId" class="form-control"
+                                   ng-model="rule.shortName" placeholder="请输入一级指标简称"></div>
+                    </div>
+                    <!--active-->
+                    <div ng-if="!rules.checkCateGoryId" class="form-group">
+                        <label class="col-md-3 control-label">指标分值</label>
+                        <div class="col-md-8">
+                            <input type="text" ng-disabled="params.id" class="form-control inline-block"
+                                   ng-model="rule.maxscore" style="width: auto"/>分
+                        </div>
+                    </div>
+                    <!--active-end-->
+                </div>
+                <!--二级指标-->
+                <div ng-if="rules.checkCateGoryId">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">指标细则</label>
+                        <div class="col-md-8 custom-control">
+                            <input type="text" ng-disabled="params.id" class="form-control" ng-model="rules.name"
+                                   placeholder="请输入细则名称">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">监控方式</label>
+                        <div class="col-md-8">
+                            <select class="custom-control" ng-model="rules.judgeMethod" ng-options="m.value as m.name for m in dicts.JKFS">
+                            </select>
+                        </div>
+                    </div>
+                    <div ng-if="rules.judgeMethod == 'System'">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">指标参数定义</label>
+                            <div cz-rule-define="rules.ruleDefine" class="col-md-8"></div>
+                        </div>
+                    </div>
+                    <div ng-if="rules.judgeMethod == '0'">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">针对对象</label>
+                            <div class="col-md-8">
+                                <select class="custom-control" ng-model="rules.pointObject">
+                                    <option value="0" ng-selected="rules.pointObject==0">站点</option>
+                                    <option value="1" ng-selected="rules.pointObject==1">个人</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">复判天数</label>
+                        <div class="col-md-8">
+                            <div class="inline-block" style="padding-top: 5px;">
+                                <input ng-model="rules.repeatDay" style="width:50px">
+                            </div>
+                            &nbsp;天
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">违规扣分</label>
+                        <div class="col-md-8">
+                            <div class="inline-block" style="padding-top: 5px;">
+                                <input ng-model="rules.minscore" style="width:50px">
+                            </div>
+                            &nbsp;至
+                            <div class="inline-block custom-control">
+                                <input ng-model="rules.maxscore" style="width:50px">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">是否自查</label>
+                        <div class="col-md-8 custom-control">
+                            <label><input type="radio" name="toCheck" ng-model="rules.selfFlag" value="0"><span>是</span></label>
+                            <label><input type="radio" name="toCheck" ng-model="rules.selfFlag" value="1">否</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">状态</label>
+                        <div class="col-md-8">
+                            <select class="custom-control" ng-model="rules.useFlag" ng-change="clear">
+                                <option value="USEFUL" ng-selected="rules.useFlag=='USEFUL'">启用</option>
+                                <option value="HISTORIC" ng-selected="rules.useFlag=='HISTORIC'">停用</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">生效时间</label>
+                        <div class="col-md-8">
+                            <div ng-if="rules.useFlag!='HISTORIC'" class="inline-block date date-picker"
+                                 style="position: relative" data-date="new Date()"
+                                 data-date-format="yyyy-mm-dd"
+                                 data-date-viewmode="years">
+                                <input ng-model="rules.startDate" class="form-control"/>
+                                <i class="btn sm-btn default fa fa-calendar"></i>
+                            </div>
+                            <input ng-if="rules.useFlag=='HISTORIC'" ng-disabled="true" ng-model="rules.startDate"
+                                   class="form-control"/>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="rules.checkCateGoryId && pageStatus==null">
+                        <label class="col-md-3 control-label">细则编码</label>
+                        <div class="col-md-8">
+                            <input class="form-control" ng-model="rules.code"/>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="rules.checkCateGoryId && pageStatus==null">
+                        <label class="col-md-3 control-label">细则变更编码</label>
+                        <div class="col-md-8">
+                            <input class="form-control" ng-model="rules.changeCode"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">备注</label>
+                        <div class="col-md-8">
+                            <textarea type="text" ng-model="rules.remark" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="form-actions right1">
+                <button class="btn green" ng-click="ok()">提交</button>
+                <button class="btn default" ng-click="cancel()">取消</button>
+            </div>
+        </form>
+    </div>
+</div>
+

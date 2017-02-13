@@ -1,0 +1,9 @@
+<div class="bottom-15" style="position: relative" ng-init="rules.ruleDefine.name = ruleName;rules.rule = ruleName">
+    <span style="position: absolute;left: -87px;
+    top: 10px">提醒指标</span>
+    <span>超过</span><input type="text" class="sm-input" ng-model="rules.ruleDefine.warnRule.params.time" >点没有提交自查报告
+</div><div class="bottom-15" style="position: relative">
+    <span style="position: absolute;left: -87px;
+    top: 10px">违规指标</span>
+    <span>超过</span><input type="text" class="sm-input" ng-model="rules.ruleDefine.illegalRule.params.time"  >点没有提交自查报告
+</div>

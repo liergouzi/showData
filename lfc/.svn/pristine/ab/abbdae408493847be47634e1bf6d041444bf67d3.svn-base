@@ -1,0 +1,240 @@
+/**
+ * Created by 46358 on 2016/11/2.
+ */
+app.controller('siteDetailsCtrl', ['$scope', '$rootScope', '$state', 'stationService','personService','dateService', function ($scope, $rootScope, $state, stationService,personService,dateService) {
+    var vm = this;
+    $rootScope.$settings.layout.pageBodySolid = true;
+    $scope.initDicts('XB,ZDLX');
+    $scope.years=dateService.getYears();   //可传距今年年数
+    $scope.months=dateService.getMonths;
+    $scope.days=dateService.getDays();
+    stationService.stationDetails($state.params.id).then(function (res) {
+        $scope.params = res.data;
+        //图片url
+        //params.attach是个数组。每个数组代表一个图片。里面的url是图片url。
+        console.log($scope.params);
+    });
+
+    stationService.getStationDetailsSales($state.params.id).then(function (res) {
+        $scope.salesTable = res.data;
+        console.log($scope.salesTable);
+    })
+
+    stationService.getStationDetailsSalesOfYear($state.params.id).then(function (res) {
+        $scope.salesOfYear = res.data;
+        $scope.value = $scope.salesOfYear.compangAvg;
+        if ($scope.value > 100) {
+            $scope.value = $scope.value - 100;
+        } else {
+            $scope.value = 100 - $scope.value;
+        }
+        $scope.value = $scope.value.toFixed(2);//保留2位但结果为一个String类型
+        $scope.value = parseFloat($scope.value);//将结果转换会float
+        $scope.value = parseFloat($scope.value.toFixed(2));
+        // 仪表盘
+        var option1 = {
+            toolbox: {
+                show: false,
+            },
+            series: [
+                {
+                    name: '',
+                    type: 'gauge',
+                    detail: {
+                        formatter: '{value}%',
+                        offsetCenter: [0, '90%']
+                    },
+                    data: [{value: $scope.value, name: ''}]
+                }
+            ]
+        };
+        echarts.init(document.getElementById("instrument")).setOption(option1);
+        // 仪表盘结束
+    });
+    $scope.year = parseInt(new Date().Format('yyyy'));
+    $scope.month = parseInt(new Date().Format('M'))-1;
+    if($scope.month==0){
+        $scope.month=12;
+        $scope.year=$scope.year-1;
+    }
+    console.log($scope.year)
+    $scope.year1 = parseInt(new Date().Format('yyyy'));
+    $scope.month1 = parseInt(new Date().Format('M'))-1;
+    if($scope.month1==0){
+        $scope.month1=12;
+        $scope.year1=$scope.year1-1;
+    }
+    vm.getStationDetailsCheckOut = function () {
+        var end = new Date($scope.year1, $scope.month1,1 - 1).Format('yyyy-MM-dd');
+        var start = new Date($scope.year1, $scope.month1-1).Format('yyyy-MM-dd');
+        stationService.getStationDetailsCheckOut($state.params.id, start, end).then(function (res) {
+            $scope.checkResult = res.data;
+
+            var option = {
+                title: {
+                    text: '',
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                        type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    },
+                    formatter: function (params) {
+                        return params[0].name + '<br/>'
+                            + params[1].seriesName + ' : ' + (params[1].value + params[0].value) + '<br/>'
+                            + params[0].seriesName + ' : ' + params[0].value + '<br/>';
+                    }
+                },
+                legend: {
+                    selectedMode: false,
+                    data: ['Acutal', 'Forecast']
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: {show: true},
+                        dataView: {show: true, readOnly: false},
+                        restore: {show: true},
+                        saveAsImage: {show: true}
+                    }
+                },
+                calculable: true,
+                xAxis: [
+                    {
+                        type: 'category',
+                        name: '考核项',
+                        data: $scope.checkResult.kpiCategory
+                    }
+                ],
+                yAxis: [
+                    {
+                        name: '分数',
+                        type: 'value',
+                        boundaryGap: [0, 0.1]
+                    }
+                ],
+                series: [
+                    {
+                        name: '得分',
+                        type: 'bar',
+                        stack: 'sum',
+                        barCategoryGap: '80%',
+                        itemStyle: {
+                            normal: {
+                                barBorderWidth: 0,
+                                barBorderRadius: 0,
+                                label: {
+                                    show: true, position: 'insideTop'
+                                },
+                                color: function (params) {
+                                    // build a color map as your need.
+                                    var colorList = [
+                                        '#D64635', '#FCAF41', '#36C6D3', '#3F51B5', '#27727B',
+                                        '#FE8463', '#9BCA63', '#FAD860', '#F3A43B', '#60C0DD',
+                                        '#D7504B', '#C6E579', '#F4E001', '#F0805A', '#26C0C0'
+                                    ];
+                                    return colorList[params.dataIndex]
+                                },
+                            }
+                        },
+                        data: $scope.checkResult.score
+                    },
+                    {
+                        name: '满分',
+                        type: 'bar',
+                        stack: 'sum',
+                        itemStyle: {
+                            normal: {
+                                color: '#AFB1B3',
+                                barBorderWidth: 0,
+                                barBorderRadius: 0,
+                                label: {
+                                    show: true,
+                                    position: 'top',
+                                    formatter: function (params) {
+                                        for (var i = 0, l = option.xAxis[0].data.length; i < l; i++) {
+                                            if (option.xAxis[0].data[i] == params.name) {
+                                                return option.series[0].data[i] + params.value;
+                                            }
+                                        }
+                                    },
+                                    textStyle: {
+                                        color: 'D64635'
+                                    }
+                                }
+                            }
+                        },
+                        data: $scope.checkResult.deduction
+                    }
+                ]
+            };
+            echarts.init(document.getElementById("cake")).setOption(option);
+        })
+    }
+
+    vm.href = function (params) {
+        $state.go('protocol', params)
+    }
+
+    vm.changeyear = function () {
+        $scope.month = "";
+        $scope.day = "";
+        vm.selectSales();
+    }
+    vm.changemonth = function () {
+        $scope.day = "";
+        $scope.days=dateService.getDays($scope.month);
+        vm.selectSales();
+    }
+    vm.changeday = function () {
+        vm.selectSales();
+    }
+    vm.changeyear1 = function () {
+        if ($scope.month1 && $scope.year1)
+        vm.getStationDetailsCheckOut();
+    }
+    vm.changemonth1 = function () {
+        if ($scope.month1 && $scope.year1)
+        vm.getStationDetailsCheckOut();
+    }
+    vm.selectSales = function () {
+        $scope.s = {
+            year: $scope.year,
+            month: $scope.month,
+            day: $scope.day
+        }
+        stationService.getStationDetailsSales($state.params.id, $scope.s).then(function (res) {
+            $scope.salesTable = res.data;
+            console.log($scope.salesTable);
+        })
+    }
+
+    $scope.$on('ngRepeatFinished', function () {
+        var boxRight = $("#right-box"),
+            boxLeft = $("#left-box");
+        for (var i = 0; i < boxRight.length; i++) {
+            var leftHeight = boxLeft.eq(i).height(),
+                rightHeight = boxRight.eq(i).height();
+            if (leftHeight > rightHeight) {
+                boxRight.eq(i).height(leftHeight)
+            } else if (leftHeight < rightHeight) {
+                boxLeft.eq(i).height(rightHeight)
+            }
+        }
+
+    });
+    vm.getStationDetailsCheckOut();
+
+    vm.openSalesMan=function (id) {
+        personService.persondetails($scope, personService.getPerson(id));
+        personService.getPersonScore(id, new Date().Format('yyyy') + "-01-01").then(function (res) {
+            $scope.personScore = res.data;
+            var sum = 15;
+            angular.forEach($scope.personScore, function (data) {
+                sum = sum - data.score;
+            })
+            $scope.sum = sum;
+            $scope.year = new Date().Format('yyyy') - 1;
+        });
+    }
+}]);

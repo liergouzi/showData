@@ -1,0 +1,222 @@
+<style>
+    .calendar-modal .calendar-ul {
+        overflow: hidden;
+    }
+
+    .calendar-modal .calendar-ul li {
+        list-style: none;;
+        margin-top: 30px;
+    }
+
+    .calendar-modal .calendar-ul li span {
+        margin-right: 20px;
+    }
+
+    /*dateAdmin*/
+    .calendar li, .calendar p {
+        list-style: none;
+        margin: 0;
+    }
+
+    .calendar h5 {
+        width: 100%;
+        padding-left: 30px;
+        font-size: 14px;
+        background-color: #d64635;
+        height: 30px;
+        line-height: 30px;
+        font-family: "微软雅黑";
+        color: #fff;
+        font-weight: 400;
+    }
+
+    .calendar .nav {
+        background-color: #fff;
+        line-height: 23px;
+        font-family: "微软雅黑";
+    }
+
+    .calendar .small-size {
+        font-weight: 700;
+        font-size: 13px;
+    }
+
+    .calendar .big-size {
+        font-weight: 700;
+        font-size: 18px;
+    }
+
+    .calendar .main .title {
+        width: 100%;
+        height: 40px;
+        border-bottom: 1px solid #ccc;
+        background-color: #d64635;
+        color: #fff;
+    }
+
+    .calendar .main .title li {
+        float: left;
+        height: 24px;
+        width: 14.2%;
+        text-align: center;
+        padding: 8px;
+        line-height: 24px;
+    }
+
+    .calendar .main .body {
+        background-color: #E6F3FA;
+    }
+
+    .calendar .main .body li {
+        float: left;
+        width: 14.2%;
+        text-align: center;
+        height: 60px;
+    }
+
+    .calendar .main .body li a {
+        color: #0C52D1;
+        font-family: "Arial Black";
+        font-size: x-large;
+        text-decoration: none
+    }
+
+    .calendar .main .body li a:hover {
+        color: red;
+        cursor: pointer;
+    }
+
+    .calendar .main .body li p {
+        font-family: 宋体;
+        font-weight: normal;
+        font-size: 12px;
+    }
+
+    .calendar .nav .title {
+        color: #d64635;
+        padding: 20px 15px 10px;
+    }
+
+    .calendar .nav select {
+        width: 85px;
+        padding-left: 20px;
+    }
+
+    .calendar-table tbody td {
+        text-align: center;
+    }
+
+    .calendar-table tbody td .glyphicon-trash {
+        color: #65Be42;
+    }
+    .form-body .type{
+        padding-top: 7px;
+    }
+    .form-body .type input{
+        margin-right: 5px;
+    }
+    .form-body .calendar-table{
+        margin-top: 35px;
+    }
+    /*dateAdmin-end*/
+</style>
+<div class="main">
+    <div class="title">
+        <ul>
+            <li>星期日</li>
+            <li>星期一</li>
+            <li>星期二</li>
+            <li>星期三</li>
+            <li>星期四</li>
+            <li>星期五</li>
+            <li>星期六</li>
+        </ul>
+    </div>
+    <div class="body">
+        <ul style="overflow: hidden">
+            <li ng-repeat="li in caledays" ng-style="{visibility:li.solarDay==0?'hidden':'visible'}" ng-click="getalink(li)">
+                <a ng-bind="li.solarDay" ng-style="{color:li.holiday?'red':'#0C52D1'}"></a>
+
+                <p ng-bind="li.chineseDay" ng-if="li.jieqi==''"></p>
+
+                <p ng-bind="li.jieqi" ng-if="li.jieqi" style="color: rgb(50,205,50);"></p>
+            </li>
+        </ul>
+    </div>
+</div>
+<script type="text/ng-template" id="datePicker.html">
+    <div class="portlet box red portlet-mg0 ">
+        <div class="portlet-title">
+            <div class="caption">
+                <i class="fa fa-gift"></i>工作日设置
+            </div>
+            <div class="tools">
+                <i class="fa fa-close" ng-click="cancel()"></i>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <form class="form-horizontal" role="form">
+                <div class="form-body">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">名称：</label>
+                        <div class="col-md-8">
+                            <input type="text"  class="form-control" ng-model="name"
+                                   placeholder="请输入名称"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">描述：</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" ng-model="description"
+                                   placeholder="请输入描述">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label"><span>类型：</span></label>
+                        <div class="col-md-8 type">
+                            <input type="radio" ng-model="holiday" value="0" name="holiday">节假日且放假
+                            <input type="radio" ng-model="holiday" value="1" name="holiday">节假日且不放假
+                            <input type="radio" ng-model="holiday" value="2" name="holiday">非节假日且不放假
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label"><span>规则：</span></label>
+                        <div class="col-md-8 type">
+                            <input type="radio" ng-model="ruleType" value="0" name="rule">阳历年月日
+                            <input type="radio" ng-model="ruleType" value="1" name="rule">阳历月日
+                            <input type="radio" ng-model="ruleType" value="2" name="rule" >阴历年月日
+                            <input type="radio" ng-model="ruleType" value="3" name="rule">阴历月日
+                        </div>
+                    </div>
+                    <div>
+                        <table class="table calendar-table table-bordered">
+                            <thead>
+                            <tr class="table-title1">
+                                <th class="text-center">名字</th>
+                                <th class="text-center">规则</th>
+                                <th class="text-center">工作日</th>
+                                <th class="text-center">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="li in params">
+                                <td>{{li.name}}</td>
+                                <td>{{li.ruleType|ruleTypeFilter}}</td>
+                                <td>{{li.holiday|holidayFilter}}</td>
+                                <td><i class="glyphicon glyphicon-trash" ng-click="delrules(li.id)"></i></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="calendar-modal">
+                    <div class="form-actions right1">
+                        <button type="button" class="btn green" ng-click="ok()">提交</button>
+                        <button type="submit" class="btn default" ng-click="cancel()">取消</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+</script>

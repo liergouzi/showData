@@ -1,0 +1,526 @@
+<style>
+    .digital .tablelist .head .hd-left .start{
+        float: left;
+        height: 34px;
+        line-height: 34px;
+    }
+    .digital .tablelist .head .hd-left .input-group{
+        float: left;
+    }
+    .digital .tablelist .head .hd-left .input-group .input-group-addon{
+        background-color: #fff;
+        border: none;
+        margin-left: 40px;
+    }
+</style>
+<div>
+    <div class="digital">
+        <ul class="nav nav-tabs" role="tablist">
+            <li ng-show="1+1==3" role="presentation" ng-repeat="title in titles">
+                <a href ng-click="toggle(title.id)">{{title.name}}</a>
+            </li>
+        </ul>
+        <ul class="tablelist">
+            <li ng-show='base==1'>
+                <div class="page-header">
+                    <h1>{{alltables.title}}</h1>
+                </div>
+                <div class="head">
+                    <div class="hd-left">
+                        <div class='start'>开始时间：</div>
+                        <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012"
+                             data-date-format="yyyy/mm/dd">
+                            <input type="text" class="form-control" name="from">
+                            <span class="input-group-addon">结束时间：</span>
+                            <input type="text" class="form-control" name="to">
+                        </div>
+                        <button   class='btn' style='width: 67px;margin-left: 40px;text-align: left;padding: 7px 6px;'>
+                        <i class='icon-magnifier'>查询</i>
+                        </button>
+                    </div>
+                    <div class="hd-right">
+                        <span>单位：万元</span>
+                    </div>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th ng-repeat="allthead in alltables.theads" colspan="2"
+                            ng-style="{color:allthead.alink? 'red':'#000'}">
+                            <div ng-controller="DropdownCtrl">
+                                <div class="btn-group" uib-dropdown>
+                                    <span uib-dropdown-toggle>{{allthead.name}}</span>
+                                    <ul class="dropdown-menu" uib-dropdown-menu>
+                                        <li role="menuitem"><a href="#">排序</a></li>
+                                        <li role="menuitem"><a href="#">上钻</a></li>
+                                        <li role="menuitem"><a ng-click="nextClick(allthead.alink)">下钻</a></li>
+                                        <li role="menuitem"><a href="#">横列转置</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </th>
+                        <th>合计</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td></td>
+                    </tr>
+                    <tr ng-repeat="alltbody in alltables.tbodys">
+                        <td ng-style="{color:alltbody.alink? 'red':'#000'}">
+                            <div ng-controller="DropdownCtrl">
+                                <div class="btn-group" uib-dropdown>
+                                    <span uib-dropdown-toggle>{{alltbody.week}}</span>
+                                    <ul class="dropdown-menu" uib-dropdown-menu>
+                                        <li role="menuitem"><a href="#">排序</a></li>
+                                        <li role="menuitem"><a href="#">上钻</a></li>
+                                        <li role="menuitem"><a href="#" ng-click="nextClick(alltbody.alink)">下钻</a></li>
+                                        <li role="menuitem"><a href="#">横列转置</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{alltbody.Sales}}</td>
+                        <td>{{alltbody.percentage}}</td>
+                        <td>{{alltbody.Dsales}}</td>
+                        <td>{{alltbody.Dpercentage}}</td>
+                        <td>{{alltbody.redsales}}</td>
+                        <td>{{alltbody.redpercentage}}</td>
+                        <td>{{alltbody.bulesales}}</td>
+                        <td>{{alltbody.bluepercentage}}</td>
+                        <td>{{alltbody.Qsales}}</td>
+                        <td>{{alltbody.Qpercentage}}</td>
+                        <td>{{alltbody.Tsales}}</td>
+                        <td>{{alltbody.Tpercentage}}</td>
+                        <td>{{alltbody.weeksum}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <div id="alltable-left" class="col-lg-6 col-xs-12 echar">
+                    </div>
+                    <div id="alltable-right" class="col-lg-6 col-xs-12 echar">
+                    </div>
+                </div>
+            </li>
+            <li ng-show='base==2'>
+                <div class="page-header">
+                    <h1>{{weektables.title}}</h1>
+                </div>
+                <div class="head">
+                    <div class="hd-left">
+                        <div class='start'>开始时间：</div>
+                        <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012"
+                             data-date-format="yyyy/mm/dd">
+                            <input type="text" class="form-control" name="from">
+                            <span class="input-group-addon">结束时间：</span>
+                            <input type="text" class="form-control" name="to">
+                        </div>
+                        <button   class='btn' style='width: 67px;margin-left: 40px;text-align: left;padding: 7px 6px;'>
+                            <i class='icon-magnifier'>查询</i>
+                        </button>
+                    </div>
+                    <div class="hd-right">
+                        <span>单位：万元</span>
+                    </div>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th ng-repeat="weekthead in weektables.theads" colspan="2"
+                            ng-style="{color:weekthead.alink? 'red':'#000'}">
+                            <div ng-controller="DropdownCtrl">
+                                <div class="btn-group" uib-dropdown>
+                                    <span uib-dropdown-toggle>{{weekthead.name}}</span>
+                                    <ul class="dropdown-menu" uib-dropdown-menu>
+                                        <li role="menuitem"><a href="#">排序</a></li>
+                                        <li role="menuitem"><a href="#">上钻</a></li>
+                                        <li role="menuitem"><a ng-click="nextClick(weekthead.alink)">下钻</a></li>
+                                        <li role="menuitem"><a href="#">横列转置</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </th>
+                        <th>合计</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td></td>
+                    </tr>
+                    <tr ng-repeat="weektbody in weektables.tbodys">
+                        <td ng-style="{color:weektbody.alink? 'red':'#000'}">
+                            <div ng-controller="DropdownCtrl">
+                                <div class="btn-group" uib-dropdown>
+                                    <span uib-dropdown-toggle>{{weektbody.week}}</span>
+                                    <ul class="dropdown-menu" uib-dropdown-menu>
+                                        <li role="menuitem"><a href="#">排序</a></li>
+                                        <li role="menuitem"><a href="#">上钻</a></li>
+                                        <li role="menuitem"><a href="#" ng-click="nextClick(weektbody.alink)">下钻</a>
+                                        </li>
+                                        <li role="menuitem"><a href="#">横列转置</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{weektbody.Sales}}</td>
+                        <td>{{weektbody.percentage}}</td>
+                        <td>{{weektbody.Dsales}}</td>
+                        <td>{{weektbody.Dpercentage}}</td>
+                        <td>{{weektbody.redsales}}</td>
+                        <td>{{weektbody.redpercentage}}</td>
+                        <td>{{weektbody.bulesales}}</td>
+                        <td>{{weektbody.bluepercentage}}</td>
+                        <td>{{weektbody.Qsales}}</td>
+                        <td>{{weektbody.Qpercentage}}</td>
+                        <td>{{weektbody.Tsales}}</td>
+                        <td>{{weektbody.Tpercentage}}</td>
+                        <td>{{weektbody.weeksum}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div id="weektable" class="echar">
+                </div>
+            </li>
+            <li ng-show='base==3'>
+                <div class="page-header">
+                    <h1>{{daytables.title}}</h1>
+                </div>
+                <div class="head">
+                    <div class="hd-left">
+                        <div class='start'>开始时间：</div>
+                        <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012"
+                             data-date-format="yyyy/mm/dd">
+                            <input type="text" class="form-control" name="from">
+                            <span class="input-group-addon">结束时间：</span>
+                            <input type="text" class="form-control" name="to">
+                        </div>
+                        <button   class='btn' style='width: 67px;margin-left: 40px;text-align: left;padding: 7px 6px;'>
+                            <i class='icon-magnifier'>查询</i>
+                        </button>
+                    </div>
+                    <div class="hd-right">
+                        <span>单位：万元</span>
+                    </div>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th ng-repeat="daythead in daytables.theads" colspan="2"
+                            ng-style="{color:daythead.alink? 'red':'#000'}">
+                            <div ng-controller="DropdownCtrl">
+                                <div class="btn-group" uib-dropdown>
+                                    <span uib-dropdown-toggle>{{daythead.name}}</span>
+                                    <ul class="dropdown-menu" uib-dropdown-menu>
+                                        <li role="menuitem"><a href="#">排序</a></li>
+                                        <li role="menuitem"><a href="#">上钻</a></li>
+                                        <li role="menuitem"><a ng-click="nextClick(daythead.alink)">下钻</a></li>
+                                        <li role="menuitem"><a href="#">横列转置</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </th>
+                        <th>合计</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td></td>
+                    </tr>
+                    <tr ng-repeat="daytbody in daytables.tbodys">
+                        <td ng-style="{color:daytbody.alink? 'red':'#000'}">
+                            <div ng-controller="DropdownCtrl">
+                                <div class="btn-group" uib-dropdown>
+                                    <span uib-dropdown-toggle>{{daytbody.week}}</span>
+                                    <ul class="dropdown-menu" uib-dropdown-menu>
+                                        <li role="menuitem"><a href="#">排序</a></li>
+                                        <li role="menuitem"><a href="#">上钻</a></li>
+                                        <li role="menuitem"><a href="#" ng-click="nextClick(daytbody.alink)">下钻</a></li>
+                                        <li role="menuitem"><a href="#">横列转置</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{daytbody.Sales}}</td>
+                        <td>{{daytbody.percentage}}</td>
+                        <td>{{daytbody.Dsales}}</td>
+                        <td>{{daytbody.Dpercentage}}</td>
+                        <td>{{daytbody.redsales}}</td>
+                        <td>{{daytbody.redpercentage}}</td>
+                        <td>{{daytbody.bulesales}}</td>
+                        <td>{{daytbody.bluepercentage}}</td>
+                        <td>{{daytbody.Qsales}}</td>
+                        <td>{{daytbody.Qpercentage}}</td>
+                        <td>{{daytbody.Tsales}}</td>
+                        <td>{{daytbody.Tpercentage}}</td>
+                        <td>{{daytbody.weeksum}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div id="daytable" class="echar">
+
+                </div>
+            </li>
+            <li ng-show='base==4'>
+                <div class="page-header">
+                    <h1>{{sitetables.title}}</h1>
+                </div>
+                <div class="head">
+                    <div class="hd-left">
+                        <div class='start'>开始时间：</div>
+                        <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012"
+                             data-date-format="yyyy/mm/dd">
+                            <input type="text" class="form-control" name="from">
+                            <span class="input-group-addon">结束时间：</span>
+                            <input type="text" class="form-control" name="to">
+                        </div>
+                        <button   class='btn' style='width: 67px;margin-left: 40px;text-align: left;padding: 7px 6px;'>
+                            <i class='icon-magnifier'>查询</i>
+                        </button>
+                    </div>
+                    <div class="hd-right">
+                        <span>单位：万元</span>
+                    </div>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th ng-repeat="sitethead in sitetables.theads" colspan="2"
+                            ng-style="{color:sitethead.alink? 'red':'#000'}">
+                            <div ng-controller="DropdownCtrl">
+                                <div class="btn-group" uib-dropdown>
+                                    <span uib-dropdown-toggle>{{sitethead.name}}</span>
+                                    <ul class="dropdown-menu" uib-dropdown-menu>
+                                        <li role="menuitem"><a href="#">排序</a></li>
+                                        <li role="menuitem"><a href="#">上钻</a></li>
+                                        <li role="menuitem"><a ng-click="nextClick(sitethead.alink)">下钻</a></li>
+                                        <li role="menuitem"><a href="#">横列转置</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </th>
+                        <th>合计</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>
+                            <div ng-controller="DropdownCtrl">
+                                <div class="btn-group" uib-dropdown>
+                                    <span uib-dropdown-toggle>占比</span>
+                                    <ul class="dropdown-menu" uib-dropdown-menu>
+                                        <li role="menuitem" class="filter"><a href="#">筛选</a>
+                                            <div class="selectinput">
+                                                请输入条件:<input type="text" placeholder=""/>
+                                                <button class="btn btn-sm btn-success">确定</button>
+                                            </div>
+                                        </li>
+                                        <li role="menuitem"><a href="#">排序</a></li>
+                                        <li role="menuitem" class='topten'><a href="#"><i
+                                                class='glyphicon glyphicon-arrow-up'></i> Top10</a></li>
+                                        <li role="menuitem"><a href="#"><i class='glyphicon glyphicon-arrow-down'></i>
+                                            Low10</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr ng-repeat="sitetbody in sitetables.tbodys">
+                        <td ng-style="{color:sitetbody.alink? 'red':'#000'}">
+                            <div ng-controller="DropdownCtrl">
+                                <div class="btn-group" uib-dropdown>
+                                    <span uib-dropdown-toggle>{{sitetbody.week}}</span>
+                                    <ul class="dropdown-menu" uib-dropdown-menu>
+                                        <li role="menuitem"><a href="#">排序</a></li>
+                                        <li role="menuitem"><a href="#">上钻</a></li>
+                                        <li role="menuitem"><a href="#" ng-click="nextClick(sitetbody.alink)">下钻</a>
+                                        </li>
+                                        <li role="menuitem"><a href="#">横列转置</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{sitetbody.Sales}}</td>
+                        <td>{{sitetbody.percentage}}</td>
+                        <td>{{sitetbody.Dsales}}</td>
+                        <td>{{sitetbody.Dpercentage}}</td>
+                        <td>{{sitetbody.redsales}}</td>
+                        <td>{{sitetbody.redpercentage}}</td>
+                        <td>{{sitetbody.bulesales}}</td>
+                        <td>{{sitetbody.bluepercentage}}</td>
+                        <td>{{sitetbody.Qsales}}</td>
+                        <td>{{sitetbody.Qpercentage}}</td>
+                        <td>{{sitetbody.Tsales}}</td>
+                        <td>{{sitetbody.Tpercentage}}</td>
+                        <td>{{sitetbody.weeksum}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </li>
+            <li ng-show='base==7'>
+                <div class="page-header">
+                    <h1>{{sitetables.title}}</h1>
+                </div>
+                <div class="head">
+                    <div class="hd-left">
+                        <div class='start'>开始时间：</div>
+                        <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012"
+                             data-date-format="yyyy/mm/dd">
+                            <input type="text" class="form-control" name="from">
+                            <span class="input-group-addon">结束时间：</span>
+                            <input type="text" class="form-control" name="to">
+                        </div>
+                        <button   class='btn' style='width: 67px;margin-left: 40px;text-align: left;padding: 7px 6px;'>
+                            <i class='icon-magnifier'>查询</i>
+                        </button>
+                    </div>
+                    <div class="hd-right">
+                        <span>单位：万元</span>
+                    </div>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th ng-repeat="sitethead in siteSorttables.theads" colspan="2">
+                            <div ng-controller="DropdownCtrl">
+                                <div class="btn-group" uib-dropdown>
+                                    <span uib-dropdown-toggle>{{sitethead.name}}</span>
+                                    <ul class="dropdown-menu" uib-dropdown-menu>
+                                        <li role="menuitem"><a href="#">排序</a></li>
+                                        <li role="menuitem"><a href="#">上钻</a></li>
+                                        <li role="menuitem"><a href="#">下钻</a></li>
+                                        <li role="menuitem"><a href="#">横列转置</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </th>
+                        <th>合计</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>占比</td>
+                        <td>销量</td>
+                        <td>
+                            <div ng-controller="DropdownCtrl">
+                                <div class="btn-group" uib-dropdown>
+                                    <span uib-dropdown-toggle>占比</span>
+                                    <ul class="dropdown-menu" uib-dropdown-menu>
+                                        <li role="menuitem" class="filter"><a href="#">筛选</a>
+                                            <div class="selectinput">
+                                                请输入条件:<input type="text" placeholder=""/>
+                                                <button class="btn btn-sm btn-success">确定</button>
+                                            </div>
+                                        </li>
+                                        <li role="menuitem"><a href="#">排序</a></li>
+                                        <li role="menuitem" class='topten'><a href="#"><i
+                                                class='glyphicon glyphicon-arrow-up'></i> Top10</a></li>
+                                        <li role="menuitem"><a href="#"><i class='glyphicon glyphicon-arrow-down'></i>
+                                            Low10</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr ng-repeat="sitetbody in siteSorttables.tbodys">
+                        <td ng-style="{color:sitetbody.alink? 'red':'#000'}">
+                            <div ng-controller="DropdownCtrl">
+                                <div class="btn-group" uib-dropdown>
+                                    <span uib-dropdown-toggle>{{sitetbody.week}}</span>
+                                    <ul class="dropdown-menu" uib-dropdown-menu>
+                                        <li role="menuitem"><a href="#">排序</a></li>
+                                        <li role="menuitem"><a href="#">上钻</a></li>
+                                        <li role="menuitem"><a href="#">下钻</a></li>
+                                        <li role="menuitem"><a href="#">横列转置</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{sitetbody.Sales}}</td>
+                        <td>{{sitetbody.percentage}}</td>
+                        <td>{{sitetbody.Dsales}}</td>
+                        <td>{{sitetbody.Dpercentage}}</td>
+                        <td>{{sitetbody.redsales}}</td>
+                        <td>{{sitetbody.redpercentage}}</td>
+                        <td>{{sitetbody.bulesales}}</td>
+                        <td>{{sitetbody.bluepercentage}}</td>
+                        <td>{{sitetbody.Qsales}}</td>
+                        <td>{{sitetbody.Qpercentage}}</td>
+                        <td>{{sitetbody.Tsales}}</td>
+                        <td>{{sitetbody.Tpercentage}}</td>
+                        <td>{{sitetbody.weeksum}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </li>
+        </ul>
+    </div>
+</div>

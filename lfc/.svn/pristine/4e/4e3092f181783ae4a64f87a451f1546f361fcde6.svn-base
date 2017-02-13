@@ -1,0 +1,13 @@
+<div class="bottom-15" style="position: relative" ng-init="rules.ruleDefine.name = ruleName;rules.rule = ruleName">
+    <span style="position: absolute;left: -87px;
+    top: 10px">提醒指标</span>
+    <span>应缴款大于</span><input type="text" class="sm-input" ng-model="rules.ruleDefine.warnRule.params.fund" style="width: 200px" >万
+</div><div class="bottom-15" style="position: relative">
+    <span style="position: absolute;left: -87px;
+    top: 10px">违规指标</span>
+    <span>应缴款大于</span><input type="text" class="sm-input" ng-model="rules.ruleDefine.illegalRule.params.fund" style="width: 200px" >万
+</div><div class="bottom-15" style="position: relative">
+    <span style="position: absolute;left: -87px;
+    top: 10px">预警指标</span>
+    <span>应缴款大于</span><input type="text" class="sm-input" ng-model="rules.ruleDefine.stopRule.params.fund" style="width: 200px" >万
+</div>

@@ -1,0 +1,59 @@
+<div data-ng-controller="restController">
+    <div data-ng-controller="bettingMachineCtrl" class="row table-list">
+        <div class="col-md-12 title">
+            搜索条件
+        </div>
+        <!--搜索条件-->
+        <div id="toolbar" class="table-search clearfix">
+            <div class="form-group col-md-6 col-lg-3 sm-3">
+                <label>模糊搜索</label>
+                <input type="text" ng-model="filter.code$station__name$$LIKE" placeholder="投注机编号/站点名称"/>
+            </div>
+            <div class="form-group col-md-6 col-lg-3 sm-3">
+                <label>站点类型</label>
+                <select ng-model="filter.station__type">
+                    <option value="">---所有---</option>
+                    <option ng-repeat="opt in dicts['ZDLX']" ng-value="opt.value">{{opt.name}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6 col-lg-3 sm-3">
+                <label>所属区县</label>
+                <select ng-model="filter.station__regionId">
+                    <option value="">---所有---</option>
+                    <option ng-repeat="opt in regions" ng-value="opt.id">{{opt.name}}</option>
+                </select>
+            </div>
+            <div class="form-group col-md-6 col-lg-3 sm-3">
+                <label>分支机构</label>
+                <select ng-model="filter.station__company__id" >
+                    <option value="">---所有---</option>
+                    <option ng-repeat="li in company" value="{{li.id}}">{{li.name}}</option>
+                </select>
+            </div>
+            <div class="form-group col-lg-1 col-sm-12">
+                <button class="btn" id="ok"><i class="icon-magnifier"></i>查询</button>
+            </div>
+        </div>
+        <!--表格-->
+        <div class="col-md-12 portlet-body custom">
+            <div class="table-title clearfix">投注机列表</div>
+            <table cz-table-control cz-delegate-handle="delegateHandle" data-search-toolbar="#toolbar" data-sort-name="id" data-show-print="false"
+                   data-toggle="table" data-advanced-search="true" data-url="/rest/machine?_method=get"
+                   data-show-export="true" data-show-refresh="true" data-show-columns="true">
+                <thead>
+                <tr>
+                    <th data-align="center" cz-index-column="true">序号</th>
+                    <th data-field="station_code" data-align="center" data-sortable="false">站点编号</th>
+                    <th data-field="station_name" data-align="center" data-sortable="true">名称</th>
+                    <th data-field="station_company_name" data-align="center" data-sortable="false">分支机构</th>
+                    <th data-field="station_region_name" data-align="center" data-sortable="false">所属区县</th>
+                    <th data-field="station_type" data-align="center" data-sortable="false" data-dict="ZDLX" cz-column-formatter="formatter.formatDictByValue">站点类型</th>
+                    <th data-field="code" data-align="center" data-sortable="false">投注机编号</th>
+                    <th data-field="openTime" data-align="center" data-sortable="false">开通时间</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+</div>

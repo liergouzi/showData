@@ -1,0 +1,297 @@
+<div data-ng-controller="restController">
+    <div data-ng-controller="siteDetailsCtrl as vm">
+        <h3 class="page-title site-title"><a onclick="javascript :history.back(-1);"><i
+                class='glyphicon glyphicon-chevron-left back' style='color:#CB4737;' title="返回列表"></i></a>{{params.station.name}}</span>
+        </h3>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="portlet light bordered radius basic sm">
+                    <p class="sitetitle">基本信息</p>
+                    <div class="col-md-12">
+                        <div class="col-md-6">
+                            <p>站点编号:{{params.station.code}}</p>
+
+                            <p>投注站名称:{{params.station.name}}</p>
+
+                            <p>所属区县:{{params.station.region_name}}</p>
+
+                            <p>站长姓名:{{params.station.leaderUser_name}}</p>
+
+                            <p>路由器:{{params.station.route}}</p>
+
+                            <p>站点类型:{{params.station.type|stationTypeFilter}}</p>
+
+                            <p ng-if="params.station.rightType!='0'">企业名称:{{params.ownerCompanyName}}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p>旧站点编号:{{params.station.oldCode}}</p>
+
+                            <p>开通时间:{{params.station.openTime}}</p>
+
+                            <p>详细地址:{{params.station.address}}</p>
+
+                            <p>电话:{{params.station.tel}}</p>
+
+                            <p>置换时间:{{params.station.routeChangeTime}}</p>
+
+                            <p ng-if="params.station.rightType=='0'">是否企业:否</p>
+
+                            <p ng-if="params.station.rightType!='0'">是否企业:是</p>
+
+                            <p ng-if="params.station.rightType!='0'">企业统一信用代码:{{params.station.ownerCompanyCode}}</p>
+                        </div>
+                    </div>
+                    <div class="col-md-12 text-right btnbtn" style="margin: 10px 0px;">
+                        <button style="color: #FBC648;border-color: #FBC648">彩站历史</button>
+                        <button style="color: #1EC8D2;border-color: #1EC8D2;"
+                                ng-click="vm.href({'stationId':params.station.id})">代销协议与押金
+                        </button>
+                    </div>
+                    <sm-carous ng-if="params.attach" size="3" img-arr="params.attach"></sm-carous>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="portlet light bordered radius admin sm">
+                    <p class="sitetitle">店主信息</p>
+                    <div class="text-bottom site-photo"  style="vertical-align: bottom">
+                        <img src="{{params.shopOwner.photourl|photoFilter}}" width="90" height="90" class="img-circle">
+
+                        <p style="margin-top: 10px">姓名:{{params.shopOwner.name}}</p>
+
+                        <p>是否站长:{{params.shopOwner.leaderFlag}}</p>
+                    </div>
+                    <div class="text-bottom">
+                        <p>年龄:{{params.shopOwner.identification | ageFilter}}</p>
+
+                        <p>学历:{{params.shopOwner.education}}</p>
+
+                        <p>职业:{{params.shopOwner.occupation}}</p>
+
+                        <p>身体状体:{{params.shopOwner.bodyState}}</p>
+
+                        <p>开卡人姓名:{{params.bankCard.personName}}</p>
+                    </div>
+                    <div class="text-bottom">
+                        <p>户口所在地:{{params.shopOwner.registeredResidence}}</p>
+
+                        <p>电话:{{params.shopOwner.phone}}</p>
+
+                        <p>身份证号:{{params.shopOwner.identification}}</p>
+
+                        <p>开卡身份证:{{params.bankCard.personIdentification}}</p>
+
+                        <p>储存卡号:{{params.bankCard.cardCode}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="portlet light bordered radius other sm">
+                    <p class="sitetitle">投注站其他信息</p>
+
+                    <div class="col-md-6">
+                        <p>上年度销售总额（万元）：{{params.stationInfo.yestYearSale|moneyFilter}}</p>
+
+                        <p>投注站等级：{{params.stationInfo.leave}}</p>
+
+                        <p>普通游戏佣金（%）：{{params.stationInfo.commonGameMoney}}</p>
+
+                        <p>特殊游戏佣金（%）：{{params.stationInfo.specialGameMoney}}</p>
+
+                        <p>月租金：{{params.stationInfo.monthRent}}元</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>兼营项目：{{params.stationInfo.otherShopProject}}</p>
+
+                        <p>提成比例（%）：{{params.stationInfo.commissionScale}}</p>
+
+                        <p ng-if="params.stationInfo.sportFlag=='notSale'">是否代售体彩：否</p>
+
+                        <p ng-if="params.stationInfo.sportFlag!='notSale'">是否代售体彩：是</p>
+
+                        <p>经营面积m2：{{params.stationInfo.stationSpace}}</p>
+
+                        <p ng-if="params.rightType=='0'">产权类型：个人</p>
+
+                        <p ng-if="params.rightType!='0'">产权类型：企业</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="portlet light bordered radius sm" id="left-box">
+                    <p class="sitetitle">销售员信息</p>
+                    <table class="table table-border text-center">
+                        <thead>
+                        <tr class="text-center">
+                            <th>姓名</th>
+                            <th>性别</th>
+                            <th>年龄</th>
+                            <th>身份证号</th>
+                            <th>详细信息</th>
+                            <th>是否站长</th>
+                        </tr>
+                        </thead>
+                        <tr repeat-finish ng-repeat="li in params.salesPerson| orderBy : '-leaderFlag'">
+                            <td>{{li.name}}</td>
+                            <td>{{li.sex|sexFilter}}</td>
+                            <td>{{li.identification|ageFilter}}</td>
+                            <td>{{li.identification}}</td>
+                            <td ng-click="vm.openSalesMan(li.id)"><button class="lookbtn">查看</button></td>
+                            <td ng-style="{color:li.leaderFlag=='是'?'#DF2D2D':'#000'}">{{li.leaderFlag}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="portlet light bordered radius sm" id="right-box">
+                    <p class="sitetitle">设备信息</p>
+                    <table class="table table-border text-center">
+                        <thead>
+                        <tr class="text-center">
+                            <th>设备名称</th>
+                            <th>设备编号</th>
+                            <th>装机时间</th>
+                        </tr>
+                        </thead>
+                        <tr repeat-finish ng-repeat="x in params.machines">
+                            <td>{{x.name}}</td>
+                            <td>{{x.code}}</td>
+                            <td>{{x.installTime}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="portlet light bordered radius sm">
+                    <div class="sitetitle" style="position: relative">
+                        <p>销量信息</p>
+                        <div class="title-date1">
+                            <select style="width: 100px" ng-change="vm.changeyear()" ng-options="m.value as m.name for m in years" ng-model="year">
+                                <option value="">请选择年</option>
+                            </select>
+                            |
+                            <select ng-model="month" style="width: 80px" ng-change="vm.changemonth()" ng-options="m.value as m.name for m in months">
+                                <option value="">所有</option>
+                            </select>
+                            |
+                            <select ng-model="day" style="width:80px" ng-change="vm.changeday()"  ng-options="m.value as m.name for m in days">
+                                <option value="">所有</option>
+                                <option ng-repeat="opt in days" ng-value="opt">{{opt}}日</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="inline-block" style="width: 70%;vertical-align: top">
+                        <table class=" table table-bordered" style="text-align: center">
+                            <thead>
+                            <tr class="gray-title">
+                                <th>项目</th>
+                                <th>本月销量累计（万元）</th>
+                                <th>与全市站点均值（万元）比较</th>
+                                <th>当月销量最高（万元）</th>
+                                <th>当月销量最低（万元）</th>
+                                <th>当前得分</th>
+                            </tr>
+                            </thead>
+                            <tr ng-repeat="li in salesTable"
+                                ng-class="{'color-blue':li.color=='blue','color_red':li.color=='red','color-black':li.color=='black'}">
+                                <td>{{li.lotteryType}}</td>
+                                <td>{{li.sum}}</td>
+                                <td>{{li.compareOfAvg || '-'}}</td>
+                                <td>{{li.top}}</td>
+                                <td>{{li.low}}</td>
+                                <td>{{li.score}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="inline-block" style="width: 27%;height: 320px;text-align:center">
+                        截止昨日年度总销量（万元）：{{salesOfYear.sum}}
+                        <div id="instrument" style="width: 100%;height: 280px;">
+                        </div>
+                        <span ng-if="salesOfYear.compangAvg>=100">
+                            亲，您超过全市销售平均值{{salesOfYear.compangAvg-100|number:2}}%
+                        </span>
+                        <span ng-if="salesOfYear.compangAvg<100">
+                            亲，您距离全市销售平均值还差{{100-salesOfYear.compangAvg|number:2}}%
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="portlet light portlet-fit bordered">
+                    <div class="portlet-title text-c">
+                        考核情况
+                    </div>
+                    <div class="portlet-body">
+                        <div class="text-c" style="font-size: 18px">{{checkResult.month}}份的考核得分为:<span>{{checkResult.sumScore}}</span>
+
+                            <div class="title-date1" style="top:70px !important;left: 70% !important;">
+                                <select ng-model="year1" style="width: 100px" ng-change="vm.changeyear1()" ng-options="m.value as m.name for m in years">
+                                    <option value="">选择年份</option>
+                                    <!--<option ng-repeat="opt in years" ng-value="opt" ng-selected="opt==year1">{{opt}}年-->
+                                    <!--</option>-->
+                                </select>
+                                |
+                                <select ng-model="month1" style="width: 60px" ng-change="vm.changemonth1()" ng-options="m.value as m.name for m in months">
+                                    <option value="">选择月份</option>
+                                    <!--<option ng-repeat="opt in months" ng-value="opt" ng-selected="opt==month1">-->
+                                        <!--{{opt}}月-->
+                                    <!--</option>-->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <div id="cake" style="height:500px;"></div>
+                        <!--<div id="cake" style="height:500px;" class="col-md-8 col-xm-8">-->
+                        <!--</div>-->
+                        <!--<div class="sitedetails-range col-md-4 col-xs-4">-->
+                            <!--<p>扣分说明</p>-->
+
+                            <!--<div class="row">-->
+                                <!--<p>7月15未开机满15小时，扣三分</p>-->
+                                <!--<div class="col-md-8 col-xs-8">-->
+                                    <!--<div class="progress">-->
+                                        <!--<div class="progress-bar progress-bar-success" style="width: 70%">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="col-md-4 col-xs-4">7/10分</div>-->
+                            <!--</div>-->
+                            <!--<div class="row">-->
+                                <!--<p>7月15未开机满15小时，扣三分</p>-->
+
+                                <!--<div class="col-md-8 col-xs-8">-->
+                                    <!--<div class="progress">-->
+                                        <!--<div class="progress-bar progress-bar-info" style="width: 20%">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="col-md-4 col-xs-4">7/10分</div>-->
+                            <!--</div>-->
+                            <!--<div class="row">-->
+                                <!--<p>7月15未开机满15小时，扣三分</p>-->
+                                <!--<div class="col-md-8 col-xs-8">-->
+                                    <!--<div class="progress  ">-->
+                                        <!--<div class="progress-bar progress-bar-warning" style="width: 60%">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="col-md-4 col-xs-4">7/10分</div>-->
+                            <!--</div>-->
+                            <!--<div class="row">-->
+                                <!--<p>7月15未开机满15小时，扣三分</p>-->
+                                <!--<div class="col-md-8 col-xs-8">-->
+                                    <!--<div class="progress ">-->
+                                        <!--<div class="progress-bar progress-bar-danger" style="width: 80%">-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="col-md-4 col-xs-4">7/10分</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<div data-ng-controller="restController" data-options="{initLoad:'false'}">
+<div data-ng-controller="machineStatusCtrl" class="row table-list">
+    <div class="col-md-12 title">
+        搜索条件
+    </div>
+    <!--搜索条件-->
+    <div id="toolbar" class="table-search clearfix">
+        <div class="form-group col-md-6 col-lg-3">
+            <label>模糊搜索</label>
+            <input type="text" ng-model="filter.machine__code$station__name$$LIKE" placeholder="站点名称/投注机编号"/>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label>分支机构</label>
+            <select ng-model="filter.station__company__id" >
+                <option value="">---所有---</option>
+                <option ng-repeat="li in company" value="{{li.id}}">{{li.name}}</option>
+            </select>
+        </div>
+        <button class="btn" id="ok"><i class="icon-magnifier"></i>查询</button>
+    </div>
+    <!--表格-->
+    <div class="col-md-12 portlet-body custom">
+        <div class="table-title clearfix">投注机开停机列表</div>
+        <table cz-table-control cz-delegate-handle="delegateHandle" data-search-toolbar="#toolbar" data-sort-name="id" data-show-print="false"
+               data-toggle="table" data-advanced-search="true" data-url="/rest/machineStartStopHistory?_method=get"
+               data-show-export="true" data-show-refresh="true" data-show-columns="true">
+            <thead>
+            <tr>
+                <th data-align="center" cz-index-column="true">序号</th>
+                <th data-field="station_name" data-align="center" data-sortable="false">站点名称</th>
+                <th data-field="station_address" data-align="center" data-sortable="false">地址</th>
+                <th data-field="station_company_name" data-align="center" data-sortable="false">分支机构</th>
+                <th data-field="machine_code" data-align="center" data-sortable="false">投注机编号</th>
+                <th data-field="stopTime" data-align="center" data-sortable="false">停机录入时间</th>
+                <th data-field="stopDept_name" data-align="center" data-sortable="false">停机录入部门</th>
+                <th data-field="stopReason" data-align="center" data-sortable="false">停机原因</th>
+                <th data-field="startTime" data-align="center" data-sortable="false">开机录入时间</th>
+                <th data-field="startDept_name" data-align="center" data-sortable="false">开机录入部门</th>
+                <th data-field="startTime" data-align="center" data-sortable="false">开机时间</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div></div>

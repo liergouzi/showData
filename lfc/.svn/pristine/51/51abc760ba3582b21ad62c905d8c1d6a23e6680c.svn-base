@@ -1,0 +1,106 @@
+<div data-ng-controller="restController" >
+<div data-ng-controller="siteIllegalCtrl as vm" class="row table-list">
+    <div class="col-md-12 title">
+        搜索条件
+    </div>
+    <!--搜索条件-->
+    <div class="table-search learfix" id="toolbar">
+        <div class="form-group col-md-6 col-lg-3">
+            <label>模糊搜索</label>
+            <input type="text" placeholder="站点名称/地址/编号/站长" ng-model="searchKey"/>
+        </div>
+        <div class="form-group col-lg-9 col-sm-12">
+            <label>上报时间</label>
+            <div class="inline-block date date-picker" style="position: relative" data-date="new Date()"
+                 data-date-format="yyyy-mm-dd"
+                 data-date-viewmode="years">
+                <input ng-model="begintime" ng-change="datechange()"/>
+                <i class="btn sm-btn default fa fa-calendar"></i>
+            </div>
+            --
+            <div class="inline-block date date-picker" style="position: relative" data-date="new Date()"
+                 data-date-format="yyyy-mm-dd" minDate="2016-12-22"
+                 data-date-viewmode="years">
+                <input ng-model="endtime" ng-change="datechange()"/>
+                <i class="btn sm-btn default fa fa-calendar"></i>
+            </div>
+            <button class="btn" ng-click="click()"><i class="icon-magnifier"></i>查询</button>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label>违规类别</label>
+            <select ng-model="categoryId" >
+                <option value="">---所有---</option>
+                <option ng-repeat="li in kpiCategory" value="{{li.id}}">{{li.name}}</option>
+            </select>
+        </div>
+        <div class="form-group col-md-3 col-lg-9">
+            <label>分支机构</label>
+            <select ng-model="companyId">
+                <option value="">---所有---</option>
+                <option ng-repeat="li in company" value="{{li.id}}">{{li.name}}</option>
+            </select>&nbsp;&nbsp;&nbsp;
+            <label class="mt-checkbox mt-checkbox-outline">
+                <input type="checkbox" name="today" ng-model="today" ng-change="selecttoday()">只显示今日违规
+                <span></span>
+            </label>
+        </div>
+    </div>
+    <!--表格-->
+    <div class="col-md-12">
+        <div class="table-title clearfix">
+            <span class="col-md-6">站点列表</span>
+        </div>
+        <div>
+            <h5 style="padding-left: 20px">序号</h5>
+            <div class="custom-table clearfix"   ng-repeat="x in vm.list"><!--repeat-->
+                <div class="custom-thead clearfix">
+                    <div class="th"><span style="padding: 0 22px">{{$index+1}}</span>站点信息</div>
+                    <div class="right-box">
+                        <div class="th left32" style="width:19%;">违规类别</div>
+                        <div class="th" style="width:23%;">违规指标</div>
+                        <div class="th" style="width:10%;">扣分</div>
+                        <div class="th" style="width:15%;">上报人</div>
+                        <div class="th" style="width:15%;">上报时间</div>
+                        <div class="th" style="width: 18%">操作</div>
+                    </div>
+                </div>
+                <div class="custom-tbody clearfix" >
+                    <div class="left-box">
+                        <div><span>站点编号：</span>{{x.stationDetails.station.code}}</div>
+                        <div><span>站点名称：</span>{{x.stationDetails.station.name}}</div>
+                        <div><span>站点地址：</span>{{x.stationDetails.station.address}}</div>
+                        <div><span>分支机构：</span>{{x.stationDetails.station.companyName}}</div>
+                        <div><span>站长：</span>{{x.stationDetails.leaderName}}</div>
+                        <div class="btn-launch">
+                            <div ng-click="vm.earlyWarning(x)"  ng-if="x.stationDetails.station.status=='violation'" class="inline-block"><i class="fa fa-exclamation-circle"></i>发起停机预警</div>
+                            <div  ng-if="x.stationDetails.station.status!='violation'" class="inline-block disabled"><i class="fa fa-exclamation-circle"></i>已进入停机预警状态</div>
+                            <div ng-click="vm.launchTask(x.stationDetails.station)" class="inline-block"><i class="fa fa-bell"></i>发起紧急任务</div>
+                        </div>
+                    </div><div class="right-box">
+                    <div repeat-finish  ng-repeat="li in x.lstCatagoryResults" class="clearfix" ng-class="{smBorder:$index!=0}">
+                        <div class="td left32" style="vertical-align: top;width: 19%;">{{li.catagoryName}}</div>
+                        <div class="box-list clearfix" ng-class="{blank:$index!=0}" ng-repeat="item in li.kpiresults">
+                            <div class="td"  style="width:23%;">
+                                <div class="indent">{{item.kpiContent}}</div>
+                            </div>
+                            <div class="td" style="width:10%;">
+                                {{item.score}}
+                            </div>
+                            <div class="td" style="width:15%;">
+                                {{item.creatorName}}
+                            </div>
+                            <div class="td" style="width:15%;">
+                                {{item.createDate}}
+                            </div>
+                            <div class="td" style="width:18%;">
+                                <a class="popup"><span>查看详情</span><i ng-click="vm.details(item.id)" class="glyphicon glyphicon-eye-open" style="color: #1A9ED8;"></i></a>
+                                <a class="popup"><span>删除</span><i ng-click="vm.del(item.id)" class="glyphicon glyphicon-trash" style="color: #65Be42"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div></div>

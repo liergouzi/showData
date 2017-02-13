@@ -1,0 +1,41 @@
+<div>
+    <div class="portlet box red portlet-mg0 ">
+        <div class="portlet-title" style="min-height: 36px">
+            <div class="caption" style="padding: 8px 0 6px;">修改密码</div>
+            <div class="tools" style="padding: 10px 0 5px;">
+                <i class="fa fa-close big-icon" ng-click="cancel()"></i>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <form class="form-horizontal" role="form">
+                <div class="form-body" style="padding:40px 20px 0 20px">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">旧密码</label>
+                        <div class="col-md-8">
+                            <input class="form-control" ng-model="oldpwd" type="password" ng-change="checkoldpwd()"/>
+                            <input class="form-control" ng-model="oldpwdinfo" ng-if="oldpwdinfo" readonly="readonly" style="color: red"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">新密码</label>
+                        <div class="col-md-8">
+                            <input class="form-control" ng-model="newpwd" type="password" ng-change="checknewpwd()"/>
+                            <input class="form-control" ng-model="newpwdinfo" ng-if="newpwdinfo" readonly="readonly" style="color: red"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">重复密码</label>
+                        <div class="col-md-8">
+                            <input class="form-control" ng-model="repeatnewpwd" type="password" ng-change="checkpwd()"/>
+                            <input class="form-control" ng-model="pwdinfo" ng-if="pwdinfo" readonly="readonly" style="color: red"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-foot">
+                    <button class="btn green confirm" ng-click="ok()" ng-disabled="oldpwdinfo!=''||newpwdinfo!=''||pwdinfo!=''||oldpwd==''||newpwd==''||repeatnewpwd==''">提交</button>
+                    <button class="btn default cancel" ng-click="cancel()">关闭</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<div>
+    <div class="portlet box red portlet-mg0 ">
+        <div class="portlet-title" style="min-height: 36px">
+            <div class="caption" style="padding: 8px 0 6px;">添加区域</div>
+            <div class="tools" style="padding: 10px 0 5px;">
+                <i class="fa fa-close big-icon" ng-click="cancel()"></i>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <form class="form-horizontal" role="form">
+                <div class="form-body" style="padding:40px 20px 0 20px">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">上级区域</label>
+                        <div class="col-md-8">
+                            <input class="form-control" ng-model="params.parentId_name" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">区域名称</label>
+                        <div class="col-md-8">
+                            <input class="form-control" ng-model="params.name"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">区域简称</label>
+                        <div class="col-md-8">
+                            <input class="form-control" ng-model="params.shortName"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">备注</label>
+                        <div class="col-md-8">
+                            <textarea ng-model="params.remark" style="width: 100%;height:90px;resize:none"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-foot">
+                    <button class="btn green confirm" ng-click="ok()">提交</button>
+                    <button class="btn default cancel" ng-click="cancel()">关闭</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

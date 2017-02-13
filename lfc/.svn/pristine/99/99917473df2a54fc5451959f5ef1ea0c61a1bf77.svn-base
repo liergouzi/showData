@@ -1,0 +1,52 @@
+<div data-ng-controller="restController">
+<div data-ng-controller="cardCtrl" class="row table-list">
+    <div class="col-md-12 title">
+        搜索条件
+    </div>
+    <!--搜索条件-->
+    <div class="table-search clearfix" id="toolbar">
+        <div class="form-group col-md-6 col-lg-3">
+            <label>模糊搜索</label>
+            <input type="text" ng-model="filter.station__name$personName$cardCode$$LIKE" placeholder="站点名称/开卡人姓名/银行卡号"/>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label>银行卡状态</label>
+            <select  ng-model="filter.cardStatus">
+                <option value="">---所有---</option>
+                <option ng-repeat="opt in dicts['YHKZT']" ng-value="opt.value">{{opt.name}}</option>
+            </select>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label>分支机构</label>
+            <select ng-model="filter.station__company__id" >
+                <option value="">---所有---</option>
+                <option ng-repeat="li in company" value="{{li.id}}">{{li.name}}</option>
+            </select>
+        </div>
+        <button class="btn" id="ok"><i class="icon-magnifier"></i>查询</button>
+    </div>
+    <!--表格-->
+    <div class="col-md-12 portlet-body custom">
+        <div class="table-title clearfix">银行卡列表</div>
+        <table cz-table-control cz-delegate-handle="delegateHandle" data-search-toolbar="#toolbar" data-sort-name="id" data-show-print="false"
+               data-toggle="table" data-advanced-search="true" data-url="/rest/bankCard?_method=get"
+               data-show-export="true" data-show-refresh="true" data-show-columns="true">
+            <thead>
+                <tr>
+                    <th data-align="center" cz-index-column="true">序号</th>
+                    <th data-field="station_name" data-align="center" data-sortable="false">站点名称</th>
+                    <th data-field="station_company_name" data-align="center" data-sortable="false">分支机构</th>
+                    <th data-field="personName" data-align="center" data-sortable="false">开卡人姓名</th>
+                    <th data-field="shopOwnerFlag" data-align="center" data-sortable="false"  data-dict="SFZH" cz-column-formatter="formatter.formatDictByValue">是否店主</th>
+                    <th data-field="personSex" data-align="center" data-sortable="false" data-dict="XB" cz-column-formatter="formatter.formatDictByValue">性别</th>
+                    <th data-field="personIdentification" data-align="center" data-sortable="false">身份证号</th>
+                    <th data-field="personPhone" data-align="center" data-sortable="false">手机号</th>
+                    <th data-field="cardCode" data-align="center" data-sortable="false">银行卡号</th>
+                    <th data-field="cardStatus" data-align="center" data-sortable="false" data-dict="YHKZT" cz-column-formatter="formatter.formatDictByValue">卡状态</th>
+                </tr>
+                </thead>
+            </table>
+    </div>
+</div></div>
+
+

@@ -1,0 +1,34 @@
+<div ng-controller="restController" data-options="{initLoad:'false'}">
+    <div ng-controller="deptAdminCtrl">
+        <div class="row table-list">
+            <div class="col-md-12 title">
+            </div>
+            <!--表格-->
+            <div class="col-md-12 portlet-body custom">
+                <div class="table-title clearfix">机构列表</div>
+                <table cz-table-control cz-delegate-handle="delegateHandle" data-search-toolbar="#toolbar"
+                       data-sort-name="id" data-show-print="false"
+                       data-toggle="table" data-advanced-search="true" data-url="/rest/dept?_method=get"
+                       data-show-export="true" data-show-refresh="true" data-show-columns="true">
+                    <thead>
+                    <tr style="display: none">
+                        <th data-align="center" cz-index-column="true">序号</th>
+                        <th data-field="name" data-align="center" data-sortable="false">机构名称</th>
+                        <th data-field="shortName" data-align="center" data-sortable="false">机构简称</th>
+                        <th data-field="deptCode" data-align="center" data-sortable="false">机构编码</th>
+                        <th data-field="deptAddr" data-align="center" data-sortable="false">机构地址</th>
+                        <th data-field="deptPhone" data-align="center" data-sortable="false">联系电话</th>
+                        <th data-field="contactPerson" data-align="center" data-sortable="false">负责人</th>
+                        <th data-field="contactPhone" data-align="center" data-sortable="false">负责人电话</th>
+                        <th data-field="regionId_name" data-align="center" data-sortable="false">所属区域</th>
+                        <th data-field="id" data-align="center" data-print-ignore="true"
+                            cz-column-formatter="column.formatter.formatAction"
+                            cz-column-event="column.colEvents.operation">操作
+                        </th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

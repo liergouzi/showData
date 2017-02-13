@@ -1,0 +1,58 @@
+<!--销售风险金列表-->
+<div data-ng-controller="restController" data-options="{initLoad:'false'}">
+<div data-ng-controller="riskCtrl" class="row table-list">
+    <div class="col-md-12 title">
+        搜索条件
+    </div>
+    <!--搜索条件-->
+    <div class="table-search clearfix"  id="toolbar">
+        <div class="form-group col-md-6 col-lg-3">
+            <label>模糊搜索</label>
+            <input type="text" placeholder="站点编号/名称"  ng-model="filter.station__name$station__code$$LIKE"/>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label>分支机构</label>
+            <select ng-model="filter.station__companyId">
+                <option>所有</option>
+                <option ng-repeat="li in company" value="{{li.id}}">{{li.name}}</option>
+            </select>
+        </div>
+        <div class="form-group col-lg-5 col-sm-12">
+            <label>缴费时间</label>
+            <div class="inline-block date date-picker" style="position: relative" data-date="new Date()"
+                 data-date-format="yyyy-mm-dd"
+                 data-date-viewmode="years">
+                <input ng-model="filter.time$$GTE"/>
+                <i class="btn sm-btn default fa fa-calendar"></i>
+            </div>
+            --
+            <div class="inline-block date date-picker" style="position: relative" data-date="new Date()"
+                 data-date-format="yyyy-mm-dd"
+                 data-date-viewmode="years">
+                <input ng-model="filter.time$$LTE"/>
+                <i class="btn sm-btn default fa fa-calendar"></i>
+            </div>
+        </div>
+        <button class="btn" id="ok"><i class="icon-magnifier"></i>查询</button>
+    </div>
+    <!--表格-->
+    <div class="col-md-12 portlet-body custom">
+        <div class="table-title clearfix">大额缴费列表</div>
+        <table cz-table-control cz-delegate-handle="delegateHandle" data-search-toolbar="#toolbar" data-sort-name="id" data-show-print="false"
+               data-toggle="table" data-advanced-search="true" data-url="/rest/payHistory?_method=get&filter.type=1"
+               data-show-export="true" data-show-refresh="true" data-show-columns="true">
+            <thead>
+            <tr>
+                <th data-align="center" cz-index-column="true">序号</th>
+                <th data-field="station_code" data-align="center" data-sortable="false">站点编号</th>
+                <th data-field="station_name" data-align="center" data-sortable="false">名称</th>
+                <th data-field="station_company_name" data-align="center" data-sortable="false">分支机构</th>
+                <th data-field="time" data-align="center" data-sortable="false">缴费时间</th>
+                <th data-field="money" data-align="center" data-sortable="false">缴纳金额</th>
+                <th data-field="chargePersonName" data-align="center" data-sortable="false">记录人</th>
+                <th data-field="remark" data-align="center" data-sortable="false">备注</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div></div>

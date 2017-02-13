@@ -1,0 +1,5 @@
+<div class="bottom-15" style="position: relative;line-height: 4.6">
+    <span style="position: absolute;left: -87px;
+    ">违规指标</span>
+    <span>从维修系统自动产生</span><input type="text" class="sm-input" ng-model="current.name" >台设备维修完成消息并且消息中保修原因是<input class="sm-input" >
+</div>

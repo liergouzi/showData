@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=1.4"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>
+<title>热力图功能示例</title>
+<style type="text/css">
+ul, li {
+list-style: none;
+margin: 0;
+padding: 0;
+float: left;
+}
+
+html {
+height: 100%;
+}
+
+body {
+height: 100%;
+margin: 0px;
+padding: 0px;
+font-family: "微软雅黑";
+}
+
+#container {
+height: 100%;
+width: 100%;
+}
+
+#r-result {
+width: 100%;
+}
+</style>
+</head>
+<body>
+<div id="container"></div>
+<div id="r-result">
+<input type="button" onclick="openHeatmap();" value="显示热力图" />
+<input type="button" onclick="closeHeatmap();" value="关闭热力图" />
+</div>
+</body>
+</html>
+<script type="text/javascript">
+var map = new BMap.Map("container"); // 创建地图实例
+var point = new BMap.Point(116.403875,39.915168);
+map.centerAndZoom(point, 12); // 初始化地图，设置中心点坐标和地图级别
+map.enableScrollWheelZoom(); // 允许滚轮缩放
+var points = [
+{
+"count":231200,"lat":40.136310,"lng":117.105320},
+{
+"count":23100,"lat":40.326240,"lng":116.710050},
+{
+"count":2331,"lat":39.799410,"lng":116.426050},
+{
+"count":234,"lat":39.832700,"lng":116.660310},
+{
+"count":235,"lat":39.755910,"lng":116.547460},
+{
+"count":236,"lat":39.757400,"lng":116.325630},
+{
+"count":237,"lat":39.753450,"lng":116.216110},
+{
+"count":238,"lat":39.877190,"lng":116.339520},
+{
+"count":239,"lat":39.994270,"lng":116.365320},
+{
+"count":2310,"lat":39.902160,"lng":116.234440},
+{
+"count":2311,"lat":40.136990,"lng":116.140270},
+{
+"count":2312,"lat":40.030780,"lng":116.358350},
+{
+"count":2313,"lat":40.008100,"lng":116.408280},
+{
+"count":2314,"lat":40.084830,"lng":116.322380},
+{
+"count":2315,"lat":39.981920,"lng":116.375260},
+{
+"count":2316,"lat":39.922780,"lng":116.203480},
+{
+"count":2317,"lat":39.974580,"lng":116.215720},
+{
+"count":2318,"lat":40.149770,"lng":116.292610},
+{
+"count":2319,"lat":40.153190,"lng":116.387690},
+{
+"count":2320,"lat":39.867660,"lng":116.476470},
+{
+"count":2321,"lat":39.931380,"lng":116.085610},
+{
+"count":2322,"lat":39.854600,"lng":116.414060},
+{
+"count":2323,"lat":39.922440,"lng":116.517960},
+{
+"count":2324,"lat":39.743470,"lng":116.335320},
+{
+"count":2325,"lat":39.898530,"lng":116.243510},
+{
+"count":2326,"lat":39.950130,"lng":116.415310},
+{
+"count":2327,"lat":39.882600,"lng":116.437630},
+{
+"count":2328,"lat":39.942320,"lng":116.425990},
+{
+"count":2329,"lat":39.896640,"lng":116.431000},
+{
+"count":2330,"lat":39.890910,"lng":116.439900},
+{
+"count":2331,"lat":39.944010,"lng":116.434580},
+{
+"count":2332,"lat":39.883480,"lng":116.358790},
+{
+"count":2333,"lat":39.937920,"lng":116.436070},
+{
+"count":2334,"lat":39.944970,"lng":116.416530},
+{
+"count":2335,"lat":39.865270,"lng":116.410380},
+{
+"count":2336,"lat":39.957290,"lng":116.404850}
+];
+if (!isSupportCanvas()) {
+alert('热力图目前只支持有canvas支持的浏览器,您所使用的浏览器不能使用热力图功能~')
+}
+//详细的参数,可以查看heatmap.js的文档 https://github.com/pa7/heatmap.js/blob/master/README.md
+//参数说明如下:
+/* visible 热力图是否显示,默认为true
+* opacity 热力的透明度,1-100
+* radius 势力图的每个点的半径大小 
+* gradient {JSON} 热力图的渐变区间 . gradient如下所示
+*	{
+.2:'rgb(0, 255, 255)',
+.5:'rgb(0, 110, 255)',
+.8:'rgb(100, 0, 255)'
+}
+其中 key 表示插值的位置, 0~1. 
+value 为颜色值. 
+*/
+heatmapOverlay = new BMapLib.HeatmapOverlay({ "radius": 20 });
+map.addOverlay(heatmapOverlay);
+heatmapOverlay.setDataSet({ data: points, max: 100 });
+//是否显示热力图
+function openHeatmap() {
+heatmapOverlay.show();
+}
+function closeHeatmap() {
+heatmapOverlay.hide();
+}
+closeHeatmap();
+function setGradient() {
+/*格式如下所示:
+{
+0:'rgb(102, 255, 0)',
+.5:'rgb(255, 170, 0)',
+1:'rgb(255, 0, 0)'
+}*/
+var gradient = {};
+var colors = document.querySelectorAll("input[type='color']");
+colors = [].slice.call(colors, 0);
+colors.forEach(function (ele) {
+gradient[ele.getAttribute("data-key")] = ele.value;
+});
+heatmapOverlay.setOptions({ "gradient": gradient });
+}
+//判断浏览区是否支持canvas
+function isSupportCanvas() {
+var elem = document.createElement('canvas');
+return !!(elem.getContext && elem.getContext('2d'));
+}
+openHeatmap();
+</script>

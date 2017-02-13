@@ -1,0 +1,68 @@
+<div ng-controller="restController" data-options="{initLoad:'false'}">
+<div ng-controller="assessInquireCtrl" class="row table-list">
+    <div class="col-md-12 title">
+        搜索条件
+    </div>
+    <!--搜索条件-->
+    <div id="toolbar" class="table-search clearfix">
+        <div class="form-group col-md-6 col-lg-3">
+            <label>模糊搜索</label>
+            <input type="text"  ng-model="filter.station__name$station__address$$LIKE" placeholder="站点名称/地址"/>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label>站点类型</label>
+            <select ng-model="filter.station__type">
+                <option value="">---所有---</option>
+                <option ng-repeat="opt in dicts['ZDLX']" ng-value="opt.value">{{opt.name}}</option>
+            </select>
+        </div>
+        <div class="form-group col-lg-6 col-sm-12">
+
+            <label>考核时间</label>
+            <div class="inline-block date date-picker" style="position: relative" data-date="new Date()"
+                 data-date-format="yyyy-mm-dd"
+                 data-date-viewmode="years">
+                <input ng-model="filter.finalScoreTime$$GTE"/>
+                <i class="btn sm-btn default fa fa-calendar"></i>
+            </div>
+            --
+            <div class="inline-block date date-picker" style="position: relative" data-date="new Date()"
+                 data-date-format="yyyy-mm-dd"
+                 data-date-viewmode="years">
+                <input ng-model="filter.finalScoreTime$$LTE"/>
+                <i class="btn sm-btn default fa fa-calendar"></i>
+            </div>
+            <button class="btn" id="ok"><i class="icon-magnifier"></i>查询</button>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label>分支机构</label>
+            <select ng-model="filter.station__company__id" >
+                <option value="">---所有---</option>
+                <option ng-repeat="li in company" value="{{li.id}}">{{li.name}}</option>
+            </select>
+        </div>
+    </div>
+    <!--表格-->
+    <div class="col-md-12 portlet-body custom">
+        <div class="table-title clearfix">站点列表</div>
+        <table cz-table-control cz-option="tableOptions" data-search-toolbar="#toolbar" data-sort-name="id" data-show-print="false"
+               data-toggle="table" data-advanced-search="true" data-show-export="true" data-show-refresh="true" data-url="/ctrl/taskCheckOut/getCheckOutResultDetails?_method=get"
+               data-show-columns="true">
+            <thead>
+            <tr>
+                <th data-align="center" cz-index-column="true">序号</th>
+                <th data-field="taskCheckOut.stationCode" data-align="center" data-sortable="false">站点编号</th>
+                <th data-field="taskCheckOut.stationName" data-align="center" data-sortable="false">名称</th>
+                <th data-field="taskCheckOut.station_company_name" data-align="center" data-sortable="false">分支机构</th>
+                <th data-field="taskCheckOut.station_type" data-align="center" data-sortable="false" data-dict="ZDLX" cz-column-formatter="formatter.formatDictByValue">站点类型</th>
+                <th data-width="120px" data-field="taskCheckOut.finalScoreTime" data-align="center" data-sortable="false" cz-column-formatter="formatter1">考核时间</th>
+                <th data-field="taskCheckOut.result" data-align="center" data-sortable="false">本月考核总数</th>
+                <th cz-column-repeat="dynColumn" data-align="center" data-sortable="false"></th>
+                <th data-field="taskCheckOut.resultCenterSort" data-align="center" data-sortable="false" >全市排名</th>
+                <th data-field="taskCheckOut.resultCompanySort" data-align="center" data-sortable="false">公司排名</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+</div>

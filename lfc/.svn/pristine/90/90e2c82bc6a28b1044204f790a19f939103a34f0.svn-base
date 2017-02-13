@@ -1,0 +1,86 @@
+/**
+ * Created by hxd on 2016/11/29.
+ */
+app.controller('regionAdminCtrl', ['$scope', '$rootScope','$uibModal','systemService', function ($scope, $rootScope,$uibModal,systemService) {
+        var vm=$scope;
+        $rootScope.$settings.layout.pageBodySolid = false;
+        $scope.column = {
+            formatter: {
+                formatIndex: function (value, row, index) {
+                    return index + 1;
+                },
+                formatAction: function (value, row, index) {
+                    return '<i class="customicon glyphicon glyphicon-plus" style="color: #CD3B35;">&nbsp;添加子区域</i>&nbsp;&nbsp;&nbsp;&nbsp;' +
+                        '<i class="customicon glyphicon glyphicon-edit" style="color: #1C9FD8;">&nbsp;修改</i>&nbsp;&nbsp;&nbsp;&nbsp;'+
+                        '<i class="customicon glyphicon glyphicon-trash" style="color: #65Be42">&nbsp;删除</i>';
+                }
+            },
+            colEvents: {
+                operation: {
+                    'click .glyphicon-edit': function (e, id, row, index) {
+                        $uibModal.open({
+                            animation: true,
+                            templateUrl: 'views/system/region-modal.html',
+                            controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                                $scope.params=row;
+                                $scope.cancel = function () {
+                                    $uibModalInstance.dismiss('cancel')
+                                };
+                                $scope.ok=function () {
+                                    if (systemService.updateRegion($scope.params)) {
+                                        $rootScope.alert({
+                                            title: "操作结果", message: "修改成功"
+                                        });
+                                        $scope.cancel();
+                                        vm.refresh();
+                                    }
+                                }
+                            }],
+                            size: 'md'
+                        })
+                    },
+                    'click .glyphicon-trash': function (e, id, row, index) {
+                        $rootScope.dialog({
+                            title: "是否删除", message: "是否对该区县进行删除操作？", callback: function () {
+                                if (systemService.delRegion(id)) {
+                                    $rootScope.alert({
+                                        title: "操作结果", message: "删除成功", callback: function () {
+                                            $scope.refresh();
+                                        }
+                                    })
+                                }
+                            }
+                        })
+                    },
+                    'click .glyphicon-plus': function (e, id, row, index) {
+                        $uibModal.open({
+                            animation: true,
+                            templateUrl: 'views/system/region-modal.html',
+                            controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                                $scope.params={
+                                    "level":row.level+1,
+                                    "parentId":row.id,
+                                    "showOrder":0,
+                                    "parentId_name":row.name
+                                };
+                                $scope.cancel = function () {
+                                    $uibModalInstance.dismiss('cancel')
+                                };
+                                $scope.ok=function () {
+                                    if (systemService.saveRegion($scope.params)) {
+                                        $rootScope.alert({
+                                            title: "操作结果", message: "添加成功"
+                                        });
+                                        $scope.cancel();
+                                        vm.refresh();
+                                    }
+                                }
+                            }],
+                            size: 'md'
+                        })
+                    }
+                },
+            }
+        }
+    }
+]);

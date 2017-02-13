@@ -1,0 +1,103 @@
+<style>
+    .user-privilege {
+        width: 100%;
+    }
+
+    .user-privilege table tr td:last-child {
+        padding: 10px 10px;
+    }
+
+    .user-privilege td {
+        border: 1px solid #000;
+        line-height: 30px;
+    }
+
+    table.user-privilege {
+        border-collapse: collapse;
+    }
+
+    .user-privilege li {
+        list-style: none !important;
+        float: left;
+        padding: 0 30px;
+    }
+
+    .user-privilege tr td:first-child {
+        width: 110px;
+        text-align: center;
+    }
+
+    .user-privilege > tr > td:nth-child(2) {
+        text-align: center;
+    }
+
+    .user-privilege table {
+        border-collapse: collapse;
+        border-width: 0;
+        border-style: hidden;
+        width: 100%;
+    }
+
+</style>
+<div data-ng-controller="restController">
+    <div>
+        <h3 class="page-title site-title"><a onclick="javascript :history.back(-1);"><i
+                class='glyphicon glyphicon-chevron-left back' style='color:#CB4737;' title="返回列表"></i></a>{{params.user.name}}的权限编辑</span>
+        </h3>
+        <div class="row">
+            <table class="user-privilege" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>角色设置</td>
+                    <td>
+                        <li col-lg-12 col-md-6 col-sm-4 ng-repeat="l in params.roles">
+                            <input type="checkbox" ng-model="l.checkflag" ng-click="changeRole(l.roleId)">{{l.rolename}}
+                        </li>
+                    </td>
+                </tr>
+                <tr>
+                    <td>角色权限</td>
+                    <td>
+                        <table border="1" cellspacing="0" cellpadding="0">
+                            <tr ng-repeat="li in params.privileges.role">
+                                <td>{{li.category}}</td>
+                                <td>
+                                    <li col-lg-12 col-md-6 col-sm-4 ng-repeat="l in li.privileges"><input
+                                            type="checkbox" ng-model="l.checkflag" ng-disabled="true">{{l.name}}
+                                    </li>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>共有权限</td>
+                    <td>
+                        <table border="1" cellspacing="0" cellpadding="0">
+                            <tr ng-repeat="li in params.privileges.public">
+                                <td>{{li.category}}</td>
+                                <td>
+                                    <li ng-repeat="l in li.privileges"><input type="checkbox" ng-model="l.checkflag"  ng-click="changePrivilege(l.privilegeId)">{{l.name}}
+                                    </li>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>个人权限</td>
+                    <td>
+                        <table border="1" cellspacing="0" cellpadding="0">
+                            <tr ng-repeat="li in params.privileges.private">
+                                <td>{{li.category}}</td>
+                                <td>
+                                    <li ng-repeat="l in li.privileges"><input type="checkbox" ng-model="l.checkflag"  ng-click="changePrivilege(l.privilegeId)">{{l.name}}
+                                    </li>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

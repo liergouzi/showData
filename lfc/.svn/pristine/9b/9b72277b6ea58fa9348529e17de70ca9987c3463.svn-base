@@ -1,0 +1,52 @@
+<div data-ng-controller="restController">
+<div data-ng-controller="supervisorCtrl as vm" class="row table-list">
+    <div class="col-md-12 title">
+        搜索条件
+    </div>
+    <!--搜索条件-->
+    <div id="toolbar" class="table-search clearfix">
+        <div class="form-group col-md-6 col-lg-3">
+            <label>模糊搜索</label>
+            <input type="text" ng-model="filter.user__name$user__identityNum$$LIKE" placeholder="姓名/身份证/管理范围"/>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label>状态</label>
+            <select ng-model="filter.status">
+                <option value="">所有</option>
+                <option ng-repeat="opt in dicts['ZGZT']" ng-value="opt.value">{{opt.name}}</option>
+            </select>
+        </div>
+        <div class="form-group col-md-6 col-lg-3">
+            <label>分支机构</label>
+            <select ng-model="filter.company__id">
+                <option value="">所有</option>
+                <option ng-repeat="li in company" value="{{li.id}}">{{li.name}}</option>
+            </select>
+        </div>
+        <button class="btn" id="ok"><i class="icon-magnifier"></i>查询</button>
+        <div class="form-group col-md-12">
+            <button class="addBtn" ng-click="add('添加','')"><i class="glyphicon glyphicon-plus-sign"></i><span>新增督导员</span></button>
+        </div>
+    </div>
+    <!--表格-->
+    <div class="col-md-12 portlet-body custom">
+        <div class="table-title clearfix">督导员列表</div>
+        <table cz-table-control cz-delegate-handle="delegateHandle" data-search-toolbar="#toolbar" data-sort-name="id" data-show-print="false"
+               data-toggle="table" data-advanced-search="true" data-url="/ctrl/supervisor/getSupervisor?_method=get"
+               data-show-export="true" data-show-refresh="true" data-show-columns="true">
+            <thead>
+            <tr>
+                <th data-align="center" cz-index-column="true">序号</th>
+                <th data-field="user_name" data-align="center" data-sortable="false">姓名</th>
+                <th data-field="user_gender" data-align="center" data-sortable="false" data-dict="XB" cz-column-formatter="formatter.formatDictByValue">性别</th>
+                <th data-field="user_identityNum" data-align="center" data-sortable="false">身份证号</th>
+                <th data-field="user_mobile" data-align="center" data-sortable="false">手机号</th>
+                <th data-field="firstdomain" data-align="center" data-sortable="false">管理范围</th>
+                <th data-field="company_name" data-align="center" data-sortable="false">分支机构</th>
+                <th data-field="status" data-align="center" data-sortable="false" data-dict="ZGZT" cz-column-formatter="formatter.formatDictByValue">状态</th>
+                <th data-field="userId" data-align="center" data-print-ignore="true" cz-column-formatter="column.formatter.formatAction" cz-column-event="column.colEvents.operation">操作</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div></div>

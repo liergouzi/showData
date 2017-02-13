@@ -1,0 +1,10 @@
+/**
+ * Created by 46358 on 2016/11/11.
+ */
+app.controller('indexCtrl', ['$scope', '$rootScope','loginService', function($scope, $rootScope,loginService) {
+    $rootScope.$settings.layout.pageBodySolid = false;
+
+
+
+
+}]);

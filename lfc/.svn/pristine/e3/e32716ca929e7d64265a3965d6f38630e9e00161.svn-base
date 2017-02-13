@@ -1,0 +1,117 @@
+<div data-ng-controller="restController">
+<div data-ng-controller="salesCtrl as vm" class="row">
+    <div class="col-md-12 ">
+        <div class="clearfix portlet light bordered radius" style="margin-top: 20px;">
+            <div class="dusty-blue">
+                <i class="fa fa-area-chart"></i><span>销量数据综合展示</span>
+            </div>
+            <div class="item clearfix text-center">
+                <div class="col-md-4 ">
+                    <div class="portlet text-center inline-block" style="width: 132px;height: 132px;">
+                        <div class="box">
+                            <i class="sales-date fa fa-calendar"></i>
+                            <p>{{params.time}}</p>
+                            <p>统计区间</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 cake">
+                    <div id="cake" style="width: 120px;height: 120px;margin-top: -17px"></div>
+                    <p>销量在全市平均值以上的站点</p>
+                </div>
+                <div class="col-md-4 cake">
+                    <div id="cake1" style="width: 120px;height: 120px;margin-top: -17px"></div>
+                    <p>缴费不正常站点</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div>
+                    <div style="margin-bottom: 15px;color: #576162;font-weight: 900">{{params.month}}月销售总金额<span style="color: #d94635">{{params.sum}}</span>万元</div>
+                    <span style="vertical-align: top">其中：</span>
+                    <div class="inline-block mg-p c666666">
+                        <p ng-repeat="li in params.details"><span>{{li.name}}总量为：<span style="color: #d64635">{{li.val}}</span>万元</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row table-list">
+    <div class="col-md-12">
+        <div class="clearfix portlet light bordered radius">
+            <div class="">
+                搜索条件
+            </div>
+            <!--搜索条件-->
+            <div class="clearfix table-search" id="toolbar">
+                <div class="form-group col-md-6 col-lg-3">
+                    <label>模糊搜索</label>
+                    <input type="text" placeholder="站点名称/地址" ng-model="filter.searchKey"/>
+                </div>
+                <div class="form-group col-md-6 col-lg-3">
+                    <label>所属区县</label>
+                    <select ng-model="filter.regionId">
+                        <option value="">---所有---</option>
+                        <option ng-repeat="opt in regions" ng-value="opt.id">{{opt.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-lg-6 col-sm-12">
+                    <label>销售时间</label>
+                    <select ng-model="filter.year" style="width: 80px">
+                        <option value="">所有</option>
+                        <option ng-repeat="opt in years" ng-value="opt">{{opt}}年</option>
+                    </select>
+                    --
+                    <select ng-model="filter.month" style="width: 60px">
+                        <option value="">所有</option>
+                        <option ng-repeat="opt in months" ng-value="opt">{{opt}}月</option>
+                    </select>
+                    --
+                    <select ng-model="filter.day" style="width: 60px">
+                        <option value="">所有</option>
+                        <option ng-repeat="opt in days" ng-value="opt">{{opt}}日</option>
+                    </select>
+                    <button class="btn" id="ok"><i class="icon-magnifier"></i>查询</button>
+                </div>
+                <div class="form-group col-md-6 col-lg-3">
+                    <label>站点类型</label>
+                    <select ng-model="filter.stationType">
+                        <option value="">---所有---</option>
+                        <option ng-repeat="opt in dicts['ZDLX']" ng-value="opt.value">{{opt.name}}</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6 col-lg-3">
+                    <label>分支机构</label>
+                    <select ng-model="filter.companyId">
+                        <option value="">---所有---</option>
+                        <option ng-repeat="li in company" value="{{li.id}}">{{li.name}}</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <!--表格-->
+            <div class="col-md-12 portlet-body custom">
+                <div class="table-title clearfix">站点列表</div>
+                <table cz-table-control cz-option="tableOptions" data-search-toolbar="#toolbar" data-sort-name="id" data-show-print="false" style="min-width: 860px;"
+                       data-toggle="table" data-advanced-search="true" data-show-export="true" data-show-refresh="true" data-url="/ctrl/saleDetailsInfo/getSaleDetailsInfo?_method=get"
+                       data-show-columns="true">
+                    <thead>
+                    <tr>
+                        <th data-align="center" cz-index-column="true">序号</th>
+                        <th data-field="stationCode" data-align="center" data-sortable="false">站点编号</th>
+                        <th data-field="stationName" data-align="center" data-sortable="false">名称</th>
+                        <th data-field="redionName" data-align="center" data-sortable="false">所属区县</th>
+                        <th data-field="companyName" data-align="center" data-sortable="false">分支机构</th>
+                        <th data-field="sumSale" data-align="center" data-sortable="false">本月总销量</th>
+                        <th cz-column-repeat="dynColumn" data-align="center" data-sortable="false"></th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div></div>
+
+

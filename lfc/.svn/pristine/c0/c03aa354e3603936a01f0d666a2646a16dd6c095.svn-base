@@ -1,0 +1,93 @@
+<div>
+    <div class="portlet box red portlet-mg0 ">
+        <div class="portlet-title" style="min-height: 36px">
+            <div class="caption" style="padding: 8px 0 6px;">{{doing}}督导员</div>
+            <div class="tools" style="padding: 10px 0 5px;">
+                <i class="fa fa-close big-icon" ng-click="cancel()"></i>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <form class="form-horizontal" role="form">
+                <div class="form-body" style="padding:40px 20px 0 20px">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">督导员</label>
+                        <div class="col-md-8">
+                            <input class="form-control" ng-model="supervisorName" ng-change="search()"
+                                   placeholder="请输入督导员名称"/>
+                            <input type="hidden" ng-model="params.userId">
+                            <input type="text" ng-model="show1" class="form-control" style="color: red;"
+                                   ng-disabled="true" ng-model="info" ng-if="show1!=''">
+                            <div class="custom-select hide" ng-class="{show:result.length}">
+                                <div class="custom-select-scroll">
+                                    <div class="custom-select-body">
+                                        <div ng-repeat="li in result" ng-click="changeValue(li.name,li.id)">
+                                            {{li.name}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">分支机构</label>
+                        <div class="col-md-8">
+                            <select class="custom-control" ng-model="params.companyId"
+                                    ng-options="m.id as m.name for m in company">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">状态</label>
+                        <div class="col-md-8">
+                            <select class="custom-control" ng-model="params.status"
+                                    ng-options="m.value as m.name for m in dicts['ZGZT']">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">学历</label>
+                        <div class="col-md-8">
+                            <select class="custom-control" ng-model="params.educationalBackground"
+                                    ng-options="m.name as m.name for m in dicts['XUELI']">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">管理范围</label>
+                        <div class="col-md-8">
+                            <li ng-repeat="li in glfw" style="list-style-type: none;height: 50px; text-align: center;" class="clearfix">
+                                <div style="float: left;width: 70%;" ><input class="form-control" ng-model="li.name"
+                                                                placeholder="请输入站点名称"
+                                                                ng-change="search1($index)"/>
+                                    <input type="text" ng-model="showinfo['result' + $index]"
+                                           class="form-control"
+                                           style="color: red;" ng-if="showinfo['result' + $index]"
+                                           ng-disabled="true" ng-model="info">
+                                    <div class="custom-select hide" ng-class="{show:result['result'+$index].length}"
+                                         style="width: 66%">
+                                        <div class="custom-select-scroll" style="text-align: left">
+                                            <div class="custom-select-body">
+                                                <div ng-repeat="li in result['result'+$index]"
+                                                     ng-click="changeValue1(li.name,li.id,$parent.$index)">
+                                                    {{li.name}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="float: right;font-size: 16px;margin-top: 6px;">
+                                    <span ng-click="delRow($index)">删除</span>&nbsp;&nbsp;
+                                    <span ng-click="addRow()">添加</span>
+                                </div>
+                            </li>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-foot">
+                    <button class="btn green confirm" ng-click="ok()">提交</button>
+                    <button class="btn default cancel" ng-click="cancel()">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

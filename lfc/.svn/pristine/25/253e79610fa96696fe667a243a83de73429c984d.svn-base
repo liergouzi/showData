@@ -1,0 +1,72 @@
+/**
+ * Created by 46358 on 2016/11/11.
+ */
+app.controller('indexCtrl', ['$scope', '$rootScope','loginService', function($scope, $rootScope,loginService) {
+    $rootScope.$settings.layout.pageBodySolid = false;
+
+    loginService.getIndex().then(function (res) {
+        $scope.params=res.data;
+        var data=$scope.params.analysis;
+        function getLegendData() {
+            var arr=[];
+            for (var i = 0; i < data.length; i++) {
+                arr.push(data[i].region);
+            }
+            return arr;
+        }
+        function getSeriesData() {
+            var arr=[];
+            for (var i = 0; i < data.length; i++) {
+                var obj={value:data[i].value,name:data[i].region};
+                arr.push(obj);
+            }
+            return arr;
+        }
+        var option = {
+            title: {
+                text: '昨日销量',
+                subtext: '单位：万元',
+                x: 'left'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b}: {c}万元 ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                top: '55',
+                x: 'left',
+                data: getLegendData()
+            },
+            series: [
+                {
+                    name: '昨日销量',
+                    type: 'pie',
+                    selectedMode: 'single',
+                    radius: [0, '30%'],
+                    label: {
+                        normal: {
+                            position: 'inner'
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    }
+                },
+
+                {
+                    name: '昨日销量',
+                    type: 'pie',
+                    radius: ['40%', '55%'],
+                    center:['60%','50%'],
+                    data: getSeriesData()
+                }
+            ]
+        };
+        echarts.init(document.getElementById("cake")).setOption(option);
+    });
+
+
+}]);

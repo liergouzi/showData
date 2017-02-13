@@ -1,0 +1,152 @@
+<div data-ng-controller="timeController">
+    <div class="digital">
+        <ul ng-show="1+1==3"  class="nav nav-tabs" role="tablist">
+            <li role="presentation" ng-repeat="title in titles">
+                <a href ng-click="toggle(title.id)">{{title.name}}</a>
+            </li>
+        </ul>
+
+        <ul class="tablelist quarter">
+            <li ng-show='base==5'>
+                <div class="page-header">
+                    <div>{{quartertables.title}}</div>
+                </div>
+                <!--季度表  有月，表头中 上钻到年表-->
+                <table class="quarter table table-striped">
+                    <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th colspan="4" ng-repeat="quarterthead in quartertables.theads" ng-style="{color:quarterthead.alink? 'red':'#000'}">
+                            <div ng-controller="DropdownCtrl">
+                                <div class="btn-group" uib-dropdown>
+                                    <span uib-dropdown-toggle>{{quarterthead.name}}</span>
+                                    <ul class="dropdown-menu" uib-dropdown-menu>
+                                        <li role="menuitem"><a href="#">排序</a></li>
+                                        <li role="menuitem"><a ng-click="nextClick(quarterthead.alink)">上钻</a></li>
+                                        <li role="menuitem"><a href="#">下钻</a></li>
+                                        <li role="menuitem"><a href="#">横列转置</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </th>
+                        <th>合计</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td ng-repeat="quartermonth in quartertables.months">{{quartermonth.name}}</td>
+                        <td></td>
+                    </tr>
+                    <tr ng-repeat="quartertbody in quartertables.tbodys">
+                        <td class='firsttd' ng-style="{color:quartertbody.alink? 'red':'#000'}">
+                            <div ng-controller="DropdownCtrl">
+                                <div class="btn-group" uib-dropdown>
+                                    <span uib-dropdown-toggle>{{quartertbody.week}}</span>
+                                    <ul class="dropdown-menu" uib-dropdown-menu>
+                                        <li role="menuitem"><a href="#">排序</a></li>
+                                        <li role="menuitem"><a ng-click="nextClick(quartertbody.alink)">上钻</a></li>
+                                        <li role="menuitem"><a href="#">下钻</a></li>
+                                        <li role="menuitem"><a href="#">横列转置</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{quartertbody.one}}</td>
+                        <td>{{quartertbody.two}}</td>
+                        <td>{{quartertbody.three}}</td>
+                        <td>{{quartertbody.firstsum}}</td>
+                        <td>{{quartertbody.four}}</td>
+                        <td>{{quartertbody.five}}</td>
+                        <td>{{quartertbody.sex}}</td>
+                        <td>{{quartertbody.secendsum}}</td>
+                        <td>{{quartertbody.seven}}</td>
+                        <td>{{quartertbody.eight}}</td>
+                        <td>{{quartertbody.nine}}</td>
+                        <td>{{quartertbody.thridsum}}</td>
+                        <td>{{quartertbody.ten}}</td>
+                        <td>{{quartertbody.eleven}}</td>
+                        <td>{{quartertbody.twelve}}</td>
+                        <td>{{quartertbody.fourthsum}}</td>
+                        <td>{{quartertbody.allsum}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </li>
+            <div ng-show='base==5'>
+                <div id="quartertable" class="echartime"></div>
+            </div>
+            <li ng-show='base==6'>
+                <div class="page-header">
+                    <div>{{yeartables.title}}</div>
+                </div>
+                <!--年表 没有月份 下钻到季度表-->
+                <table class="year table table-striped">
+                    <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th colspan="3" ng-repeat="yearthead in yeartables.theads" ng-style="{color:yearthead.alink? 'red':'#000'}">
+                            <div ng-controller="DropdownCtrl">
+                                <div class="btn-group" uib-dropdown>
+                                    <span uib-dropdown-toggle>{{yearthead.name}}</span>
+                                    <ul class="dropdown-menu" uib-dropdown-menu>
+                                        <li role="menuitem"><a href="#">排序</a></li>
+                                        <li role="menuitem"><a href="#">上钻</a></li>
+                                        <li role="menuitem"><a ng-click="nextClick(yearthead.alink)">下钻</a></li>
+                                        <li role="menuitem"><a href="#">横列转置</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </th>
+                        <th colspan='3'>合计</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td ng-repeat="yearmonth in yeartables.months">{{yearmonth.name}}</td>
+                        <td></td>
+                    </tr>
+                    <tr ng-repeat="yeartbody in yeartables.tbodys">
+                        <td class='firsttd'>
+                            <div ng-controller="DropdownCtrl">
+                                <div class="btn-group" uib-dropdown>
+                                    <span uib-dropdown-toggle>{{yeartbody.week}}</span>
+                                    <!--aria-labelledby="split-button"-->
+                                    <ul class="dropdown-menu" uib-dropdown-menu>
+                                        <li role="menuitem"><a href="#">排序</a></li>
+                                        <li role="menuitem"><a href="#">上钻</a></li>
+                                        <li role="menuitem"><a href="#">下钻</a></li>
+                                        <li role="menuitem"><a href="#">横列转置</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{yeartbody.firstD}}</td>
+                        <td>{{yeartbody.firstS}}</td>
+                        <td>{{yeartbody.firstsum}}</td>
+                        <td>{{yeartbody.secendD}}</td>
+                        <td>{{yeartbody.secendS}}</td>
+                        <td>{{yeartbody.secendsum}}</td>
+                        <td>{{yeartbody.thirdD}}</td>
+                        <td>{{yeartbody.thirdS}}</td>
+                        <td>{{yeartbody.thirdsum}}</td>
+                        <td>{{yeartbody.fourthD}}</td>
+                        <td>{{yeartbody.fourthS}}</td>
+                        <td>{{yeartbody.fourthsum}}</td>
+                        <td>{{yeartbody.sumD}}</td>
+                        <td>{{yeartbody.sumS}}</td>
+                        <td>{{yeartbody.sumall}}</td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </li>
+            <div ng-show='base==6'>
+                <div id="YearDantable"  class="echartime"></div>
+                <div id="YearDoutable" class="echartime"></div>
+                <div id="YearAlltable" class="echartime"></div>
+            </div>
+        </ul>
+    </div>
+</div>
