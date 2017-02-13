@@ -1,0 +1,102 @@
+<div>
+    <div class="digital">
+        <ul class="tablelist play">
+            <li>
+                <div class="page-header">
+                    <div>{{table.title}}</div>
+                </div>
+                <div class="head">
+                    <div class="hd-left">
+                        <div class='start'>开始时间：</div>
+                        <div class="input-group input-large date-picker input-daterange" data-date="10/11/2012"
+                             data-date-format="yyyy/mm/dd">
+                            <input type="text" class="form-control" name="from" ng-model='table.time.startTime'>
+                            <span class="input-group-addon">结束时间：</span>
+                            <input type="text" class="form-control" name="to" ng-model='table.time.endTime'>
+                        </div>
+                        <button class='btn select'>
+                            <i class='icon-magnifier'>查询</i>
+                        </button>
+                    </div>
+                    <div class="hd-right">
+                        <span>单位：万元</span>
+                    </div>
+                </div>
+                <div class="tableclass">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th rowspan='2'>时间</th>
+                            <th class='eachths' ng-repeat="thead in table.theads track by $index" colspan="{{2}}">
+                                <div ng-controller="DropdownCtrl">
+                                    <div class="btn-group" uib-dropdown>
+                                        <span uib-dropdown-toggle>{{thead}}</span>
+                                        <ul class="dropdown-menu" uib-dropdown-menu >
+                                            <li role="menuitem"><a ng-click='sortClick(thead)'>排序</a></li>
+                                            <li role="menuitem"><a ng-click='prevClick(thead)'>上钻</a></li>
+                                            <li role="menuitem"><a ng-click='nextClick(thead)'>下钻</a></li>
+                                            <li role="menuitem"><a href="#">横列转置</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>合计</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class='everytd' ng-repeat='item in table.navs'>
+                            <div  ng-controller="DropdownCtrl">
+                                <div ng-cloak class="btn-group" uib-dropdown>
+                                        <span uib-dropdown-toggle>{{item.name}}</span>
+                                        <ul class="dropdown-menu" uib-dropdown-menu ng-show='item.show==1'>
+                                            <li role="menuitem" class="filter"><a href="#">筛选</a>
+                                                <div class="selectinput">
+                                                    请输入条件:<input type="text" placeholder=""/>
+                                                    <button class="btn btn-sm btn-success">确定</button>
+                                                </div>
+                                            </li>
+                                            <li role="menuitem"><a href="#">排序</a></li>
+                                            <li role="menuitem" class='topten'><a href="#"><i
+                                                    class='glyphicon glyphicon-arrow-up'></i> Top10</a></li>
+                                            <li role="menuitem"><a href="#"><i class='glyphicon glyphicon-arrow-down'></i>
+                                                Low10</a></li>
+                                        </ul>
+                                </div>
+                            </div>
+                            </td>
+                        </tr>
+                        <tr ng-repeat='tbody in table.tbodys track by $index' >
+                            <td class='firsttd'>
+                                <div ng-controller="DropdownCtrl">
+                                    <div class="btn-group" uib-dropdown>
+                                        <span uib-dropdown-toggle>{{tbody.time}}</span>
+                                        <ul class="dropdown-menu" uib-dropdown-menu>
+                                            <li role="menuitem"><a>排序</a></li>
+                                            <li role="menuitem"><a ng-click='prevClick(tbody.time)'>上钻</a></li>
+                                            <li role="menuitem"><a ng-click='nextClick(tbody.time)'>下钻</a></li>
+                                            <li role="menuitem"><a href="#">横列转置</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                            <td ng-repeat='tbodydata in tbody.tbodydatas track by $index'>
+                                {{tbodydata}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="spinner">
+                        <i class="fa fa-spinner fa-pulse"></i>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="alltable-left" class="col-lg-6 col-xs-12 echar">
+                    </div>
+                    <div id="alltable-right" class="col-lg-6 col-xs-12 echar">
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

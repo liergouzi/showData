@@ -1,0 +1,13 @@
+<div class="bottom-15" style="position: relative" ng-init="rules.ruleDefine.name = ruleName;rules.rule = ruleName">
+    <span style="position: absolute;left: -87px;
+    top: 10px">违规指标</span>
+    <span>每天开机时间少于</span><input type="text" class="sm-input" ng-model="rules.ruleDefine.illegalRule.params.normalTime" >小时<span style="padding-left: 20px">(普通店)</span>
+</div>
+<div  class="bottom-15" style="position:relative;">
+    <span>每天开机时间少于</span><input type="text" class="sm-input" ng-model="rules.ruleDefine.illegalRule.params.otherTime" >小时<span style="padding-left: 20px">(快乐8或PK10)</span>
+</div>
+<div  class="bottom-15" style="position:relative;">
+    <span style="position: absolute;left: -87px;
+    top: 10px">预警指标</span>
+    <span>连续</span><input type="text" class="sm-input" ng-model="rules.ruleDefine.stopRule.params.days"><span>天或以上（含）开机时间不足或不开机</span>
+</div>

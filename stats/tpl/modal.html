@@ -1,0 +1,63 @@
+
+<script type="text/ng-template" id="appModalAlertCtrl.html">
+    <div class="modal-header">
+        <h3 class="modal-title">{{items.title}}</h3>
+    </div>
+    <div class="modal-body">
+        <span><b>{{items.subTitle}}</b></span>&nbsp;<span>{{items.message}}</span>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" ng-click="ok()">知道了</button>
+    </div>
+</script>
+
+<script type="text/ng-template" id="appModalDialogCtrl.html">
+    <div class="modal-header">
+        <h3 class="modal-title">{{items.title}}</h3>
+    </div>
+    <div class="modal-body">
+        <span><b>{{items.subTitle}}</b></span>&nbsp;<span>{{items.message}}</span>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" ng-click="ok()">确认</button>
+        <button class="btn btn-cancel" ng-click="cancel()">取消</button>
+    </div>
+</script>
+<!--删除弹窗-->
+<script type="text/ng-template" id="appModalConfirmCtrl.html">
+    <div class="portlet box red portlet-mg0 ">
+        <div class="portlet-title" style="min-height: 36px">
+            <div class="caption" style="padding: 8px 0 6px;">{{items.title}}</div>
+            <div class="tools" style="padding: 10px 0 5px;">
+                <i class="fa fa-close big-icon" ng-click="cancel()"></i>
+            </div>
+        </div>
+        <div class="portlet-body form">
+            <form class="form-horizontal" role="form">
+                <div class="form-body" style="padding:40px 20px 0 20px">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <textarea placeholder="{{items.placeholder}}" ng-model="reason" style="width: 100%;height: 205px;resize:none"></textarea></div>
+                    </div>
+                </div>
+                <div class="form-foot">
+                    <button  class="btn green confirm" ng-click="confirm()">确认删除</button>
+                    <button  class="btn default cancel" ng-click="cancel()">取消</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="appModalPromptCtrl.html">
+    <div class="modal-header">
+        <h3 class="modal-title">{{items.title}}</h3>
+    </div>
+    <div class="modal-body">
+        <input type="text" class="form-control" ng-model="items.message" >
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" ng-click="msg()">确认</button>
+        <button class="btn btn-cancel" ng-click="cancel()">取消</button>
+    </div>
+</script>

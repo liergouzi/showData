@@ -1,0 +1,68 @@
+<div>
+    <div class="digital">
+        <ul class="tablelist">
+            <li>
+                <div class="page-header">
+                    <div>{{table.title}}</div>
+                </div>
+                <div class="tableclass">
+                    <table class="quarter table table-striped">
+                        <thead>
+                        <tr>
+                            <th>时间</th>
+                            <th class='eachths' colspan="{{colspan}}" ng-repeat="thead in table.theads track by $index">
+                                <div ng-controller="DropdownCtrl">
+                                    <div class="btn-group" uib-dropdown>
+                                        <span uib-dropdown-toggle>{{thead}}</span>
+                                        <ul class="dropdown-menu" uib-dropdown-menu>
+                                            <li role="menuitem"><a ng-click='sortClick(thead)'>排序</a></li>
+                                            <li role="menuitem"><a ng-click='prevClick(thead)'>上钻</a></li>
+                                            <li role="menuitem"><a ng-click='nextClick(thead)'>下钻</a></li>
+                                            <li role="menuitem"><a href="#">横列转置</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </th>
+                            <th colspan='{{colspan}}'>合计</th>
+                        </tr>
+                        </thead>
+                        <tbody ng-class="{false:'three-one',true:'four-one'}[className]">
+                        <tr>
+                            <td></td>
+                            <td ng-repeat="nav in table.navs track by $index">{{nav}}</td>
+                        </tr>
+                        <tr ng-repeat="tbody in table.tbodys">
+                            <td class='firsttd' style='min-width: 100px'>
+                                <div ng-controller="DropdownCtrl">
+                                    <div class="btn-group" uib-dropdown>
+                                        <span uib-dropdown-toggle>{{tbody.time}}</span>
+                                        <ul class="dropdown-menu" uib-dropdown-menu>
+                                            <li role="menuitem"><a ng-click='sortClick(tbody.time)'>排序</a></li>
+                                            <li role="menuitem"><a ng-click='prevClick(tbody.time)'>上钻</a></li>
+                                            <li role="menuitem"><a ng-click='nextClick(tbody.time)'>下钻</a></li>
+                                            <li role="menuitem"><a href="#">横列转置</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                            <td ng-repeat='data in tbody.tbodydatas track by $index'>
+                                {{data}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="spinner">
+                        <i class="fa fa-spinner fa-pulse"></i>
+                    </div>
+                </div>
+            </li>
+            <div class='echarts'>
+                <div id="quartertable1" class="echartime"></div>
+                <div ng-if='flag===2?true:false'>
+                    <div id='quartertable2'  class='echartime'></div>
+                    <div id='quartertable3'  class='echartime'></div>
+                </div >
+            </div>
+        </ul>
+    </div>
+</div>

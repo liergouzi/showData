@@ -1,0 +1,774 @@
+app.factory('loginService', ['$http', 'PATH', function ($http, PATH) {
+    return {
+        login: login,
+        logout: logout,
+        checkPwd: function (params) {
+            return $http.post(PATH.checkPassword, params);
+        },
+        updatePwd: function (params) {
+            return $http.post(PATH.updatePassword(), params);
+        }
+    };
+
+    function login(params) {
+        return $http({
+            url: PATH.login,
+            method: "post",
+            data: JSON.stringify(params)
+        })
+    }
+
+    function logout() {
+        return $http({
+            url: PATH.logout,
+            method: "get",
+            transformRequest: function (data, headersGetter) {
+                return data;
+            }
+        })
+    }
+}]);
+//销售
+app.factory('personService', ['$http', 'PATH', '$uibModal', 'stationService', function ($http, PATH, $uibModal, stationService) {
+    return {
+        //添加人员modal
+        personnel: function (params, parent, okFn) {
+            $uibModal.open({
+                animation: true,
+                scope: parent,
+                templateUrl: 'views/site/person-modal.html',
+                controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                    setTimeout(function () {
+                        ComponentsDateTimePickers.init();
+                    }, 100);
+                    $scope.params = {};
+                    $scope.filter = {};
+                    if (params) {
+                        $scope.params = params;
+                        console.log($scope.params);
+                        $scope.params.sex = $scope.params.sex.toString();
+                        $scope.filter.stationName = params.stationId_name;
+                    }
+                    $scope.ok = function () {
+                        $scope.params.sex = Number($scope.params.sex);
+                        if (okFn) {
+                            if (params) {
+                                okFn($scope.params.id, $scope.params);
+                            } else {
+                                okFn(null, $scope.params);
+                            }
+                            $uibModalInstance.close('closed');
+                        }
+                    };
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+
+
+                    //站点选择
+                    $scope.search = function () {
+                        $scope.params.stationId = '';
+                        if ($scope.filter.stationName != '') {
+                            stationService.stationList({
+                                'filter.name$$LIKE': $scope.filter.stationName,
+                                sort: "id",
+                                order: "asc", start: 0, length: 10000
+                            })
+                                .then(function (res) {
+                                    $scope.result = res.data.data;
+                                    if (!$scope.result.length)
+                                        $scope.show = 1;
+                                    else
+                                        $scope.show = 0;
+                                })
+                        } else {
+                            $scope.result = ''
+                            $scope.show = 0;
+                        }
+
+                    };
+                    $scope.changeValue = function (name, id) {
+                        $scope.filter.stationName = name;
+                        $scope.params.stationId = id;
+                        $scope.result.length = false;
+                        $scope.show = 0;
+                    };
+                }],
+                size: 'md'
+                //    lg sm xs md
+            })
+        },
+        //删除人员modal
+        del: function (id, okFn) {
+            $uibModal.open({
+                    animation: true,
+                    templateUrl: 'views/site/delperson-modal.html',
+                    controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                        $scope.causeList = ["填写错误", "已辞职"];
+                        $scope.cause = '';
+                        $scope.causeChecked = {active: ''};
+                        $scope.ck = function () {
+                            $scope.cause = $scope.causeChecked.active;
+                        }
+                        $scope.ok = function () {
+
+                            // //逻辑拼接删除原因
+                            // $scope.finalReason = "";
+                            // if ($scope.causeChecked.active.length == 0) {
+                            //     $scope.finalReason = $scope.cause;
+                            // } else if ($scope.causeChecked.active.length > 0 && $scope.cause.length == 0) {
+                            //     $scope.finalReason = $scope.causeChecked.active;
+                            // } else {
+                            //     $scope.finalReason = "1." + $scope.causeChecked.active + "。2." + $scope.cause
+                            // }
+                            if (okFn)
+                                okFn(id, {delReason: $scope.finalReason});
+                            $uibModalInstance.close('closed');
+                        };
+                        $scope.cancel = function () {
+                            $uibModalInstance.dismiss('cancel');
+                        };
+                    }],
+                    size: 'md'
+                }
+            )
+        },
+//销售员详情
+        persondetails: function (parent, okFn, personService) {
+            $uibModal.open({
+                animation: true,
+                scope: parent,
+                templateUrl: 'views/site/persondetails-modal.html',
+                controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                    okFn.then(function (res) {
+                        $scope.params = res.data;
+                        console.log($scope.params);
+                    });
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel')
+                    }
+                }],
+                size: 'md'
+            })
+        }
+        ,
+
+        getPersonScore: function (id, date1) {
+            return $http.post(PATH.getPersonScore(id, date1))
+        }
+        ,
+
+        delPerson: function (id, params) {
+            return $http.post(PATH.person(id, "del"), params);
+        }
+        ,
+        getPerson: function (id) {
+            return $http.get(PATH.person(id))
+        }
+        ,
+        addPerson: function (id, params) {
+            return $http({
+                url: PATH.person(id),
+                method: "put",
+                headers: {'Content-Type': 'application/json'},
+                data: JSON.stringify(params),
+                transformRequest: function (data, headersGetter) {
+                    return data;
+                }
+            })
+        }
+    }
+}])
+;
+//巡检与任务
+app.factory('getSupervisorService', ['$http', 'PATH', '$uibModal', '$rootScope', function ($http, PATH, $uibModal, $rootScope) {
+    return {
+        //督导员详情modal
+        supervisoDetails: function (okFn) {
+            $uibModal.open({
+                animation: true,
+                templateUrl: 'views/site/svdetails-modal.html',
+                controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                    okFn.then(function (res) {
+                        $scope.params = res.data;
+                        console.log($scope.params);
+                    });
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel')
+                    }
+                }],
+                size: 'md'
+            })
+        },
+        //变更巡检任务modal
+        changetaskModal: function (parent, okFn) {
+            var $this = this;
+            $uibModal.open({
+                animation: true,
+                scope: parent,
+                templateUrl: 'views/site/changetask-modal.html',
+                controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                    setTimeout(function () {
+                        ComponentsDateTimePickers.init()
+                    }, 50);
+                    $scope.params = {};
+                    $scope.list = $scope.selection;
+                    console.log($scope.list)
+                    if ($scope.ids) {
+                        $scope.params.taskIds = $scope.ids;
+                    }
+
+                    //督导员
+                    $scope.search = function () {
+                        if ($scope.filter.ownerName != '') {
+                            $this.superPerson({
+                                'filter.user.name$$LIKE': $scope.params.activeName,
+                                sort: "id",
+                                order: "asc", start: 0, length: 10000
+                            })
+                                .then(function (res) {
+                                    $scope.result = res.data.data;
+                                    if (!$scope.result.length)
+                                        $scope.show3 = 1;
+                                    else
+                                        $scope.show3 = 0;
+                                })
+                        } else {
+                            $scope.result = ''
+                            $scope.show3 = 0;
+                        }
+
+                    };
+                    $scope.changeValue = function (name, id) {
+                        $scope.params.activeId = id;
+                        $scope.params.activeName = name;
+                        $scope.result.length = false;
+                        $scope.show3 = 0;
+                    };
+                    $scope.ok = function () {
+                        if (okFn) {
+                            okFn($scope.params).then(function (res) {
+                                var msg = '';
+                                if (res.data)
+                                    msg = "变更成功！";
+                                else msg = "系统错误！";
+                                $rootScope.alert({
+                                    message: msg, callback: function () {
+                                        $scope.refresh();
+                                    }
+                                })
+                            })
+                        }
+                        $uibModalInstance.dismiss('cancel')
+                    };
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel')
+                    }
+                }],
+                size: 'md'
+            })
+        },
+        changetask: function (params) {
+            return $http.post(PATH.changetask, params)
+        },
+        delTask: function (params) {
+            return $http({
+                url: PATH.deltask,
+                method: "post",
+                headers: {'Content-Type': 'application/json'},
+                data: JSON.stringify(params),
+                transformRequest: function (data, headersGetter) {
+                    return data;
+                }
+            })
+        },
+        getSupervisor: function (id) {
+            return $http.get(PATH.supervisor(id));
+        },
+        delsupervisor: function (params) {
+            return $http.post(PATH.delsupervisor, params);
+        },
+        addsupervisor: function (params) {
+            return $http.put(PATH.addsupervisor,params);
+        },
+        superPerson: function (params) {
+            return $http.get(PATH.getsupervisorByname, {params: params})
+        },
+        getNosupervisor:function (params) {
+            return $http.get(PATH.user(),{params:params});
+        },
+        getStationBySupervisor: function (id) {
+            return $http.get(PATH.getStationBySupervisor(id))
+        },
+        getDynColumn: function () {
+            return $http.get(PATH.getDynColumn());
+        }
+
+    }
+}]);
+//站点
+app.factory('stationService', ['$http', 'PATH', '$uibModal', 'getSupervisorService', function ($http, PATH, $uibModal, getSupervisorService) {
+    return {
+        getstationDeposit: function (id) {
+            return $http.get(PATH.stationDeposit(id));
+        },
+        getStationDetailsSales: function (id, params) {
+            return $http.get(PATH.stationDetail.sales(id), {params: params});
+        },
+        getStationDetailsCheckOut: function (id, startTime, endTime) {
+            return $http.get(PATH.stationDetail.checkOutOfStation(id, startTime, endTime));
+        },
+        getStationDetailsSalesOfYear: function (id) {
+            return $http.get(PATH.stationDetail.salesOdYear(id));
+        },
+        //预警modal
+        illegal: function (params, okFn) {
+            $uibModal.open({
+                animation: true,
+                templateUrl: 'views/site/illegal-modal.html',
+                controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                    $scope.params = params;
+                    $scope.request = {
+                        stationId: $scope.params.siteId,
+                        machineId: 1,
+                        status: 0,
+                        content: "",
+                        reason: "",
+                        handleDeptId: 1,
+                        handleDeptName: "45"
+                    };
+                    $scope.clicklabel = function () {
+                        $scope.params.reason = '';
+                        angular.forEach($scope.params.rules, function (li) {
+                            if (li.$checked)
+                                $scope.params.reason += li.flag + "\r\n";
+                        });
+                    }
+                    $scope.ok = function () {
+                        angular.forEach($scope.params.rules, function (li) {
+                            if (li.$checked)
+                                return $scope.request.reason += li.flag + ","
+                        });
+                        $scope.request.reason += $scope.params.reason;
+                        if (okFn) {
+                            console.log($scope.request);
+                            okFn($scope.request);
+                            $uibModalInstance.close('closed');
+                        }
+                    };
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                }],
+                size: 'md'
+            })
+        },
+        addurgentTask: function (params) {
+            return $http.post(PATH.addurgentTask, params)
+        },
+        //紧急任务
+        addTask: function (params, okFn) {
+            $uibModal.open({
+                animation: true,
+                templateUrl: 'views/site/illegal-task-modal.html',
+                controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                    setTimeout(function () {
+                        ComponentsDateTimePickers.init()
+                    }, 50);
+                    if (params) {
+                        $scope.params = params;
+                    }
+
+                    console.log(params)
+
+
+                    //督导员
+                    $scope.search = function () {
+                        if ($scope.filter.ownerName != '') {
+                            getSupervisorService.superPerson({
+                                'filter.user.name$$LIKE': $scope.filter.ownerName,
+                                sort: "id",
+                                order: "asc", start: 0, length: 10000
+                            })
+                                .then(function (res) {
+                                    $scope.result = res.data.data;
+                                    console.log($scope.result);
+                                    // if (!$scope.result.length)
+                                    //     $scope.show1 = 1;
+                                    // else
+                                    //     $scope.show1 = 0;
+                                })
+                        } else {
+                            $scope.result = ''
+                            // $scope.show1 = 0;
+                        }
+
+                    };
+                    $scope.request = {
+                        "startTime": new Date().Format("yyyy-MM-dd"),
+                        "type": 2,
+                        taskCheckOut: {
+                            "stationId": $scope.params.id,
+                            "stationName": $scope.params.name,
+                            "stationCode": $scope.params.code,
+                            "stationCompanyId": $scope.params.companyId,
+                            "stationCompanyName": $scope.params.companyName
+                        }
+                    };
+                    $scope.changeValue = function (name, id) {
+                        $scope.request.ownerName = $scope.filter.ownerName = name;
+                        $scope.request.ownerId = id;
+                        $scope.result.length = false;
+                        // $scope.show1 = 0;
+                    };
+                    $scope.ok = function () {
+                        if (okFn) {
+                            console.log($scope.request);
+                            okFn($scope.request);
+                            $uibModalInstance.close('closed');
+                        }
+                    };
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                }],
+                size: 'md'
+            })
+        },
+        //紧急任务(临时这么写，后期再改。)
+        addTask1: function (okFn) {
+            var $this = this;
+            $uibModal.open({
+                animation: true,
+                templateUrl: 'views/site/addtask-modal.html',
+                controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                    setTimeout(function () {
+                        ComponentsDateTimePickers.init()
+                    }, 50);
+                    $scope.params = {};
+                    //站点选择
+                    $scope.search1 = function () {
+                        if ($scope.filter.stationName != '') {
+                            $scope.params.address = ''
+                            $this.stationList({
+                                'filter.name$$LIKE': $scope.filter.stationName,
+                                sort: "id",
+                                order: "asc", start: 0, length: 10000
+                            })
+                                .then(function (res) {
+                                    $scope.result1 = res.data.data;
+                                    if (!$scope.result1.length)
+                                        $scope.show2 = 1;
+                                    else
+                                        $scope.show2 = 0;
+                                })
+                        } else {
+                            $scope.result1 = ''
+                            $scope.show2 = 0;
+                        }
+
+                    };
+                    $scope.changeValue1 = function (params) {
+                        $scope.filter.stationName = params.name;
+                        $scope.params.stationId = params.id;
+                        $scope.result1.length = false;
+                        $scope.request.taskCheckOut = {
+                            "stationId": params.id,
+                            "stationName": params.name,
+                            "stationCode": params.code,
+                            "stationCompanyId": params.company_id,
+                            "stationCompanyName": params.company_name
+                        };
+                        $scope.params.address = params.address;
+                        $scope.show2 = 0;
+                    };
+                    $scope.request = {
+                        "startTime": new Date().Format("yyyy-MM-dd"),
+                        "type": 2
+                    };
+                    $scope.changeValue = function (name, id) {
+                        $scope.request.ownerName = $scope.filter.ownerName = name;
+                        $scope.request.ownerId = id;
+                        $scope.result.length = false;
+                        $scope.show1 = 0;
+                    };
+                    $scope.ok = function () {
+                        if (okFn) {
+                            console.log($scope.request);
+                            okFn($scope.request);
+                            $uibModalInstance.close('closed');
+                        }
+                    };
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                }],
+                size: 'md'
+            })
+        },
+        illegaldetails: function (params) {
+            $uibModal.open({
+                animation: true,
+                templateUrl: 'views/site/illegaldetails-modal.html',
+                controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                    params.then(function (res) {
+                        $scope.params = res.data;
+                    });
+
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                }],
+                size: 'lg   '
+            })
+        },
+        stationList: function (params) {
+            return $http.get(PATH.station(), {params: params})
+        },
+        stationDetails: function (id) {
+            return $http.get(PATH.station(id))
+        },
+        stationAdmin: function () {
+            return $http.get(PATH.stationAdmin())
+        },
+        illegalSite: function () {
+            return $http.get(PATH.illegalSite())
+        },
+        illegaldetailss: function (id) {
+            return $http.get(PATH.illegaldetails(id));
+        },
+        //违规列表
+        violation: function (params) {
+            return $http.get(PATH.violation, {params: params})
+        },
+        delviolation: function (params) {
+            return $http.post(PATH.delviolation, params)
+        },
+        //站点自查
+        siteSelfCheck: function (params) {
+            return $http.get(PATH.siteSelfCheck, {params: params})
+        }
+    }
+}]);
+
+app.factory('companyService', ['$http', 'PATH', function ($http, PATH) {
+    return {
+        companyList: function () {
+            return $http.post(PATH.company())
+        }
+    }
+}]);
+app.factory('regionService', ['$http', 'PATH', function ($http, PATH) {
+    return {
+        region: function () {
+            return $http.get(PATH.region())
+        }
+    }
+}]);
+app.factory('warningService', ['$http', 'PATH', function ($http, PATH) {
+    return {
+        addWarning: function (params) {
+            return $http.post(PATH.addWarning, params)
+        },
+        refuseWarningDo: function (params) {
+            return $http.post(PATH.refusewarning(params.id), {refuseReason: params.refuseReason});
+        },
+        stopmachine: function ($scope, id) {
+            return $http.post(PATH.stopMachine(id));
+        }
+    }
+}]);
+
+app.factory('systemService', ['$http', 'PATH', '$uibModal', '$rootScope', function ($http, PATH, $uibModal, $rootScope) {
+    return {
+        addrole: function (doing, params, okFn) {
+            $uibModal.open({
+                animation: true,
+                templateUrl: 'views/system/roleedit.html',
+                controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                    if (doing == "修改") {
+                        $scope.params = {
+                            name: params.result.name,
+                            remark: params.result.remark
+                        }
+                    } else {
+                        $scope.params = {
+                            name: "",
+                            remark: ""
+                        }
+                    }
+                    $scope.do = doing;
+                    $scope.ok = function () {
+                        if (params.result) {
+                            $scope.params = {
+                                "id": params.result.id,
+                                "name": $scope.params.name,
+                                "remark": $scope.params.remark,
+                                "useFlag": "1"
+                            }
+                        } else {
+                            $scope.params = {
+                                "name": $scope.params.name,
+                                "remark": $scope.params.remark
+                            }
+                        }
+                        if (okFn) {
+                            okFn($scope.do, $scope.params);
+                        }
+                        $uibModalInstance.close('closed');
+                    };
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                }],
+                size: 'md'
+            })
+        },
+        delroleDo: function (id) {
+            return $http.delete(PATH.role(id));
+        },
+        roleDo: function (params) {
+            return $http.put(PATH.role(), params);
+        },
+        getRole: function (id) {
+            return $http.get(PATH.role(id));
+        },
+
+        //人员详情
+        userDetails: function (okFn) {
+            $uibModal.open({
+                animation: true,
+                templateUrl: 'views/system/user-edit-modal.html',
+                controller: ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+                    $scope.doing = "查看人员";
+                    $scope.look = 1;
+                    okFn.then(function (res) {
+                        $scope.params = res.data;
+                        console.log($scope.params);
+                    });
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel')
+                    }
+                }],
+                size: 'md'
+            })
+        },
+        getuser: function (id) {
+            return $http.get(PATH.user(id));
+        },
+        delUser: function (id) {
+            return $http.get(PATH.users.delUser(id));
+        },
+        updateUser: function (params) {
+            return $http.post(PATH.users.updateUser, params);
+        },
+        saveUser: function (params) {
+            return $http.post(PATH.users.saveUser, params);
+        },
+        // 检查loginId是否重复
+        checkLoginID: function (loginId) {
+            return $http.get(PATH.checkLoginId(loginId));
+        },
+        // 字典
+        getDict: function (code) {
+            return $http.get(PATH.dict.getDict(code));
+        },
+        delDict: function (id) {
+            return $http.delete(PATH.dict.Dict(id));
+        },
+        updateDict: function (parmas) {
+            return $http.put(PATH.dict.updateDict, parmas);
+        },
+        saveDict: function (params) {
+            return $http.put(PATH.dict.saveDict, params);
+        },
+
+        //区县管理
+        updateRegion: function (parmas) {
+            return $http.put(PATH.region.updateRegion, parmas);
+        },
+        delRegion: function (id) {
+            return $http.delete(PATH.region.delRegion(id));
+        },
+        saveRegion: function (params) {
+            return $http.put(PATH.region.saveRegion, params);
+        },
+
+        //部门管理
+        updateDept: function (params) {
+            return $http.post(PATH.depts.updateDept, params);
+        },
+        saveeDept: function (parmas) {
+            return $http.put(PATH.depts.saveDept, parmas);
+        },
+        delDept: function (id) {
+            return $http.delete(PATH.depts.delDept(id));
+        },
+        getDate:function(y,m){
+            return $http.get(PATH.dateAdmin(y,m))
+        },
+        dateDetails:function(params){
+            return $http.post(PATH.dateDetails,params)
+        },
+
+        // 日历设置
+        putWorkDay:function(params){
+            return $http.put(PATH.dateDetails,params)
+        },
+        deleteDate:function (id) {
+            return $http.delete(PATH.deleteDate(id));
+        },
+
+    }
+}]);
+
+
+app.factory('salesService', ['$http', 'PATH', function ($http, PATH) {
+    return {
+        getLotteryType: function () {
+            return $http.get(PATH.lottery_type);
+        },
+        getSalesBasicFacts: function () {
+            return $http.get(PATH.getSalesBasicFacts);
+        }
+    }
+}]);
+
+app.factory('messageService', ['$http', 'PATH', '$uibModal', '$rootScope', function ($http, PATH, $uibModal, $rootScope) {
+    return {
+        getmessage: function () {
+            return $http.get(PATH.getmessage);
+        }
+    }
+}]);
+//玩法分析
+app.factory('playService', ['$http', 'PATH', function ($http, PATH) {
+    return {
+        tableTitle:function () {
+            return $http.get(PATH.tableTitle);
+        },
+        tableTbody:function () {
+            return $http.get(PATH.tableTbody);
+        },
+        selectPlaytable:function (timejson) {
+            return $http.get(PATH.selectPlaytable(timejson));
+        },
+        upClick:function (target) {
+            return $http.post(PATH.upClick(target));
+        },
+        downClick:function (target) {
+            return $http.post(PATH.downClick(target));
+        }
+    }
+}]);
+//时间分析
+app.factory('timeService',['$http','PATH',function ($http, PATH) {
+    return{
+        tableTitle:function () {
+            return $http.get(PATH.tableTitle);
+        },
+        tableTbody:function () {
+            return $http.get(PATH.tableTbody);
+        },
+    }
+}])
